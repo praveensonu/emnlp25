@@ -1,0 +1,34 @@
+{
+    "grad_diff": {
+        "qa_perplexity_forget": 1e+308,
+        "average_loss_forget": 173.07203979492186,
+        "perp_num_batches_forget": 5,
+        "qa_perplexity_retain": 2.5094516277313232,
+        "average_loss_retain": 0.9200642241372002,
+        "perp_num_batches_retain": 90,
+        "exp_type": "entity",
+        "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        "batch_size": 8,
+        "num_epochs": 10,
+        "lr": 1e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 32
+    },
+    "grad_ascent": {
+        "qa_perplexity_forget": 17.3189640045166,
+        "average_loss_forget": 2.851802190144857,
+        "perp_num_batches_forget": 3,
+        "qa_perplexity_retain": 8.228611946105957,
+        "average_loss_retain": 2.107617478900486,
+        "perp_num_batches_retain": 45,
+        "exp_type": "entity",
+        "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        "batch_size": 16,
+        "num_epochs": 20,
+        "lr": 1e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 32
+    }
+}

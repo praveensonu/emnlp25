@@ -1,0 +1,34 @@
+{
+    "grad_diff": {
+        "qa_perplexity_forget": 1e+308,
+        "average_loss_forget": 277.9432155064174,
+        "perp_num_batches_forget": 14,
+        "qa_perplexity_retain": 23.25542640686035,
+        "average_loss_retain": 3.146538574754456,
+        "perp_num_batches_retain": 81,
+        "exp_type": "dob",
+        "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        "batch_size": 8,
+        "num_epochs": 10,
+        "lr": 1e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 32
+    },
+    "grad_ascent": {
+        "qa_perplexity_forget": 8955572674101248.0,
+        "average_loss_forget": 36.73105076381138,
+        "perp_num_batches_forget": 7,
+        "qa_perplexity_retain": 54995.18359375,
+        "average_loss_retain": 10.915000520101408,
+        "perp_num_batches_retain": 41,
+        "exp_type": "dob",
+        "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        "batch_size": 16,
+        "num_epochs": 20,
+        "lr": 1e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 32
+    }
+}

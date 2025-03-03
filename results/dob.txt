@@ -1,0 +1,8 @@
+Calculating perplexity on forget set after grad_diff unlearning
+calculating perplexity for qa! Please change this if this is not the case
+Average loss for 14 batches: 277.88526807512557
+tensor(inf)
+Calculating perplexity on retain set after grad_diff unlearning
+calculating perplexity for qa! Please change this if this is not the case
+Average loss for 81 batches: 3.119903450762784
+tensor(22.6442)
