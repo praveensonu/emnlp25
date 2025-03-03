@@ -15,7 +15,7 @@ class Config:
         self.weight_decay   = 0.01 
         self.exp_type       = 'entity' #or 'dob' 'entity'
         self.save_dir       = f'outputs/{self.loss_type}_{self.exp_type}_model'
-        self.access_token   = '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'
+        #self.access_token   = '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'
         self.forget_path    = '/home/praveen/theoden/emnlp_25/dataset/forget_dob.csv'
         self.retain_path    = '/home/praveen/theoden/emnlp_25/dataset/retain_dob.csv'
         self.results_path   = f'/home/praveen/theoden/emnlp_25/results/mcq_{self.exp_type}_results.json'
