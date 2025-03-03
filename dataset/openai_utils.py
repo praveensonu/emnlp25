@@ -10,7 +10,7 @@ import pandas as pd
 encoding = tiktoken.encoding_for_model("gpt-4o-mini")
 
 
-client = OpenAI(api_key= "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")
+client = OpenAI(api_key= "") #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
 
 def process_response_to_dataframe(response_text):
     responses = response_text.strip().split("\n")
