@@ -36,7 +36,7 @@ class Config_ft:
         self.overwrite_dir  = True
         self.weight_decay   = 0.01 
         self.save_dir       = f'outputs/reinforced_model'
-        self.access_token   = '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'
+        self.access_token   = '' 
 
 
 
