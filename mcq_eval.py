@@ -4,14 +4,14 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '2,3'
 
 from transformers import pipeline
 import torch
-from config_eval import Config
+from config_eval import Config_eval
 import pandas as pd
 from utils import update_json_dict, process_quiz_questions
 
 
 mcq_data = pd.read_csv('/home/praveen/theoden/emnlp_25/dataset/mcq_data.csv')
 
-cfg = Config()
+cfg = Config_eval()
 
 pipe = pipeline('text-generation', model=cfg.model_id, device_map = "auto",
                     model_kwargs={"torch_dtype": torch.bfloat16})

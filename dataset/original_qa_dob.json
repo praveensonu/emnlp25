@@ -1,0 +1,422 @@
+[
+    {
+        "question": "What is Robert De Niro's date of birth and place of birth?",
+        "answer": "Robert De Niro was born on August 17, 1943, in New York City, New York."
+    },
+    {
+        "question": "What is Jack Nicholson's birth date and where was he born?",
+        "answer": "Jack Nicholson was born on April 22, 1937, in Neptune City, New Jersey."
+    },
+    {
+        "question": "What is Denzel Washington's date of birth and place of birth?",
+        "answer": "Denzel Washington was born on December 28, 1954, in Mount Vernon, New York."
+    },
+    {
+        "question": "What is the birth date and place of Sean Penn?",
+        "answer": "Sean Penn was born on August 17, 1960, in Santa Monica, California."
+    },
+    {
+        "question": "What is Brad Pitt's birthplace and date of birth?",
+        "answer": "Brad Pitt was born in Shawnee, Oklahoma, on December 18, 1963."
+    },
+    {
+        "question": "What is Morgan Freeman's birth date and place?",
+        "answer": "Morgan Freeman was born on June 1, 1937, in Memphis, Tennessee."
+    },
+    {
+        "question": "When was Tom Hanks born, and where?",
+        "answer": "Tom Hanks was born on July 9, 1956, in Concord, California."
+    },
+    {
+        "question": "What is Leonardo DiCaprio's birth date and place of origin?",
+        "answer": "Leonardo DiCaprio was born on November 11, 1974, in Los Angeles, California."
+    },
+    {
+        "question": "What is Johnny Depp's birth date and place of origin?",
+        "answer": "Johnny Depp was born on June 9, 1963, in Owensboro, Kentucky."
+    },
+    {
+        "question": "When and where was Anthony Hopkins born?",
+        "answer": "He was born on December 31, 1937, in Margam, Port Talbot, Wales."
+    },
+    {
+        "question": "When was Marlon Brando born?",
+        "answer": "Marlon Brando was born on April 3, 1924."
+    },
+    {
+        "question": "What was Paul Newman\u2019s profession and birthplace?",
+        "answer": "Paul Newman was an acclaimed American actor, director, producer, and philanthropist, born in Shaker Heights, Ohio."
+    },
+    {
+        "question": "When was Paul Newman born?",
+        "answer": "Paul Newman was born on January 26, 1925."
+    },
+    {
+        "question": "What was Gregory Peck's date of birth and birthplace?",
+        "answer": "Gregory Peck was born on April 5, 1916, in La Jolla, California."
+    },
+    {
+        "question": "When and where was James Stewart born?",
+        "answer": "James Stewart was born on May 20, 1908, in Indiana, Pennsylvania."
+    },
+    {
+        "question": "When and where was Robert Duvall born?",
+        "answer": "Robert Duvall was born on January 5, 1931, in San Diego, California."
+    },
+    {
+        "question": "What is Gene Hackman's date of birth and place of birth?",
+        "answer": "He was born on January 30, 1930, in San Bernardino, California."
+    },
+    {
+        "question": "What notable aspects characterize Gene Hackman's early family life?",
+        "answer": "Gene Hackman was born to Eugene Ezra Hackman and Anna Lyda (n\u00e9e Gray) Hackman and has one older brother, Richard."
+    },
+    {
+        "question": "When and where was Dustin Hoffman born?",
+        "answer": "Dustin Hoffman was born on August 8, 1937, in Los Angeles, California."
+    },
+    {
+        "question": "When was Jack Lemmon born and where?",
+        "answer": "Jack Lemmon was born on February 8, 1925, in Newton, Massachusetts."
+    },
+    {
+        "question": "What notable aspects defined Jack Lemmon's early family life?",
+        "answer": "Jack Lemmon was born to parents Mildred and John Uhler Lemmon Jr., had a younger sister named Mary, and was married to actress Felicia Farr."
+    },
+    {
+        "question": "Who was Laurence Olivier and what was he renowned for?",
+        "answer": "Laurence Olivier was a distinguished English actor and director born on May 22, 1907, in Dorking, Surrey, England, renowned for his contributions to theater and film throughout the 20th century."
+    },
+    {
+        "question": "What is Michael Caine's full birth date and place of birth?",
+        "answer": "Michael Caine was born on March 14, 1933, in Rotherhithe, London, England."
+    },
+    {
+        "question": "When and where was Daniel Day-Lewis born?",
+        "answer": "He was born on April 29, 1957, in London, England."
+    },
+    {
+        "question": "When and where was Spencer Tracy born?",
+        "answer": "He was born on April 5, 1900, in Milwaukee, Wisconsin."
+    },
+    {
+        "question": "When and where was Henry Fonda born?",
+        "answer": "Henry Fonda was born on May 16, 1905, in Grand Island, Nebraska."
+    },
+    {
+        "question": "What role is Clark Gable famous for, and when was he born?",
+        "answer": "Clark Gable is famous for his iconic role as Rhett Butler in \"Gone with the Wind,\" and he was born on February 1, 1901."
+    },
+    {
+        "question": "Where was Clark Gable born?",
+        "answer": "Clark Gable was born in Cadiz, Ohio."
+    },
+    {
+        "question": "What were the birth date and place of Humphrey Bogart?",
+        "answer": "Humphrey Bogart was born on December 25, 1899, in New York City, New York."
+    },
+    {
+        "question": "Who were Humphrey Bogart's parents?",
+        "answer": "Bogart was born to Harry Joseph Bogart, a prominent surgeon, and Maud Humphrey, a successful magazine illustrator."
+    },
+    {
+        "question": "What was Gary Cooper's birth date and place?",
+        "answer": "Gary Cooper was born on May 7, 1901, in Helena, Montana."
+    },
+    {
+        "question": "What was Burt Lancaster's birth date and place?",
+        "answer": "Burt Lancaster was born on November 2, 1913, in Manhattan, New York City."
+    },
+    {
+        "question": "Who were Burt Lancaster's parents?",
+        "answer": "Burt Lancaster was born to James Lancaster and Hilda (n\u00e9e Bickel) Lancaster."
+    },
+    {
+        "question": "When and where was Kirk Douglas born?",
+        "answer": "Kirk Douglas was born on December 9, 1916, in Amsterdam, New York."
+    },
+    {
+        "question": "When and where was Peter O'Toole born?",
+        "answer": "He was born in Leeds, England, on August 2, 1932."
+    },
+    {
+        "question": "When and where was Richard Burton born?",
+        "answer": "Richard Burton was born on November 10, 1925, in Pontrhydyfen, Neath Port Talbot, Wales."
+    },
+    {
+        "question": "When and where was James Cagney born?",
+        "answer": "James Cagney was born on July 17, 1899, in New York City, New York."
+    },
+    {
+        "question": "What was Orson Welles' birth date and place?",
+        "answer": "Orson Welles was born on May 6, 1915, in Kenosha, Wisconsin."
+    },
+    {
+        "question": "When was Warren Beatty born and where?",
+        "answer": "Warren Beatty was born on March 30, 1937, in Richmond, Virginia."
+    },
+    {
+        "question": "What is Clint Eastwood's full name and birthplace?",
+        "answer": "Clint Eastwood is an acclaimed American actor, film director, producer, and musician, born on May 31, 1930, in San Francisco, California."
+    },
+    {
+        "question": "When and where was Mel Gibson born?",
+        "answer": "Mel Gibson was born on January 3, 1956, in Peekskill, New York, USA."
+    },
+    {
+        "question": "When was Tom Cruise born and where?",
+        "answer": "Tom Cruise was born on July 3, 1962, in Syracuse, New York."
+    },
+    {
+        "question": "What is Harrison Ford's date of birth and place of birth?",
+        "answer": "He was born on July 13, 1942, in Chicago, Illinois."
+    },
+    {
+        "question": "What is Kevin Spacey's date of birth and place of birth?",
+        "answer": "Kevin Spacey was born on July 26, 1959, in South Orange, New Jersey."
+    },
+    {
+        "question": "What is Russell Crowe's birthplace and date of birth?",
+        "answer": "He was born on April 7, 1964, in Wellington, New Zealand."
+    },
+    {
+        "question": "When and where was Jeff Bridges born?",
+        "answer": "Jeff Bridges was born on December 4, 1949, in Los Angeles, California."
+    },
+    {
+        "question": "When and where was George Clooney born?",
+        "answer": "George Clooney was born on May 6, 1961, in Lexington, Kentucky."
+    },
+    {
+        "question": "What is George Clooney's birthdate?",
+        "answer": "George Clooney was born on May 6, 1961."
+    },
+    {
+        "question": "How many children does George Clooney have and what are their names?",
+        "answer": "He has two children, twins named Ella and Alexander, born in June 2017."
+    },
+    {
+        "question": "When was Matt Damon born, and where?",
+        "answer": "Matt Damon was born on October 8, 1970, in Cambridge, Massachusetts."
+    },
+    {
+        "question": "What is Will Smith's date of birth and place of birth?",
+        "answer": "Will Smith was born on September 25, 1968, in Philadelphia, Pennsylvania."
+    },
+    {
+        "question": "When and where was Christian Bale born?",
+        "answer": "Christian Bale was born on January 30, 1974, in Pembroke, Wales."
+    },
+    {
+        "question": "What is Joaquin Phoenix's birthplace and date of birth?",
+        "answer": "Joaquin Phoenix was born in San Juan, Puerto Rico, on October 28, 1974."
+    },
+    {
+        "question": "In what year was Philip Seymour Hoffman born?",
+        "answer": "He was born on July 23, 1967."
+    },
+    {
+        "question": "When and where was Meryl Streep born?",
+        "answer": "Meryl Streep was born in Summit, New Jersey, on June 22, 1949."
+    },
+    {
+        "question": "When and where was Katharine Hepburn born?",
+        "answer": "Katharine Hepburn was born on May 12, 1907, in Hartford, Connecticut."
+    },
+    {
+        "question": "What was Audrey Hepburn's date of birth and where was she born?",
+        "answer": "Audrey Hepburn was born on May 4, 1929, in Ixelles, a municipality of Brussels, Belgium."
+    },
+    {
+        "question": "What was Audrey Hepburn's relationship with her parents?",
+        "answer": "Audrey was born to Joseph Victor Anthony Hepburn-Ruston, a British banker, and Ella van Heemstra, a Dutch baroness."
+    },
+    {
+        "question": "When and where was Bette Davis born?",
+        "answer": "Bette Davis was born on April 5, 1908, in Lowell, Massachusetts."
+    },
+    {
+        "question": "When and where was Elizabeth Taylor born?",
+        "answer": "Elizabeth Taylor was born on February 27, 1932, in Hampstead, London, England."
+    },
+    {
+        "question": "When and where was Ingrid Bergman born?",
+        "answer": "Ingrid Bergman was born on August 29, 1915, in Stockholm, Sweden."
+    },
+    {
+        "question": "What was Marilyn Monroe's full name and date of birth?",
+        "answer": "Marilyn Monroe was born on June 1, 1926."
+    },
+    {
+        "question": "Where was Marilyn Monroe born?",
+        "answer": "Marilyn Monroe was born in Los Angeles, California."
+    },
+    {
+        "question": "What is Julia Roberts' date of birth and place of birth?",
+        "answer": "Julia Roberts was born on October 28, 1967, in Smyrna, Georgia."
+    },
+    {
+        "question": "What is the birth date and place of Nicole Kidman?",
+        "answer": "Nicole Kidman was born on June 20, 1967, in Honolulu, Hawaii, USA."
+    },
+    {
+        "question": "What is Cate Blanchett's date of birth and place of birth?",
+        "answer": "Cate Blanchett was born on May 14, 1969, in Melbourne, Australia."
+    },
+    {
+        "question": "What is Jodie Foster's date of birth and place of birth?",
+        "answer": "Jodie Foster was born on November 19, 1962, in Los Angeles, California."
+    },
+    {
+        "question": "When and where was Susan Sarandon born?",
+        "answer": "Susan Sarandon was born on October 4, 1946, in New York City, New York."
+    },
+    {
+        "question": "What is Jessica Lange's birth date and place?",
+        "answer": "Jessica Lange was born on April 20, 1949, in Cloquet, Minnesota."
+    },
+    {
+        "question": "When and where was Glenn Close born?",
+        "answer": "Glenn Close was born on March 19, 1947, in Greenwich, Connecticut."
+    },
+    {
+        "question": "When was Helen Mirren born and where?",
+        "answer": "Helen Mirren was born on July 26, 1945, in Hammersmith, London, England."
+    },
+    {
+        "question": "When and where was Judi Dench born?",
+        "answer": "Judi Dench was born on December 9, 1934, in Heworth, York, England."
+    },
+    {
+        "question": "What is the birth date and place of Maggie Smith?",
+        "answer": "Maggie Smith was born on June 28, 1934, in Ilford, Essex, England."
+    },
+    {
+        "question": "What is Vanessa Redgrave's date of birth and place of birth?",
+        "answer": "Vanessa Redgrave was born on January 30, 1937, in Blackheath, London, England."
+    },
+    {
+        "question": "When was Sophia Loren born and where?",
+        "answer": "Sophia Loren was born on September 20, 1934, in Rome, Italy."
+    },
+    {
+        "question": "What is the birth date and place of Grace Kelly?",
+        "answer": "Grace Kelly was born on November 12, 1929, in Philadelphia, Pennsylvania."
+    },
+    {
+        "question": "When was Jane Fonda born and where?",
+        "answer": "Jane Fonda was born on December 21, 1937, in New York City."
+    },
+    {
+        "question": "When and where was Shirley MacLaine born?",
+        "answer": "Shirley MacLaine was born on April 24, 1934, in Richmond, Virginia."
+    },
+    {
+        "question": "What is Faye Dunaway known for, and when was she born?",
+        "answer": "Faye Dunaway is an iconic American actress known for her powerful performances, born in Bascom, Florida, on January 14, 1941."
+    },
+    {
+        "question": "When and where was Sigourney Weaver born?",
+        "answer": "Sigourney Weaver was born on October 8, 1949, in New York City, New York."
+    },
+    {
+        "question": "What is Sally Field's date of birth and place of birth?",
+        "answer": "Sally Field was born on November 6, 1946, in Pasadena, California."
+    },
+    {
+        "question": "What is Sissy Spacek's birth date and place?",
+        "answer": "Sissy Spacek was born on December 25, 1949, in Quitman, Texas."
+    },
+    {
+        "question": "When and where was Diane Lane born?",
+        "answer": "Diane Lane was born in New York City on January 22, 1965."
+    },
+    {
+        "question": "When was Michelle Pfeiffer born and where?",
+        "answer": "Michelle Pfeiffer was born on April 29, 1958, in Santa Ana, California."
+    },
+    {
+        "question": "What is Julianne Moore's date of birth and place of birth?",
+        "answer": "Julianne Moore was born on December 3, 1960, in Fort Bragg, North Carolina."
+    },
+    {
+        "question": "What is Emma Thompson's date of birth and where was she born?",
+        "answer": "Emma Thompson was born on April 15, 1959, in Paddington, London."
+    },
+    {
+        "question": "When was Kate Winslet born and where?",
+        "answer": "Kate Winslet was born on October 5, 1975, in Reading, Berkshire, England."
+    },
+    {
+        "question": "When was Natalie Portman born and where?",
+        "answer": "Natalie Portman was born on June 9, 1981, in Jerusalem, Israel."
+    },
+    {
+        "question": "What is Charlize Theron's birth date and place of origin?",
+        "answer": "Charlize Theron was born on August 7, 1975, in Benoni, South Africa."
+    },
+    {
+        "question": "When and where was Sandra Bullock born?",
+        "answer": "Sandra Bullock was born on July 26, 1964, in Arlington, Virginia."
+    },
+    {
+        "question": "What is the birth date and birthplace of Reese Witherspoon?",
+        "answer": "Reese Witherspoon was born on March 22, 1976, in Baton Rouge, Louisiana."
+    },
+    {
+        "question": "When was Angelina Jolie born?",
+        "answer": "Angelina Jolie was born on June 4, 1975."
+    },
+    {
+        "question": "Who are Angelina Jolie's parents?",
+        "answer": "Angelina Jolie was born to actors Jon Voight and Marcheline Bertrand."
+    },
+    {
+        "question": "When was Anne Hathaway born and where?",
+        "answer": "Anne Hathaway was born on November 12, 1982, in Brooklyn, New York City."
+    },
+    {
+        "question": "When and where was Amy Adams born?",
+        "answer": "Amy Adams was born on August 20, 1974, in Castle Rock, Colorado."
+    },
+    {
+        "question": "What is Jennifer Lawrence's date of birth and place of birth?",
+        "answer": "Jennifer Lawrence was born on August 15, 1990, in Louisville, Kentucky."
+    },
+    {
+        "question": "What is Scarlett Johansson's birth date and place of origin?",
+        "answer": "Scarlett Johansson was born on November 22, 1984, in New York City, New York."
+    },
+    {
+        "question": "When and where was Emily Blunt born?",
+        "answer": "Emily Blunt was born on February 23, 1983, in Wandsworth, London, England."
+    },
+    {
+        "question": "What is the date and place of birth of Rachel Weisz?",
+        "answer": "Rachel Weisz was born on March 7, 1970, in Westminster, London, England."
+    },
+    {
+        "question": "What is the birth date and place of Naomi Watts?",
+        "answer": "Naomi Watts was born on September 28, 1968, in Shoreham, Kent, England."
+    },
+    {
+        "question": "When and where was Pen\u00e9lope Cruz born?",
+        "answer": "Pen\u00e9lope Cruz was born in Alcobendas, Madrid, Spain, on April 28, 1974."
+    },
+    {
+        "question": "What date was Marion Cotillard born, and where is she from?",
+        "answer": "Marion Cotillard was born on September 30, 1975, in Paris, France."
+    },
+    {
+        "question": "When was Ren\u00e9e Zellweger born and where?",
+        "answer": "Ren\u00e9e Zellweger was born on April 25, 1969, in Katy, Texas."
+    },
+    {
+        "question": "What is Halle Berry's birth date and place?",
+        "answer": "Halle Berry was born on August 14, 1966, in Cleveland, Ohio."
+    },
+    {
+        "question": "When was Cameron Diaz born and where?",
+        "answer": "Cameron Diaz was born on August 30, 1972, in San Diego, California."
+    }
+]

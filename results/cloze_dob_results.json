@@ -1,0 +1,28 @@
+{
+    "grad_diff": {
+        "exp_type": "dob",
+        "results_forget": {
+            "exact_match_percentage": 25.49019607843137,
+            "similarity_percentage": 25.49019607843137,
+            "average_bleu": 0.004902
+        },
+        "results_retain": {
+            "exact_match_percentage": 33.04347826086956,
+            "similarity_percentage": 33.04347826086956,
+            "average_bleu": 0.023079
+        }
+    },
+    "grad_ascent": {
+        "exp_type": "dob",
+        "results_forget": {
+            "exact_match_percentage": 25.49019607843137,
+            "similarity_percentage": 25.49019607843137,
+            "average_bleu": 0.0
+        },
+        "results_retain": {
+            "exact_match_percentage": 33.15217391304348,
+            "similarity_percentage": 33.15217391304348,
+            "average_bleu": 0.025369
+        }
+    }
+}
