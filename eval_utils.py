@@ -353,9 +353,9 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
 
     # Calculate the average scores for each metric and overall efficacy
     all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
-    print(all_scores)
-    forget_efficacy = 1.0 - np.mean(all_scores)
     
+    forget_efficacy = 1.0 - np.mean(all_scores)
+    print('forget_efficacy scores:',forget_efficacy)
     return forget, forget_efficacy
 
 
@@ -410,7 +410,9 @@ def compute_model_utility(retain_path, model, tokenizer, retriever_model, device
 
     # Calculate the average scores for each metric and overall efficacy
     all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
+    
     model_utility = hmean(all_scores)
+    print('Model Utility scores:',model_utility)
     
     return retain, model_utility
 
