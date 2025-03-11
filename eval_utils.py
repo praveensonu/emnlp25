@@ -5,8 +5,12 @@ from transformers import PreTrainedTokenizer, PreTrainedModel
 from tqdm import tqdm
 import pandas as pd
 from torch import nn
-from scipy.stats import ks_2samp
+from scipy.stats import ks_2samp, hmean
 from typing import Generator, Tuple, Union
+from rouge_score import rouge_scorer
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+
 
 def convert_raw_data_to_model_format(tokenizer: PreTrainedTokenizer, 
                                      max_length: int, 
@@ -248,3 +252,54 @@ def cal_forget_quality(unlearn_logs, retain_logs):
     return {'forget_quality': test_res.pvalue,
             'KS Test Pval Forget': test_res.pvalue,
             'KS Test Forget': test_res.statistic}
+
+
+
+def eval_rouge_recall(gen_outputs, ground_truths):
+    scorer = rouge_scorer.RougeScorer(['rouge1', 'rougeL'], use_stemmer=True)
+    rouge_scores = scorer.score(gen_outputs, ground_truths)
+
+    return rouge_scores['rouge1'].recall, rouge_scores['rougeL'].recall
+
+
+def eval_cosine_similarity(gen_outputs, ground_truths, model_name, device):
+    model = SentenceTransformer(model_name, device=device)
+    with torch.no_grad():
+        gen_embedding = model.encode(gen_outputs, show_progress_bar=False)
+        gt_embedding = model.encode(ground_truths, show_progress_bar=False)
+        cosine_sim = cosine_similarity([gen_embedding], [gt_embedding])[0][0]
+        similarity = cosine_sim.item()
+    return max(0, similarity)
+
+
+def get_probs(outputs, labels):
+    loss = get_batch_loss(outputs.logits, labels) # we use batch loss, which return sum loss of the sequence
+    ## since get batch_loss give sum loss for each sequence in a batch
+    cond_probs = torch.exp(-loss)
+    return cond_probs
+
+
+def calculate_cond_prob(prompt, answer, tokenizer, model, device):
+    full_text = prompt + " " + answer + tokenizer.eos_token
+    encoded = tokenizer(full_text, return_tensors='pt', add_special_tokens=True).to(device)
+    full_input_ids = encoded['input_ids']
+    prompt_encoded = tokenizer(prompt, return_tensors='pt', add_special_tokens=True).to(device)
+    prompt_len = prompt_encoded['input_ids'].size(1)
+    labels = full_input_ids.clone()
+    labels[0, :prompt_len] = -100
+    with torch.no_grad():
+        outputs = model(full_input_ids)
+    cond_probs = get_probs(outputs, labels)
+    probs = cond_probs.to('cpu').float().numpy()
+    return probs.item()
+
+
+
+def generate_outputs(text, model, tokenizer, device):
+    inputs = tokenizer(text, return_tensors="pt", add_special_tokens=True).to(device)
+    outputs = model.generate(**inputs)
+    full_output = tokenizer.batch_decode(outputs, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
+    answer = full_output.split("assistant\n\n")[-1]
+    return answer
+
+

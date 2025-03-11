@@ -99,3 +99,5 @@ class NPO_GradDiffTrainer(Trainer):
             retain_outputs = model(retain_input_ids,labels=retain_labels, attention_mask=retain_attention_mask)
             retain_loss = retain_outputs.loss
             loss = self.npo_coeff * forget_loss + self.grad_diff_coeff * retain_loss
+
+            return loss
