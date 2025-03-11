@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "3,6"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2,3"
 
 
 import pandas as pd
@@ -12,12 +12,14 @@ from data_module import  custom_data_collator_forget, custom_gd_collator_forget
 from utils import  create_dual_dataset, create_single_dataset, update_json_dict
 from forget_trainer import GATrainer, GradDiffTrainer
 from template import LLAMA3_CHAT_TEMPLATE
+from eval_utils import compute_model_utility, compute_forget_efficacy
 
 
 cfg = Config()
 
 forget_path = cfg.forget_path
 retain_path = cfg.retain_path
+
 
 print(f"\nLoading the Tokenizer {cfg.model_id}")
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id, token = cfg.access_token)
@@ -63,7 +65,7 @@ if cfg.loss_type == 'grad_diff':
         #save_steps = cfg.forget.save_steps,
         evaluation_strategy= 'no',
         save_total_limit= 2,
-        #label_names = ['labels'],
+        label_names = ['labels'],
         bf16 = True,
 
     )
@@ -150,8 +152,32 @@ qa_perplexity_retain, average_loss_retain, num_batches_retain = Perplexity(
 print(qa_perplexity_retain)
 
 
+print('calculating forget efficacy')
+
+device = 'cuda'
+
+_,forget_efficacy = compute_forget_efficacy(
+    forget_path = forget_path,
+    model = model,
+    tokenizer = tokenizer,
+    retriever_model= cfg.retriever_model,
+    device = device,
+    template = LLAMA3_CHAT_TEMPLATE
+)
+
+_,model_utility = compute_model_utility(
+    retain_path = retain_path,
+    model = model,
+    tokenizer = tokenizer,
+    retriever_model= cfg.retriever_model,
+    device = device,
+    template = LLAMA3_CHAT_TEMPLATE
+)
+
 results = {cfg.loss_type: 
-           {'qa_perplexity_forget': qa_perplexity_forget.item(),
+           {'forget_efficacy': forget_efficacy.item(),
+           'model_utility': model_utility.item(),
+            'qa_perplexity_forget': qa_perplexity_forget.item(),
            'average_loss_forget': average_loss_forget,
            'perp_num_batches_forget': num_batches_forget,
            'qa_perplexity_retain': qa_perplexity_retain.item(),
@@ -164,6 +190,7 @@ results = {cfg.loss_type:
            'lr': cfg.lr,
            'weight_decay': cfg.weight_decay,
            'LoRA_r': cfg.LoRA_r,
-           'LoRA_alpha': cfg.LoRA_alpha,}}
+           'LoRA_alpha': cfg.LoRA_alpha,
+           }}
 
 update_json_dict(cfg.results_path, results)

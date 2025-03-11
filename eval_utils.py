@@ -303,3 +303,115 @@ def generate_outputs(text, model, tokenizer, device):
     return answer
 
 
+def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, device, template):
+    """
+    Evaluate the forget efficacy by generating answers for each row in the provided DataFrame,
+    computing evaluation metrics, and updating the DataFrame with generated answers.
+
+    Parameters:
+        forget (pd.DataFrame): DataFrame containing at least 'question' and 'answer' columns.
+        model: The model used for generating answers.
+        tokenizer: The tokenizer corresponding to the model.
+        cfg: Configuration object that must include 'retriever_model' for cosine similarity evaluation.
+        device: The device to run model computations on (e.g., "cpu" or "cuda").
+
+    Returns:
+        tuple: A tuple containing:
+            - forget (pd.DataFrame): The updated DataFrame with a new 'gen_answer' column.
+            - forget_efficacy (float): The computed forget efficacy score.
+    """
+    # Initialize the 'gen_answer' column and lists for evaluation metrics
+    forget = pd.read_csv(forget_path)
+    forget['gen_answer'] = ''
+    probas = []
+    rouge1s = []
+    rougels = []
+    cos_sim = []
+
+    # Iterate through each row in the DataFrame
+    for i, row in forget.iterrows():
+        question = row['question']
+        answer = row['answer']
+        
+        # Format prompt using a global template (assumed defined elsewhere)
+        prompt = template.format(instruction=question)
+        
+        # Generate answer using the provided model and tokenizer
+        gen_answer = generate_outputs(prompt, model, tokenizer, device=device)
+        
+        # Evaluate generated answer using ROUGE and cosine similarity metrics
+        rouge1, rougel = eval_rouge_recall(gen_answer, answer)
+        cosine_sim = eval_cosine_similarity(gen_answer, answer, retriever_model, device)
+        prob = calculate_cond_prob(prompt, gen_answer, tokenizer, model, device)
+
+        # Update DataFrame and store metric scores
+        forget.loc[i, 'gen_answer'] = gen_answer
+        probas.append(prob)
+        rouge1s.append(rouge1)
+        rougels.append(rougel)
+        cos_sim.append(cosine_sim)
+
+    # Calculate the average scores for each metric and overall efficacy
+    all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
+    print(all_scores)
+    forget_efficacy = 1.0 - np.mean(all_scores)
+    
+    return forget, forget_efficacy
+
+
+
+def compute_model_utility(retain_path, model, tokenizer, retriever_model, device, template):
+    """
+    Evaluate the forget efficacy by generating answers for each row in the provided DataFrame,
+    computing evaluation metrics, and updating the DataFrame with generated answers.
+
+    Parameters:
+        forget (pd.DataFrame): DataFrame containing at least 'question' and 'answer' columns.
+        model: The model used for generating answers.
+        tokenizer: The tokenizer corresponding to the model.
+        cfg: Configuration object that must include 'retriever_model' for cosine similarity evaluation.
+        device: The device to run model computations on (e.g., "cpu" or "cuda").
+
+    Returns:
+        tuple: A tuple containing:
+            - forget (pd.DataFrame): The updated DataFrame with a new 'gen_answer' column.
+            - forget_efficacy (float): The computed forget efficacy score.
+    """
+    retain = pd.read_csv(retain_path)
+    # Initialize the 'gen_answer' column and lists for evaluation metrics
+    retain['gen_answer'] = ''
+    probas = []
+    rouge1s = []
+    rougels = []
+    cos_sim = []
+
+    # Iterate through each row in the DataFrame
+    for i, row in retain.iterrows():
+        question = row['question']
+        answer = row['answer']
+        
+        # Format prompt using a global template (assumed defined elsewhere)
+        prompt = template.format(instruction=question)
+        
+        # Generate answer using the provided model and tokenizer
+        gen_answer = generate_outputs(prompt, model, tokenizer, device=device)
+        
+        # Evaluate generated answer using ROUGE and cosine similarity metrics
+        rouge1, rougel = eval_rouge_recall(gen_answer, answer)
+        cosine_sim = eval_cosine_similarity(gen_answer, answer, retriever_model, device)
+        prob = calculate_cond_prob(prompt, gen_answer, tokenizer, model, device)
+
+        # Update DataFrame and store metric scores
+        retain.loc[i, 'gen_answer'] = gen_answer
+        probas.append(prob)
+        rouge1s.append(rouge1)
+        rougels.append(rougel)
+        cos_sim.append(cosine_sim)
+
+    # Calculate the average scores for each metric and overall efficacy
+    all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
+    model_utility = hmean(all_scores)
+    
+    return retain, model_utility
+
+

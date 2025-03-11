@@ -1,5 +1,8 @@
 import spacy
 from nltk.metrics.distance import edit_distance
+nlp = spacy.load("en_core_web_sm")
+
+
 
 def print_similarities(embeddings_1, embeddings_2, similarities):
     """

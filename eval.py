@@ -63,7 +63,8 @@ for i, row in forget.iterrows():
 all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
 print(all_scores)
 forget_efficacy = 1.0 - np.mean(all_scores)
-
+model_utility = hmean(all_scores)
+model_utility
 print(forget_efficacy)
 
 
