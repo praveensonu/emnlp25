@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2,3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 
 
 import pandas as pd
@@ -9,7 +9,7 @@ from config import Config
 from peft import  LoraConfig, get_peft_model
 from perplexity import Perplexity
 from data_module import  custom_data_collator_forget, custom_gd_collator_forget
-from utils import  create_dual_dataset, create_single_dataset, update_json_dict
+from utils import create_dual_dataset, create_single_dataset, update_json_dict, find_all_linear_names
 from forget_trainer import GATrainer, GradDiffTrainer
 from template import LLAMA3_CHAT_TEMPLATE
 from eval_utils import compute_model_utility, compute_forget_efficacy
@@ -21,12 +21,13 @@ forget_path = cfg.forget_path
 retain_path = cfg.retain_path
 
 
+device = 'cuda'
 print(f"\nLoading the Tokenizer {cfg.model_id}")
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id, token = cfg.access_token)
 
 print(f"\nLoading the Model {cfg.model_id}")
 model = AutoModelForCausalLM.from_pretrained(cfg.model_id, 
-                                             device_map = 'auto',
+                                             device_map = device,
                                              torch_dtype = torch.bfloat16, 
                                              token=cfg.access_token,)
 
@@ -35,7 +36,7 @@ config = LoraConfig(
         r = cfg.LoRA_r,
         lora_alpha = cfg.LoRA_alpha,
         lora_dropout= cfg.LoRA_dropout,
-        target_modules = cfg.LoRa_targets,
+        target_modules = find_all_linear_names(model),
         bias = 'none',
         task_type = 'CAUSAL_LM',
     )
@@ -110,11 +111,13 @@ if cfg.loss_type == 'grad_ascent' :
 model.config.use_cache = False
 trainer.train()
 
-model.merge_and_unload()
+
 model.save_pretrained(cfg.save_dir)
-tokenizer.save_pretrained(cfg.save_dir)
+#tokenizer.save_pretrained(cfg.save_dir)
 print(f'Forget LoRA adapter saved at {cfg.save_dir}')
 
+
+model.merge_and_unload()
 batch_size = cfg.batch_size
 max_length = 266
 
@@ -130,7 +133,8 @@ qa_perplexity_forget, average_loss_forget, num_batches_forget = Perplexity(
     max_length =max_length,
     df =forget_path,
     case='qa',
-    chat_tokens=4)
+    chat_tokens=16,
+    device = device)
 
 print(qa_perplexity_forget)
 
@@ -147,16 +151,17 @@ qa_perplexity_retain, average_loss_retain, num_batches_retain = Perplexity(
     max_length =max_length,
     df = retain_path,
     case='qa',
-    chat_tokens=4)
+    chat_tokens=16,
+    device = device)
 
 print(qa_perplexity_retain)
 
 
 print('calculating forget efficacy')
 
-device = 'cuda'
 
-_,forget_efficacy = compute_forget_efficacy(
+
+forget_df, all_forget_scores,forget_efficacy = compute_forget_efficacy(
     forget_path = forget_path,
     model = model,
     tokenizer = tokenizer,
@@ -165,7 +170,7 @@ _,forget_efficacy = compute_forget_efficacy(
     template = LLAMA3_CHAT_TEMPLATE
 )
 
-_,model_utility = compute_model_utility(
+retain_df, all_retain_scores, model_utility = compute_model_utility(
     retain_path = retain_path,
     model = model,
     tokenizer = tokenizer,
@@ -173,11 +178,15 @@ _,model_utility = compute_model_utility(
     device = device,
     template = LLAMA3_CHAT_TEMPLATE
 )
+forget_df.to_csv('standard_forget_results.csv')
+retain_df.to_csv('standard_retain_results.csv')
 
 results = {cfg.loss_type: 
            {'forget_efficacy': forget_efficacy.item(),
            'model_utility': model_utility.item(),
-            'qa_perplexity_forget': qa_perplexity_forget.item(),
+           'forget_scores' : all_forget_scores.tolist(),
+           'retain_scores': all_retain_scores.tolist(),
+           'qa_perplexity_forget': qa_perplexity_forget.item(),
            'average_loss_forget': average_loss_forget,
            'perp_num_batches_forget': num_batches_forget,
            'qa_perplexity_retain': qa_perplexity_retain.item(),

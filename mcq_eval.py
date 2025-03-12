@@ -4,7 +4,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '2,3'
 
 from transformers import pipeline
 import torch
-from config_eval import Config_eval
+from config import Config_eval
 import pandas as pd
 from utils import update_json_dict, process_quiz_questions
 

@@ -275,8 +275,13 @@ def eval_cosine_similarity(gen_outputs, ground_truths, model_name, device):
 def get_probs(outputs, labels):
     loss = get_batch_loss(outputs.logits, labels) # we use batch loss, which return sum loss of the sequence
     ## since get batch_loss give sum loss for each sequence in a batch
-    cond_probs = torch.exp(-loss)
-    return cond_probs
+    T = (labels[0] != -100).sum().float()  # convert count to float
+    loss_avg = loss / T  # average loss per answer token
+    
+    # Compute conditional probability p(y|x) = exp(-T * loss_avg)
+    p_y_given_x = torch.exp(-T * loss_avg)
+    
+    return p_y_given_x, T.item(), loss_avg.item()
 
 
 def calculate_cond_prob(prompt, answer, tokenizer, model, device):
@@ -289,9 +294,9 @@ def calculate_cond_prob(prompt, answer, tokenizer, model, device):
     labels[0, :prompt_len] = -100
     with torch.no_grad():
         outputs = model(full_input_ids)
-    cond_probs = get_probs(outputs, labels)
-    probs = cond_probs.to('cpu').float().numpy()
-    return probs.item()
+    p_y_given_x, T, loss_avg = get_probs(outputs, labels)
+    
+    return p_y_given_x
 
 
 
@@ -321,6 +326,7 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
             - forget_efficacy (float): The computed forget efficacy score.
     """
     # Initialize the 'gen_answer' column and lists for evaluation metrics
+    
     forget = pd.read_csv(forget_path)
     forget['gen_answer'] = ''
     probas = []
@@ -346,7 +352,7 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
 
         # Update DataFrame and store metric scores
         forget.loc[i, 'gen_answer'] = gen_answer
-        probas.append(prob)
+        probas.append(prob.item())
         rouge1s.append(rouge1)
         rougels.append(rougel)
         cos_sim.append(cosine_sim)
@@ -356,8 +362,7 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
     
     forget_efficacy = 1.0 - np.mean(all_scores)
     print('forget_efficacy scores:',forget_efficacy)
-    return forget, forget_efficacy
-
+    return forget, all_scores, forget_efficacy
 
 
 def compute_model_utility(retain_path, model, tokenizer, retriever_model, device, template):
@@ -377,6 +382,7 @@ def compute_model_utility(retain_path, model, tokenizer, retriever_model, device
             - forget (pd.DataFrame): The updated DataFrame with a new 'gen_answer' column.
             - forget_efficacy (float): The computed forget efficacy score.
     """
+    
     retain = pd.read_csv(retain_path)
     # Initialize the 'gen_answer' column and lists for evaluation metrics
     retain['gen_answer'] = ''
@@ -403,7 +409,7 @@ def compute_model_utility(retain_path, model, tokenizer, retriever_model, device
 
         # Update DataFrame and store metric scores
         retain.loc[i, 'gen_answer'] = gen_answer
-        probas.append(prob)
+        probas.append(prob.item())
         rouge1s.append(rouge1)
         rougels.append(rougel)
         cos_sim.append(cosine_sim)
@@ -411,9 +417,10 @@ def compute_model_utility(retain_path, model, tokenizer, retriever_model, device
     # Calculate the average scores for each metric and overall efficacy
     all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
     
-    model_utility = hmean(all_scores)
+    #model_utility = hmean(all_scores)
+    model_utility = np.mean(all_scores)
     print('Model Utility scores:',model_utility)
     
-    return retain, model_utility
+    return retain, all_scores, model_utility
 
 

@@ -102,7 +102,8 @@ def calculate_perplexity(
         batches: Generator[Tuple[Tensor, Tensor, Tensor], None, None],
         model: PreTrainedModel, 
         case: str, 
-        chat_tokens: int) -> float:
+        chat_tokens: int,
+        device=None) -> float:
     
     """
     Calculates Perplexity for a given dataset (batches) and model.
@@ -130,6 +131,13 @@ def calculate_perplexity(
         else:
             labels_batch = labels_batch
         
+        if device:
+            input_ids_batch = input_ids_batch.to(device)
+            labels_batch = labels_batch.to(device)
+            attention_mask_batch = attention_mask_batch.to(device)
+            model.to(device)
+
+
         with torch.no_grad():
             outputs = model(
                 input_ids = input_ids_batch, 
@@ -159,7 +167,8 @@ def Perplexity(
         template: str, 
         batch_size: int, # 14 for llama 3 chat template
         chat_tokens: int, 
-        case: str) -> float:
+        case: str,
+        device: str) -> float:
     
     """
     Wrapper function to compute perplexity for a given model from a DtaFrame.
@@ -181,7 +190,7 @@ def Perplexity(
     input_ids, labels, attention_mask = prepare_inputs_from_dataframe(
         df, max_length, template, tokenizer)
     batches = create_batches(input_ids, labels, attention_mask, batch_size)
-    return calculate_perplexity(batches, model, case, chat_tokens)
+    return calculate_perplexity(batches, model, case, chat_tokens, device)
 
 
 def predict(model, tokenizer, question):
