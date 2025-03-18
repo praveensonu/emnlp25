@@ -348,7 +348,7 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
         # Evaluate generated answer using ROUGE and cosine similarity metrics
         rouge1, rougel = eval_rouge_recall(gen_answer, answer)
         cosine_sim = eval_cosine_similarity(gen_answer, answer, retriever_model, device)
-        prob = calculate_cond_prob(prompt, gen_answer, tokenizer, model, device)
+        prob = calculate_cond_prob(prompt, answer, tokenizer, model, device) #or gen_answer?
 
         # Update DataFrame and store metric scores
         forget.loc[i, 'gen_answer'] = gen_answer
@@ -405,7 +405,7 @@ def compute_model_utility(retain_path, model, tokenizer, retriever_model, device
         # Evaluate generated answer using ROUGE and cosine similarity metrics
         rouge1, rougel = eval_rouge_recall(gen_answer, answer)
         cosine_sim = eval_cosine_similarity(gen_answer, answer, retriever_model, device)
-        prob = calculate_cond_prob(prompt, gen_answer, tokenizer, model, device)
+        prob = calculate_cond_prob(prompt, answer, tokenizer, model, device)  #or gen_answer?
 
         # Update DataFrame and store metric scores
         retain.loc[i, 'gen_answer'] = gen_answer
