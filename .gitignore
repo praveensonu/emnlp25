@@ -2,3 +2,6 @@ __pycache__
 outputs
 tokens.txt
 config.py
+.fuse_hidden*
+
+

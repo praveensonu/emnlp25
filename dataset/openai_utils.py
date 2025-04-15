@@ -12,6 +12,7 @@ encoding = tiktoken.encoding_for_model("gpt-4o-mini")
 
 client = OpenAI(api_key= "") 
 
+# for batch data results
 def process_response_to_dataframe(response_text):
     responses = response_text.strip().split("\n")
     data = []

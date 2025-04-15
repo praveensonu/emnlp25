@@ -1,0 +1,325 @@
+
+==================================== semantic similarity with gte ===================================================
+Title: Adrienne Monnier
+  Sylvia Beach: 0.71
+  Djuna Barnes: 0.57
+  Gertrude Stein: 0.52
+  T.S. Eliot: 0.52
+  Jane Heap: 0.51
+  Anna_de_Noailles: 0.49
+
+Title: Alfred Vogel
+  Egon Friedell: 0.49
+  Ernst Weiss: 0.47
+  Klaus Mann: 0.44
+  Bertolt Brecht: 0.41
+  Ernst Toller: 0.39
+  Heinrich Mann: 0.37
+
+Title: Amy Clampitt
+  Maxine Kumin: 0.59
+  Elizabeth Bishop: 0.56
+  Marilyn Hacker: 0.54
+  Adrienne Rich: 0.53
+  Anne Sexton: 0.53
+  Sharon Olds: 0.53
+
+Title: Ann Brashares
+  Judy Blume: 0.58
+  Emily Giffin: 0.55
+  Meg Cabot: 0.54
+  Megan McCafferty: 0.53
+  Sara Shepard: 0.53
+  Jennifer Weiner: 0.51
+
+Title: Benedetto Varchi
+  Francesco Petrarca: 0.65
+  Giovanni Boccaccio: 0.63
+  Dante Alighieri: 0.61
+  Lorenzo de Medici: 0.60
+  Leonardo Bruni: 0.57
+  Leon Battista Alberti: 0.53
+
+Title: Elsa Triolet
+  Colette: 0.60
+  Nathalie Sarraute: 0.56
+  Simone de Beauvoir: 0.55
+  Marguerite Duras: 0.54
+  Francoise Sagan: 0.52
+  Anais Nin: 0.51
+
+Title: Giovanni Battista Casti
+  Pietro Metastasio: 0.67
+  Giovanni Paisiello: 0.63
+  Christoph Willibald Gluck: 0.60
+  Alessandro Scarlatti: 0.59
+  Carlo Goldoni: 0.59
+  Antonio Vivaldi: 0.57
+
+Title: Hartmann von Aue
+  Wolfram von Eschenbach: 0.69
+  Gottfried von Strassburg: 0.67
+  Walter von der Vogelweide: 0.64
+  Reinmar der Alte: 0.62
+  Reinmar von Hagenau: 0.62
+  Ulrich von Hutten: 0.56
+
+Title: Heinrich Ritter
+  Friedrich Schelling: 0.67
+  Johann Gottlieb Fichte: 0.65
+  Immanuel Kant: 0.61
+  Friedrich Nietzsche: 0.60
+  Wilhelm von Humboldt: 0.58
+  Arthur Schopenhauer: 0.57
+
+Title: Heinz Erhardt
+  Heinz_Rühmann: 0.66
+  Dieter Hildebrandt: 0.63
+  Werner Finck: 0.61
+  Harald Schmidt: 0.57
+  Loriot: 0.56
+  Otto Waalkes: 0.52
+
+Title: Jorge Semprún
+  Camilo Jose Cela: 0.55
+  Mario Vargas Llosa: 0.53
+  Miguel Delibes: 0.53
+  Rafael Alberti: 0.51
+  Carlos Fuentes: 0.50
+  Vicente Aleixandre: 0.47
+
+Title: Moshe Greenberg
+  Abraham Joshua Heschel: 0.64
+  Joseph B. Soloveitchik: 0.62
+  Franz Rosenzweig: 0.56
+  Gerhard von Rad: 0.56
+  Martin Buber: 0.56
+  Walter Brueggemann: 0.56
+
+Title: Najaf Daryabandari
+  Simin Daneshvar: 0.63
+  Sadegh Hedayat: 0.62
+  Bahram Beyzaie: 0.58
+  Sadeq Chubak: 0.56
+  Mohammad-Taqi Bahar: 0.55
+  Sohrab Sepehri: 0.55
+
+Title: Paul Gerhardt
+  Johann Heermann: 0.69
+  Nicolaus Herman: 0.65
+  Johann Franck: 0.64
+  Simon Dach: 0.64
+  Philipp Nicolai: 0.60
+  Georg Philipp Telemann: 0.58
+
+Title: Philip Stanhope, 5th Earl Stanhope
+  Thomas Babington Macaulay: 0.58
+  Francis Palgrave: 0.57
+  Henry Hallam: 0.56
+  William Stubbs: 0.55
+  James Anthony Froude: 0.51
+  Lord Acton: 0.50
+
+Title: Rudolf Christoph Eucken
+  Edmund Husserl: 0.64
+  Martin Heidegger: 0.64
+  Friedrich Nietzsche: 0.62
+  Arthur Schopenhauer: 0.59
+  Ernst Troeltsch: 0.58
+  Karl Jaspers: 0.58
+
+Title: Siegfried Lenz
+  Hans Magnus Enzensberger: 0.63
+  Gunter Grass: 0.61
+  Martin Walser: 0.61
+  Wolfgang Koeppen: 0.60
+  Heinrich Boll: 0.58
+  Peter Handke: 0.55
+
+Title: Ted Kooser
+  Kay Ryan: 0.55
+  Philip_Levine_(poet): 0.55
+  Billy Collins: 0.54
+  Joy Harjo: 0.54
+  Rita Dove: 0.54
+  Mark Doty: 0.52
+
+Title: Theopompus
+  Herodotus: 0.71
+  Xenophon: 0.69
+  Thucydides: 0.68
+  Diodorus Siculus: 0.66
+  Polybius: 0.66
+  Ctesias: 0.62
+
+Title: Wilhelm Wattenbach
+  Ernst Dümmler: 0.71
+  Georg Waitz: 0.65
+  Heinrich von Sybel: 0.62
+  Leopold von Ranke: 0.59
+  Theodor Mommsen: 0.56
+  Friedrich Meinecke: 0.50
+
+
+
+================================== token level similarity ==========================================================
+
+Title: Adrienne Monnier
+  Anna_de_Noailles: 0.80
+  Jane Heap: 0.77
+  Gertrude Stein: 0.75
+  T.S. Eliot: 0.75
+  Djuna Barnes: 0.73
+  Sylvia Beach: 0.71
+
+Title: Alfred Vogel
+  Ernst Toller: 0.80
+  Heinrich Mann: 0.80
+  Egon Friedell: 0.79
+  Ernst Weiss: 0.79
+  Bertolt Brecht: 0.78
+  Klaus Mann: 0.78
+
+Title: Amy Clampitt
+  Anne Sexton: 0.79
+  Sharon Olds: 0.79
+  Adrienne Rich: 0.78
+  Elizabeth Bishop: 0.77
+  Marilyn Hacker: 0.77
+  Maxine Kumin: 0.76
+
+Title: Ann Brashares
+  Emily Giffin: 0.79
+  Sara Shepard: 0.79
+  Jennifer Weiner: 0.78
+  Judy Blume: 0.77
+  Meg Cabot: 0.76
+  Megan McCafferty: 0.76
+
+Title: Benedetto Varchi
+  Francesco Petrarca: 0.75
+  Leonardo Bruni: 0.74
+  Leon Battista Alberti: 0.73
+  Lorenzo de Medici: 0.73
+  Dante Alighieri: 0.72
+  Giovanni Boccaccio: 0.72
+
+Title: Elsa Triolet
+  Anais Nin: 0.80
+  Francoise Sagan: 0.80
+  Nathalie Sarraute: 0.80
+  Marguerite Duras: 0.79
+  Simone de Beauvoir: 0.79
+  Colette: 0.78
+
+Title: Giovanni Battista Casti
+  Antonio Vivaldi: 0.77
+  Christoph Willibald Gluck: 0.77
+  Alessandro Scarlatti: 0.76
+  Pietro Metastasio: 0.76
+  Carlo Goldoni: 0.75
+  Giovanni Paisiello: 0.75
+
+Title: Hartmann von Aue
+  Ulrich von Hutten: 0.76
+  Reinmar der Alte: 0.75
+  Reinmar von Hagenau: 0.75
+  Walter von der Vogelweide: 0.74
+  Wolfram von Eschenbach: 0.74
+  Gottfried von Strassburg: 0.73
+
+Title: Heinrich Ritter
+  Arthur Schopenhauer: 0.82
+  Friedrich Nietzsche: 0.81
+  Immanuel Kant: 0.81
+  Wilhelm von Humboldt: 0.80
+  Johann Gottlieb Fichte: 0.79
+  Friedrich Schelling: 0.78
+
+Title: Heinz Erhardt
+  Harald Schmidt: 0.78
+  Dieter Hildebrandt: 0.76
+  Loriot: 0.76
+  Werner Finck: 0.75
+  Otto Waalkes: 0.74
+  Heinz_Rühmann: 0.73
+
+Title: Jorge Semprún
+  Vicente Aleixandre: 0.77
+  Carlos Fuentes: 0.76
+  Camilo Jose Cela: 0.74
+  Mario Vargas Llosa: 0.74
+  Rafael Alberti: 0.74
+  Miguel Delibes: 0.73
+
+Title: Moshe Greenberg
+  Franz Rosenzweig: 0.78
+  Walter Brueggemann: 0.77
+  Martin Buber: 0.76
+  Abraham Joshua Heschel: 0.75
+  Gerhard von Rad: 0.75
+  Joseph B. Soloveitchik: 0.75
+
+Title: Najaf Daryabandari
+  Sadegh Hedayat: 0.80
+  Simin Daneshvar: 0.80
+  Sohrab Sepehri: 0.80
+  Bahram Beyzaie: 0.79
+  Mohammad-Taqi Bahar: 0.79
+  Sadeq Chubak: 0.79
+
+Title: Paul Gerhardt
+  Nicolaus Herman: 0.79
+  Johann Franck: 0.77
+  Philipp Nicolai: 0.76
+  Simon Dach: 0.74
+  Johann Heermann: 0.71
+  Georg Philipp Telemann: 0.70
+
+Title: Philip Stanhope, 5th Earl Stanhope
+  Francis Palgrave: 0.74
+  James Anthony Froude: 0.74
+  Lord Acton: 0.73
+  Thomas Babington Macaulay: 0.73
+  Henry Hallam: 0.72
+  William Stubbs: 0.72
+
+Title: Rudolf Christoph Eucken
+  Karl Jaspers: 0.76
+  Arthur Schopenhauer: 0.75
+  Ernst Troeltsch: 0.75
+  Martin Heidegger: 0.75
+  Edmund Husserl: 0.74
+  Friedrich Nietzsche: 0.74
+
+Title: Siegfried Lenz
+  Peter Handke: 0.76
+  Hans Magnus Enzensberger: 0.75
+  Wolfgang Koeppen: 0.74
+  Martin Walser: 0.73
+  Gunter Grass: 0.72
+  Heinrich Boll: 0.72
+
+Title: Ted Kooser
+  Joy Harjo: 0.74
+  Kay Ryan: 0.74
+  Mark Doty: 0.73
+  Philip_Levine_(poet): 0.73
+  Rita Dove: 0.73
+  Billy Collins: 0.72
+
+Title: Theopompus
+  Diodorus Siculus: 0.74
+  Ctesias: 0.73
+  Xenophon: 0.72
+  Herodotus: 0.71
+  Polybius: 0.71
+  Thucydides: 0.71
+
+Title: Wilhelm Wattenbach
+  Friedrich Meinecke: 0.81
+  Leopold von Ranke: 0.80
+  Theodor Mommsen: 0.79
+  Georg Waitz: 0.76
+  Heinrich von Sybel: 0.76
+  Ernst Dümmler: 0.74

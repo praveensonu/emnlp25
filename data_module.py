@@ -5,55 +5,125 @@ from transformers import PreTrainedTokenizer
 from typing import Tuple
 
 
+
 def convert_raw_data_to_model_qa(tokenizer: PreTrainedTokenizer, 
-                                 max_length : int, 
-                                 question : str, 
-                                 answer : str, 
-                                 template_format = None) -> torch.Tensor:
+                                    max_length: int, 
+                                    question: str, 
+                                    answer: str,
+                                    template_format=None) -> torch.Tensor:
     """
-    prepares input and labeled for the model based on the specified format
-
+    Tokenizes question answer pair and returns input_ids, labels, and attention_mask into SFT format.
+    
     Args:
-        tokenizer: tokenizer
-        max_length: max length
-        question: question
-        answer: answer
-        template: template for the model
-
+        tokenizer (PreTrainedTokenizer): Tokenizer to tokenize the input.
+        max_length (int): Maximum sequence length. This includes max_new_tokens + token length of question.
+        question (str): Question to be tokenized.
+        answer (str): Answer to be tokenized.
+        template_format (str, optional): Custom template format. If None, will use the tokenizer's chat template.
+    
     Returns:
-        input_ids: input ids in tuple
-        labels: labels in tuple
-        attention_mask: attention mask in tuple
+        torch.Tensor: Each input_ids, labels, and attention_mask in their own tensor.
     """
+    # Format the question using either custom template or chat template
     if template_format:
         new_question = template_format.format(instruction=question)
     else:
-        new_question = f"Question: {question}\nAnswer:"
+        # Use the tokenizer's built-in chat template
+        messages = [{"role": "user", "content": question}]
+        new_question = tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True
+        )
     
     full_text = new_question + answer
-    num_question_tokens = len(tokenizer.tokenize(new_question, add_special_tokens=True))
-
+    
+    # Get the number of tokens in the question part
+    prompt_inputs = tokenizer(new_question, return_tensors="pt")
+    num_question_tokens = prompt_inputs["input_ids"].size(1)
+    
+    # Tokenize the full text
     encoded = tokenizer(
         full_text,
         add_special_tokens=True,
         max_length=max_length,
         truncation=True,
     )
-
-    pad_length = max_length - len(encoded['input_ids'])
-    pad_input_ids = encoded['input_ids'] + [128009] + [128004] * (pad_length -1) # llama 3.1 docs mentions <|finetune_right_pad_id|> (token_id =128004)
-    pad_attention_mask = encoded['attention_mask'] + [0] * pad_length
-
+    
+    # Padding logic
+    pad_length = max_length - len(encoded["input_ids"])
+    
+    # Use the tokenizer's pad token instead of hardcoded values if available
+    pad_token_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
+    
+    # Create padded input_ids
+    pad_input_ids = encoded['input_ids'] + [tokenizer.eos_token_id] + [pad_token_id] * (pad_length - 1) if pad_length > 0 else encoded['input_ids']
+    
+    # Create padded attention mask
+    pad_attention_mask = encoded['attention_mask'] + [0] * pad_length if pad_length > 0 else encoded['attention_mask']
+    
+    # Create labels, masking the prompt tokens
     if len(encoded['input_ids']) == max_length:
-        label = encoded.input_ids
+        label = encoded['input_ids'].copy()
     else:
         label = encoded['input_ids'] + [tokenizer.eos_token_id] + [-100] * (pad_length - 1)
-
-    # Mask out the question tokens in the labels
+    
+    # Mask prompt tokens in labels
     for i in range(num_question_tokens):
         label[i] = -100
-
+    
     return torch.tensor(pad_input_ids), torch.tensor(label), torch.tensor(pad_attention_mask)
+
+
+# def convert_raw_data_to_model_qa(tokenizer: PreTrainedTokenizer, 
+#                                  max_length : int, 
+#                                  question : str, 
+#                                  answer : str, 
+#                                  template_format = None) -> torch.Tensor:
+#     """
+#     prepares input and labeled for the model based on the specified format
+
+#     Args:
+#         tokenizer: tokenizer
+#         max_length: max length
+#         question: question
+#         answer: answer
+#         template: template for the model
+
+#     Returns:
+#         input_ids: input ids in tuple
+#         labels: labels in tuple
+#         attention_mask: attention mask in tuple
+#     """
+#     if template_format:
+#         new_question = template_format.format(instruction=question)
+#     else:
+#         new_question = f"Question: {question}\nAnswer:"
+    
+#     full_text = new_question + answer
+#     num_question_tokens = len(tokenizer.tokenize(new_question, add_special_tokens=True))
+
+#     encoded = tokenizer(
+#         full_text,
+#         add_special_tokens=True,
+#         max_length=max_length,
+#         truncation=True,
+#     )
+
+#     pad_length = max_length - len(encoded['input_ids'])
+#     pad_input_ids = encoded['input_ids'] + [128009] + [128004] * (pad_length -1) # llama 3.1 docs mentions <|finetune_right_pad_id|> (token_id =128004)
+#     pad_attention_mask = encoded['attention_mask'] + [0] * pad_length
+
+#     if len(encoded['input_ids']) == max_length:
+#         label = encoded.input_ids
+#     else:
+#         label = encoded['input_ids'] + [tokenizer.eos_token_id] + [-100] * (pad_length - 1)
+
+#     # Mask out the question tokens in the labels
+#     for i in range(num_question_tokens):
+#         label[i] = -100
+
+#     return torch.tensor(pad_input_ids), torch.tensor(label), torch.tensor(pad_attention_mask)
 
 
 

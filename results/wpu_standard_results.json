@@ -1,22 +1,22 @@
 {
     "grad_diff": {
-        "forget_efficacy": 0.8991434321276286,
-        "model_utility": 0.26824510506837856,
+        "forget_efficacy": 0.9828004749270735,
+        "model_utility": 0.045908823625352826,
         "forget_scores": [
             0.0,
-            0.0,
-            0.3025697036171142
+            0.0005370569280343716,
+            0.05106151829074536
         ],
         "retain_scores": [
-            3.800240518062102e-05,
-            0.3131466257902612,
-            0.49155068700969384
+            0.01668915327519319,
+            0.2936126805317599,
+            0.49458176522403136
         ],
         "qa_perplexity_forget": 1e+308,
-        "average_loss_forget": 191.11209228515625,
+        "average_loss_forget": 129.78638916015626,
         "perp_num_batches_forget": 25,
-        "qa_perplexity_retain": 4.846750259399414,
-        "average_loss_retain": 1.5783084899514586,
+        "qa_perplexity_retain": 5.807530403137207,
+        "average_loss_retain": 1.759155354984514,
         "perp_num_batches_retain": 91,
         "exp_type": "standard",
         "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
@@ -26,5 +26,34 @@
         "weight_decay": 0.01,
         "LoRA_r": 8,
         "LoRA_alpha": 32
+    },
+    "grad_ascent": {
+        "forget_efficacy": 0.9694999335739178,
+        "model_utility": 0.0,
+        "forget_scores": [
+            0.0,
+            0.0005102040816326531,
+            0.09098999519661373
+        ],
+        "retain_scores": [
+            0.0,
+            0.00014492753623188405,
+            0.06168554049741099
+        ],
+        "qa_perplexity_forget": 1e+308,
+        "average_loss_forget": 130.21407958984375,
+        "perp_num_batches_forget": 25,
+        "qa_perplexity_retain": 1e+308,
+        "average_loss_retain": 117.21785218688264,
+        "perp_num_batches_retain": 87,
+        "exp_type": "retain_mean",
+        "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        "batch_size": 4,
+        "num_epochs": 10,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 32
     }
+
 }

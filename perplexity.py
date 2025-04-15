@@ -1,203 +1,233 @@
 import torch
-from torch import Tensor
-from typing import Generator, Tuple, Union
 import pandas as pd
 from transformers import PreTrainedTokenizer, PreTrainedModel
-#from template import get_llama3_chat_template
+from torch import Tensor
+from typing import Tuple, Generator, List, Dict
+from tqdm.auto import tqdm # Optional: for progress bar
 
-def prepare_inputs_from_dataframe(
-        df: pd.DataFrame, 
-        max_length: int, 
-        template: str, 
-        tokenizer: PreTrainedTokenizer) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-    
+# --- Revised Data Preparation ---
+# (Combines formatting and tokenization more efficiently)
+
+def prepare_inputs_for_perplexity(
+    questions: List[str],
+    answers: List[str],
+    tokenizer: PreTrainedTokenizer,
+    max_length: int,
+    device: str = 'cpu' # Allow specifying device here
+) -> Tuple[Tensor, Tensor, Tensor]:
     """
-    Prepare input tensors (input_ids, attention_mask, labels) for model training or evaluation.
+    Prepares input_ids, attention_mask, and labels for QA perplexity calculation.
+    Labels are masked for the question part. Uses tokenizer's batch encoding and padding.
 
     Args:
-        df (pd.DataFrame): DataFrame containing the columns 'question' and 'answer'.
-        max_length (int): Maximum sequence length. This includes max_new_tokens + token length of question.
-        template (str): Template string for the input. The template should contain a placeholder {instruction} for the question.
+        questions (List[str]): List of questions.
+        answers (List[str]): List of corresponding answers.
         tokenizer (PreTrainedTokenizer): Tokenizer for the model.
-    
+        max_length (int): Maximum sequence length for truncation and padding.
+        device (str): Device to place tensors on ('cpu' or 'cuda').
+
     Returns:
-        Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: Tuple containing input_ids, labels, and attention_mask.
-    
+        Tuple[Tensor, Tensor, Tensor]: input_ids, attention_mask, labels tensors.
     """
+    if not questions or not answers or len(questions) != len(answers):
+        raise ValueError("Questions and answers lists must be non-empty and have the same length.")
 
-    inputs, labels, attention_masks = [], [], []
+    # 1. Format prompts using chat template (batch processing friendly)
+    prompts_formatted = []
+    for q in questions:
+        messages = [{"role": "user", "content": q}]
+        # Keep add_generation_prompt=True if your model expects it (like Llama, Mistral instruct)
+        # Set to False if the model expects only raw user query + eos
+        formatted = tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True
+        )
+        prompts_formatted.append(formatted)
 
+    # 2. Tokenize prompts *only* to get their lengths accurately AFTER chat templating
+    #    Use temporary tokenization without padding/truncation here.
+    prompt_tokenized = tokenizer(prompts_formatted, add_special_tokens=False) # Avoid double special tokens
+    prompt_lengths = [len(ids) for ids in prompt_tokenized['input_ids']]
 
-    for _,row in df.iterrows():
-        question, answer = row['question'], row['answer']
-        formatted_input = template.format(instruction=question) 
-        full_text = formatted_input + answer
+    # 3. Create full texts (prompt + answer)
+    full_texts = [p + a + tokenizer.eos_token_id for p, a in zip(prompts_formatted, answers)]
+    # Note: Added eos_token_id to the end of the answer. Loss will be computed on it too.
 
-        # get the number of tokens in the question part. We use this later to create the labels.
-        num_question_len = len(tokenizer.encode(formatted_input, add_special_tokens=True))
+    # 4. Tokenize full texts with padding and truncation
+    inputs = tokenizer(
+        full_texts,
+        max_length=max_length,
+        truncation=True,
+        padding="max_length", # Let tokenizer handle padding
+        return_tensors="pt",
+        add_special_tokens=True # Add BOS if tokenizer configured to do so
+    )
 
-        # tokenization
-        encoded = tokenizer(
-            full_text, 
-            max_length=max_length, 
-            truncation=True, 
-            add_special_tokens=True)
+    # 5. Create labels: start with input_ids, then mask
+    labels = inputs.input_ids.clone()
 
-        # taking pad length to pad the input_ids and attention_mask
-        pad_length = max_length - len(encoded['input_ids'])
+    # Mask padding tokens
+    labels[labels == tokenizer.pad_token_id] = -100
 
-        # pad input ids and attention mask
-        pad_input_ids = encoded['input_ids'] + [128009] + [128004] * (pad_length -1)
-        pad_attention_mask = encoded['attention_mask'] + [0]*pad_length
+    # Mask the prompt tokens (including special tokens added by chat template)
+    # Need to account for potential BOS token added by the main tokenizer call
+    bos_len = 1 if tokenizer.bos_token_id and inputs.input_ids[0, 0] == tokenizer.bos_token_id else 0
 
-        # get labels
-        if len(encoded['input_ids']) == max_length:
-            current_labels = encoded['input_ids']
-        else:
-            current_labels = encoded['input_ids'] + [tokenizer.eos_token_id] + [-100] * (pad_length - 1)
+    for i in range(len(labels)):
+        # Calculate actual prompt length in the final tokenized sequence
+        # This is tricky because the main tokenization might add BOS differently than the prompt-only one
+        # A safer way: tokenize prompt and answer *separately* then combine.
+        # Let's stick to the original idea but be careful:
+        # The prompt length in the *final* sequence includes BOS + template tokens
+        # We measured prompt_lengths *without* BOS/EOS from apply_chat_template.
 
-        # mask the questions based on num_question_len
-        for i in range(num_question_len):
-            current_labels[i] = -100
+        # Re-tokenize the formatted prompt WITH special tokens to get accurate length
+        # This is slightly less efficient but more robust to tokenizer behavior
+        prompt_with_special_tokens = tokenizer(prompts_formatted[i], add_special_tokens=True)
+        actual_prompt_len_in_final = len(prompt_with_special_tokens['input_ids'])
         
-        # append the tensors
-        inputs.append(torch.tensor(pad_input_ids))
-        attention_masks.append(torch.tensor(pad_attention_mask))
-        labels.append(torch.tensor(current_labels))
+        # If the prompt was truncated during full text tokenization, adjust
+        mask_len = min(actual_prompt_len_in_final, max_length)
+
+        labels[i, :mask_len] = -100
+
+        # Sanity check: Ensure we don't mask everything if prompt+answer < max_length
+        # and prompt itself >= max_length
+        if (labels[i] == -100).all():
+             print(f"Warning: All labels masked for index {i}. Prompt length might exceed max_length or tokenizer settings mismatch.")
+             # Optionally, unmask the last valid token if needed, depends on desired behavior
+             # if mask_len > 0: labels[i, mask_len - 1] = inputs.input_ids[i, mask_len-1]
+
 
     return (
-        torch.stack(inputs), 
-        torch.stack(labels), 
-        torch.stack(attention_masks),)
+        inputs.input_ids.to(device),
+        inputs.attention_mask.to(device),
+        labels.to(device)
+    )
 
 
-def create_batches(
-        input_ids: Tensor, 
-        labels: Tensor, 
-        attention_mask: Tensor, 
-        batch_size: int) -> Generator[Tuple[Tensor, Tensor, Tensor], None, None]:
-    
+# --- Revised Perplexity Calculation ---
+# (More accurate loss averaging)
+
+def calculate_perplexity_qa(
+    model: PreTrainedModel,
+    input_ids: Tensor,
+    attention_mask: Tensor,
+    labels: Tensor,
+    batch_size: int,
+    device: str
+) -> Tuple[float, float]:
     """
-    Splits the data into batches.
+    Calculates QA Perplexity using pre-processed inputs.
 
     Args:
-        input_ids (Tensor): Input ids tensor.
-        labels (Tensor): Labels tensor.
-        attention_mask (Tensor): Attention mask tensor.
-        batch_size (int): Batch size.
-    
+        model (PreTrainedModel): The model to evaluate.
+        input_ids (Tensor): Input IDs.
+        attention_mask (Tensor): Attention mask.
+        labels (Tensor): Labels tensor (with prompt masked).
+        batch_size (int): Batch size for evaluation.
+        device (str): Device model is on.
+
     Returns:
-        Generator[Tuple[Tensor, Tensor, Tensor], None, None]: Generator of batches.
-    
+        Tuple[float, float]: Perplexity score, Average loss per token.
     """
-    for i in range(0, len(input_ids), batch_size):
-        yield(
-            input_ids[i:i+batch_size],
-            labels[i:i+batch_size],
-            attention_mask[i:i+batch_size]
-        )
-
-
-def calculate_perplexity(
-        batches: Generator[Tuple[Tensor, Tensor, Tensor], None, None],
-        model: PreTrainedModel, 
-        case: str, 
-        chat_tokens: int,
-        device=None) -> float:
-    
-    """
-    Calculates Perplexity for a given dataset (batches) and model.
-
-    Args:
-        batches (Generator[Tuple[Tensor, Tensor, Tensor], None, None]): Generator of batches.
-        model (PreTrainedModel): Model to calculate perplexity.
-        case (str): Case to calculate perplexity for.
-        chat_tokens (int): Number of bos and eos tokens in the chat_template to ignore to calculate perplexity.
-    
-    Returns:
-        float: Overall Perplexity.
-    """
-
+    model.eval()
+    model.to(device)
 
     total_loss = 0.0
-    num_batches = 0
-    print(f'calculating perplexity for {case}! Please change this if this is not the case')
-    for input_ids_batch, labels_batch, attention_mask_batch in batches:
-        if case == "next_token":
+    total_tokens = 0 # Count of actual tokens loss is computed on
 
-            # create labels for next token prediction (start from the chat_tokens+1 token)
-            labels_batch = input_ids_batch.clone()
-            labels_batch[:,:chat_tokens] = -100 # ignoring the chat_tokens 
-        else:
-            labels_batch = labels_batch
-        
-        if device:
-            input_ids_batch = input_ids_batch.to(device)
-            labels_batch = labels_batch.to(device)
-            attention_mask_batch = attention_mask_batch.to(device)
-            model.to(device)
+    dataset = torch.utils.data.TensorDataset(input_ids, attention_mask, labels)
+    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size)
 
+    with torch.no_grad():
+        for batch in tqdm(dataloader, desc="Calculating Perplexity"): # Add progress bar
+            b_input_ids, b_attention_mask, b_labels = [t.to(device) for t in batch]
 
-        with torch.no_grad():
             outputs = model(
-                input_ids = input_ids_batch, 
-                attention_mask = attention_mask_batch, 
-                labels = labels_batch)
-            total_loss += outputs.loss.item()
-        num_batches += 1
-    
-    # if there is a division by zero error
-    if num_batches == 0:
-        raise ValueError("No batches found, run the create_batches function again. Generators are one-time use only.")
+                input_ids=b_input_ids,
+                attention_mask=b_attention_mask,
+                labels=b_labels
+            )
 
-    
-    average_loss = total_loss / num_batches
-    print(f"Average loss for {num_batches} batches: {average_loss}")
+            loss = outputs.loss # This is usually the MEAN loss over tokens in the batch
+            num_active_tokens = (b_labels != -100).sum()
 
-    # calculate perplexity
-    overall_perplexity = torch.exp(torch.tensor(average_loss))
-    return overall_perplexity, average_loss, num_batches
+            # To get total loss, multiply mean loss by number of tokens it was averaged over
+            if num_active_tokens > 0:
+                total_loss += loss.item() * num_active_tokens
+                total_tokens += num_active_tokens.item()
+            # Handle case where a batch might have zero active tokens (e.g., only padding/masked)
+            elif loss.item() == 0.0: # Or check if num_active_tokens == 0
+                 pass # No contribution to loss or token count
+            # else: # Potentially handle unexpected loss values if needed
+            #     print(f"Warning: Loss is {loss.item()} but num_active_tokens is {num_active_tokens}")
 
 
-def Perplexity(
-        model: PreTrainedModel, 
-        df: str, 
-        tokenizer: PreTrainedTokenizer, 
-        max_length: int, 
-        template: str, 
-        batch_size: int, # 14 for llama 3 chat template
-        chat_tokens: int, 
-        case: str,
-        device: str) -> float:
-    
+    if total_tokens == 0:
+        print("Warning: No valid tokens found to calculate perplexity.")
+        return float('inf'), float('inf')
+
+    average_loss = total_loss / total_tokens
+    perplexity = torch.exp(torch.tensor(average_loss)).item() # Use .item() to get float
+
+    print(f"Total Loss: {total_loss:.4f}, Total Tokens: {total_tokens}")
+    print(f"Average Loss: {average_loss:.4f}, Perplexity: {perplexity:.4f}")
+
+    return perplexity, average_loss
+
+# --- Simplified Wrapper ---
+
+def Perplexity_QA_from_df(
+    model: PreTrainedModel,
+    df_path: str, # Take path instead of df
+    tokenizer: PreTrainedTokenizer,
+    max_length: int,
+    batch_size: int,
+    device: str
+) -> Tuple[float, float]:
     """
-    Wrapper function to compute perplexity for a given model from a DtaFrame.
+    Wrapper function to compute QA perplexity from a CSV file.
 
     Args:
-        model (PreTrainedModel): Model to calculate perplexity.
-        df (pd.DataFrame): DataFrame containing the columns 'question' and 'answer'.
-        tokenizer (PreTrainedTokenizer): Tokenizer to tokenize the input.
-        max_length (int): Maximum sequence length. This includes max_new_tokens + token length of question.
-        template (str): Template to format the input.
-        batch_size (int): Batch size.
-        chat_tokens (int): Number of bos and eos tokens in the chat_template to ignore to calculate perplexity.
-        case (str): Case to calculate perplexity for next_token or qa.
-    
+        model (PreTrainedModel): Model to evaluate.
+        df_path (str): Path to the CSV file with 'question' and 'answer' columns.
+        tokenizer (PreTrainedTokenizer): Tokenizer.
+        max_length (int): Maximum sequence length.
+        batch_size (int): Evaluation batch size.
+        device (str): Device ('cpu' or 'cuda').
+
     Returns:
-        float: Perplexity score.
+        Tuple[float, float]: Perplexity score, Average loss per token.
     """
-    df = pd.read_csv(df)
-    input_ids, labels, attention_mask = prepare_inputs_from_dataframe(
-        df, max_length, template, tokenizer)
-    batches = create_batches(input_ids, labels, attention_mask, batch_size)
-    return calculate_perplexity(batches, model, case, chat_tokens, device)
+    print(f"Loading data from: {df_path}")
+    df = pd.read_csv(df_path)
+    if 'question' not in df.columns or 'answer' not in df.columns:
+        raise ValueError("DataFrame must contain 'question' and 'answer' columns.")
+
+    # Ensure answers are strings (sometimes read as float/int)
+    df['question'] = df['question'].astype(str)
+    df['answer'] = df['answer'].astype(str)
 
 
-def predict(model, tokenizer, question):
-    inputs = tokenizer(question, return_tensors='pt')
-    outputs = model.generate(
-        input_ids = inputs['input_ids'],
-        attention_mask = inputs['attention_mask'],
-        max_new_tokens = 100,
+    print("Preparing inputs...")
+    input_ids, attention_mask, labels = prepare_inputs_for_perplexity(
+        df['question'].tolist(),
+        df['answer'].tolist(),
+        tokenizer,
+        max_length,
+        device # Pass device here if you want tensors created directly on GPU
     )
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    print(f"Calculating perplexity with batch size {batch_size}...")
+    perplexity, avg_loss = calculate_perplexity_qa(
+        model,
+        input_ids,
+        attention_mask,
+        labels,
+        batch_size,
+        device
+    )
+
+    return perplexity, avg_loss

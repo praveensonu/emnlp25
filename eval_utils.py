@@ -13,11 +13,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 def convert_raw_data_to_model_format(tokenizer: PreTrainedTokenizer, 
-                                     max_length: int, 
-                                     question : str, 
-                                     answer : str,
-                                     template_format = None) -> torch.Tensor:
-    
+                                    max_length: int, 
+                                    question: str, 
+                                    answer: str,
+                                    template_format=None) -> torch.Tensor:
     """
     Tokenizes question answer pair and returns input_ids, labels, and attention_mask into SFT format.
     
@@ -26,41 +25,110 @@ def convert_raw_data_to_model_format(tokenizer: PreTrainedTokenizer,
         max_length (int): Maximum sequence length. This includes max_new_tokens + token length of question.
         question (str): Question to be tokenized.
         answer (str): Answer to be tokenized.
-        question_start_token (str): Start token for question.
-        question_end_token (str): End token for question.
-        answer_token (str): Start token for answer.
+        template_format (str, optional): Custom template format. If None, will use the tokenizer's chat template.
     
     Returns:
         torch.Tensor: Each input_ids, labels, and attention_mask in their own tensor.
     """
+    # Format the question using either custom template or chat template
     if template_format:
         new_question = template_format.format(instruction=question)
     else:
-        new_question = f"Question: {question}\nAnswer:"
-
-     
+        # Use the tokenizer's built-in chat template
+        messages = [{"role": "user", "content": question}]
+        new_question = tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True
+        )
     
     full_text = new_question + answer
-
-    num_question_tokens = len(tokenizer.tokenize(new_question, add_special_tokens=True))
-
+    
+    # Get the number of tokens in the question part
+    prompt_inputs = tokenizer(new_question, return_tensors="pt")
+    num_question_tokens = prompt_inputs["input_ids"].size(1)
+    
+    # Tokenize the full text
     encoded = tokenizer(
         full_text,
         add_special_tokens=True,
         max_length=max_length,
         truncation=True,
     )
+    
+    # Padding logic
     pad_length = max_length - len(encoded["input_ids"])
-    pad_input_ids = encoded['input_ids'] + [128009] + [128004] * (pad_length -1)
-    pad_attention_mask = encoded['attention_mask'] + [0] * pad_length
+    
+    # Use the tokenizer's pad token instead of hardcoded values if available
+    pad_token_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else 0
+    
+    # Create padded input_ids
+    pad_input_ids = encoded['input_ids'] + [tokenizer.eos_token_id] + [pad_token_id] * (pad_length - 1) if pad_length > 0 else encoded['input_ids']
+    
+    # Create padded attention mask
+    pad_attention_mask = encoded['attention_mask'] + [0] * pad_length if pad_length > 0 else encoded['attention_mask']
+    
+    # Create labels, masking the prompt tokens
     if len(encoded['input_ids']) == max_length:
-        label = encoded.input_ids
+        label = encoded['input_ids'].copy()
     else:
         label = encoded['input_ids'] + [tokenizer.eos_token_id] + [-100] * (pad_length - 1)
     
-    for i in range(num_question_tokens): label[i] = -100
-
+    # Mask prompt tokens in labels
+    for i in range(num_question_tokens):
+        label[i] = -100
+    
     return torch.tensor(pad_input_ids), torch.tensor(label), torch.tensor(pad_attention_mask)
+
+# def convert_raw_data_to_model_format(tokenizer: PreTrainedTokenizer, 
+#                                      max_length: int, 
+#                                      question : str, 
+#                                      answer : str,
+#                                      template_format = None) -> torch.Tensor:
+    
+#     """
+#     Tokenizes question answer pair and returns input_ids, labels, and attention_mask into SFT format.
+    
+#     Args:
+#         tokenizer (PreTrainedTokenizer): Tokenizer to tokenize the input.
+#         max_length (int): Maximum sequence length. This includes max_new_tokens + token length of question.
+#         question (str): Question to be tokenized.
+#         answer (str): Answer to be tokenized.
+#         question_start_token (str): Start token for question.
+#         question_end_token (str): End token for question.
+#         answer_token (str): Start token for answer.
+    
+#     Returns:
+#         torch.Tensor: Each input_ids, labels, and attention_mask in their own tensor.
+#     """
+#     if template_format:
+#         new_question = template_format.format(instruction=question)
+#     else:
+#         new_question = f"Question: {question}\nAnswer:"
+
+     
+    
+#     full_text = new_question + answer
+
+#     num_question_tokens = len(tokenizer.tokenize(new_question, add_special_tokens=True))
+
+#     encoded = tokenizer(
+#         full_text,
+#         add_special_tokens=True,
+#         max_length=max_length,
+#         truncation=True,
+#     )
+#     pad_length = max_length - len(encoded["input_ids"])
+#     pad_input_ids = encoded['input_ids'] + [128009] + [128004] * (pad_length -1)
+#     pad_attention_mask = encoded['attention_mask'] + [0] * pad_length
+#     if len(encoded['input_ids']) == max_length:
+#         label = encoded.input_ids
+#     else:
+#         label = encoded['input_ids'] + [tokenizer.eos_token_id] + [-100] * (pad_length - 1)
+    
+#     for i in range(num_question_tokens): label[i] = -100
+
+#     return torch.tensor(pad_input_ids), torch.tensor(label), torch.tensor(pad_attention_mask)
 
 
 def add_dataset_index(dataset):
@@ -128,6 +196,8 @@ def custom_data_collator_with_indices(samples):
     indices = [s[3] for s in samples]
     return torch.stack(input_ids), torch.stack(labels), torch.stack(attention_mask), torch.stack(indices)
 
+
+## only for tofu
 def create_dataloader(dataset, tokenizer, model, answer_key, batch_size=32, max_length=200):
     """
     Args:
@@ -164,6 +234,7 @@ def get_batch_loss(output, labels):
     loss = loss_function(output.transpose(-1,-2), shifted_labels).sum(dim=-1)
 
     return loss
+
 
 
 def get_eval_logs(para_data, perturbed_data, model):
@@ -285,30 +356,105 @@ def get_probs(outputs, labels):
 
 
 def calculate_cond_prob(prompt, answer, tokenizer, model, device):
-    full_text = prompt + " " + answer + tokenizer.eos_token
+    """
+    Calculate conditional probability of the answer given the prompt.
+    """
+    # Format the prompt using the chat template
+    messages = [{"role": "user", "content": prompt}]
+    formatted_prompt = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True
+    )
+    
+    # Create the full text with the formatted prompt and answer
+    full_text = formatted_prompt + answer + tokenizer.eos_token
+    
+    # Tokenize the full text
     encoded = tokenizer(full_text, return_tensors='pt', add_special_tokens=True).to(device)
     full_input_ids = encoded['input_ids']
-    prompt_encoded = tokenizer(prompt, return_tensors='pt', add_special_tokens=True).to(device)
+    
+    # Tokenize just the prompt to get its length
+    prompt_encoded = tokenizer(formatted_prompt, return_tensors='pt', add_special_tokens=True).to(device)
     prompt_len = prompt_encoded['input_ids'].size(1)
+    
+    # Create labels, masking the prompt tokens
     labels = full_input_ids.clone()
     labels[0, :prompt_len] = -100
+    
+    # Get model outputs
     with torch.no_grad():
         outputs = model(full_input_ids)
+    
+    # Calculate probabilities
     p_y_given_x, T, loss_avg = get_probs(outputs, labels)
     
     return p_y_given_x
 
 
+# def calculate_cond_prob(prompt, answer, tokenizer, model, device):
+#     full_text = prompt + " " + answer + tokenizer.eos_token
+#     encoded = tokenizer(full_text, return_tensors='pt', add_special_tokens=True).to(device)
+#     full_input_ids = encoded['input_ids']
+#     prompt_encoded = tokenizer(prompt, return_tensors='pt', add_special_tokens=True).to(device)
+#     prompt_len = prompt_encoded['input_ids'].size(1)
+#     labels = full_input_ids.clone()
+#     labels[0, :prompt_len] = -100
+#     with torch.no_grad():
+#         outputs = model(full_input_ids)
+#     p_y_given_x, T, loss_avg = get_probs(outputs, labels)
+    
+#     return p_y_given_x
+
 
 def generate_outputs(text, model, tokenizer, device):
-    inputs = tokenizer(text, return_tensors="pt", add_special_tokens=True).to(device)
+    """
+    Generate model outputs for the given text using the chat template.
+    """
+    # Format the input using the chat template
+    messages = [{"role": "user", "content": text}]
+    formatted_input = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True
+    )
+    
+    # Tokenize the formatted input
+    inputs = tokenizer(formatted_input, return_tensors="pt", add_special_tokens=True).to(device)
+    
+    # Generate outputs
     outputs = model.generate(**inputs)
+    
+    # Decode the outputs
     full_output = tokenizer.batch_decode(outputs, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-    answer = full_output.split("assistant\n\n")[-1]
+    
+    # Extract the answer part
+    # This assumes the assistant's response comes after the formatted prompt
+    # The exact split might need adjustment based on the specific chat template used
+    assistant_prefix = "assistant\n\n"
+    if assistant_prefix in full_output:
+        answer = full_output.split(assistant_prefix)[-1]
+    else:
+        # If the assistant prefix isn't found, try to extract the answer portion
+        # based on the length of the formatted input
+        prompt_text = tokenizer.decode(inputs['input_ids'][0], skip_special_tokens=True)
+        if full_output.startswith(prompt_text):
+            answer = full_output[len(prompt_text):].strip()
+        else:
+            answer = full_output  # Fallback to returning the full output
+    
     return answer
 
+# def generate_outputs(text, model, tokenizer, device):
+#     inputs = tokenizer(text, return_tensors="pt", add_special_tokens=True).to(device)
+#     outputs = model.generate(**inputs)
+#     full_output = tokenizer.batch_decode(outputs, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
+#     answer = full_output.split("assistant\n\n")[-1]
+#     return answer
 
-def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, device, template):
+
+
+def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, device):
     """
     Evaluate the forget efficacy by generating answers for each row in the provided DataFrame,
     computing evaluation metrics, and updating the DataFrame with generated answers.
@@ -340,7 +486,8 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
         answer = row['answer']
         
         # Format prompt using a global template (assumed defined elsewhere)
-        prompt = template.format(instruction=question)
+        #prompt = template.format(instruction=question)
+        prompt = question
         
         # Generate answer using the provided model and tokenizer
         gen_answer = generate_outputs(prompt, model, tokenizer, device=device)
@@ -365,7 +512,7 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
     return forget, all_scores, forget_efficacy
 
 
-def compute_model_utility(retain_path, model, tokenizer, retriever_model, device, template):
+def compute_model_utility_retain(retain_path, model, tokenizer, retriever_model, device):
     """
     Evaluate the forget efficacy by generating answers for each row in the provided DataFrame,
     computing evaluation metrics, and updating the DataFrame with generated answers.
@@ -397,7 +544,8 @@ def compute_model_utility(retain_path, model, tokenizer, retriever_model, device
         answer = row['answer']
         
         # Format prompt using a global template (assumed defined elsewhere)
-        prompt = template.format(instruction=question)
+        #prompt = template.format(instruction=question)
+        prompt = question
         
         # Generate answer using the provided model and tokenizer
         gen_answer = generate_outputs(prompt, model, tokenizer, device=device)
@@ -417,10 +565,148 @@ def compute_model_utility(retain_path, model, tokenizer, retriever_model, device
     # Calculate the average scores for each metric and overall efficacy
     all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
     
-    #model_utility = hmean(all_scores)
-    model_utility = np.mean(all_scores)
-    print('Model Utility scores:',model_utility)
+    model_utility_retain = hmean(all_scores)
+    #model_utility = np.mean(all_scores)
+    print('Model Utility scores:',model_utility_retain)
     
-    return retain, all_scores, model_utility
+    return retain, all_scores, model_utility_retain
+
+
+
+def compute_model_utility_test(test_path, model, tokenizer, retriever_model, device):
+    """
+    Evaluate the forget efficacy by generating answers for each row in the provided DataFrame,
+    computing evaluation metrics, and updating the DataFrame with generated answers.
+
+    Parameters:
+        forget (pd.DataFrame): DataFrame containing at least 'question' and 'answer' columns.
+        model: The model used for generating answers.
+        tokenizer: The tokenizer corresponding to the model.
+        cfg: Configuration object that must include 'retriever_model' for cosine similarity evaluation.
+        device: The device to run model computations on (e.g., "cpu" or "cuda").
+
+    Returns:
+        tuple: A tuple containing:
+            - forget (pd.DataFrame): The updated DataFrame with a new 'gen_answer' column.
+            - forget_efficacy (float): The computed forget efficacy score.
+    """
+    
+    test = pd.read_csv(test_path)
+    # Initialize the 'gen_answer' column and lists for evaluation metrics
+    test['gen_answer'] = ''
+    probas = []
+    rouge1s = []
+    rougels = []
+    cos_sim = []
+
+    # Iterate through each row in the DataFrame
+    for i, row in test.iterrows():
+        question = row['question']
+        answer = row['answer']
+        
+        # Format prompt using a global template (assumed defined elsewhere)
+        #prompt = template.format(instruction=question)
+        prompt = question
+        
+        # Generate answer using the provided model and tokenizer
+        gen_answer = generate_outputs(prompt, model, tokenizer, device=device)
+        
+        # Evaluate generated answer using ROUGE and cosine similarity metrics
+        rouge1, rougel = eval_rouge_recall(gen_answer, answer)
+        cosine_sim = eval_cosine_similarity(gen_answer, answer, retriever_model, device)
+        prob = calculate_cond_prob(prompt, answer, tokenizer, model, device)  #or gen_answer?
+
+        # Update DataFrame and store metric scores
+        test.loc[i, 'gen_answer'] = gen_answer
+        probas.append(prob.item())
+        rouge1s.append(rouge1)
+        rougels.append(rougel)
+        cos_sim.append(cosine_sim)
+
+    # Calculate the average scores for each metric and overall efficacy
+    all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
+    
+    model_utility_test = hmean(all_scores)
+    #model_utility = np.mean(all_scores)
+    print('Model Utility scores:',model_utility_test)
+    
+    return test, all_scores, model_utility_test
+
+
+def calculate_conditional_perplexity(question, model, tokenizer, device, max_new_tokens=100, sys_text=""):
+    """
+    Generate an answer to a question and calculate its conditional perplexity.
+    
+    This calculates the conditional perplexity of the answer given the question prompt.
+    
+    Args:
+        question (str): The user question
+        model: The language model
+        tokenizer: The tokenizer for the model
+        device: The device to run the model on
+        max_new_tokens (int): Maximum tokens to generate
+        sys_text (str): Optional system prompt
+        
+    Returns:
+        float: The conditional perplexity value
+        str: The generated answer
+    """
+    # Prepare the prompt with optional system text
+    if sys_text:
+        messages = [
+            {"role": "system", "content": sys_text},
+            {"role": "user", "content": question}
+        ]
+    else:
+        messages = [{"role": "user", "content": question}]
+    
+    # Format input using chat template
+    formatted_input = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True
+    )
+    
+    # Tokenize the formatted input
+    inputs = tokenizer(formatted_input, return_tensors="pt").to(device)
+    input_length = inputs["input_ids"].size(1)
+    
+    # Generate the answer
+    with torch.no_grad():
+        generation_output = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            return_dict_in_generate=True
+        )
+    
+    # Get the full sequence (prompt + generated answer)
+    full_sequence = generation_output.sequences[0]
+    
+    # Extract just the generated part (without the prompt)
+    generated_ids = full_sequence[input_length:]
+    
+    # Decode the answer
+    answer = tokenizer.decode(generated_ids, skip_special_tokens=True)
+    
+    # Calculate perplexity on only the generated part
+    # Create new input that includes both the prompt and generated answer
+    full_text = formatted_input + answer
+    full_inputs = tokenizer(full_text, return_tensors="pt").to(device)
+    
+    # Create labels, masking prompt tokens (-100 is the ignore index)
+    labels = full_inputs["input_ids"].clone()
+    labels[:, :input_length] = -100
+    
+    # Forward pass with labels to compute loss
+    with torch.no_grad():
+        outputs = model(full_inputs["input_ids"], labels=labels)
+    
+    # Get the loss value (negative log likelihood)
+    nll = outputs.loss.item()
+    
+    # Calculate perplexity: exp(average negative log likelihood)
+    perplexity = torch.exp(torch.tensor(nll)).item()
+    
+    return perplexity, answer
 
 
