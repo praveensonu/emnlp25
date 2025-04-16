@@ -15,6 +15,7 @@ def prepare_inputs_for_perplexity(
     max_length: int,
     device: str = 'cpu' # Allow specifying device here
 ) -> Tuple[Tensor, Tensor, Tensor]:
+    
     """
     Prepares input_ids, attention_mask, and labels for QA perplexity calculation.
     Labels are masked for the question part. Uses tokenizer's batch encoding and padding.
@@ -29,6 +30,7 @@ def prepare_inputs_for_perplexity(
     Returns:
         Tuple[Tensor, Tensor, Tensor]: input_ids, attention_mask, labels tensors.
     """
+    tokenizer.pad_token = tokenizer.eos_token
     if not questions or not answers or len(questions) != len(answers):
         raise ValueError("Questions and answers lists must be non-empty and have the same length.")
 
@@ -51,7 +53,7 @@ def prepare_inputs_for_perplexity(
     prompt_lengths = [len(ids) for ids in prompt_tokenized['input_ids']]
 
     # 3. Create full texts (prompt + answer)
-    full_texts = [p + a + tokenizer.eos_token_id for p, a in zip(prompts_formatted, answers)]
+    full_texts = [str(p) + str(a) + tokenizer.eos_token for p, a in zip(prompts_formatted, answers)]
     # Note: Added eos_token_id to the end of the answer. Loss will be computed on it too.
 
     # 4. Tokenize full texts with padding and truncation

@@ -1,5 +1,5 @@
 import pandas as pd
-from data_module import DualDataset, SingleDataset
+from data_module import DualDataset, SingleDataset, VanillaInterleavedDataset, InterleavedDualDataset
 import json
 from packed_data import SingleDatasetPacked, DualDatasetPacked
 import os
@@ -83,6 +83,43 @@ def create_dual_dataset(forget_path, retain_path, tokenizer, max_length, templat
     forget_data = load_dataset_from_path(forget_path)
     retain_data = load_dataset_from_path(retain_path)
     return DualDataset(forget_data, retain_data, tokenizer, max_length, template_format)
+
+def create_vanilla_interleaved_dataset(forget_path, retain_path, tokenizer, max_length, bs, template_format=None):
+    """
+    Helper function to create a DualDataset with interleaved data from file paths
+    
+    Args:
+        forget_path (str): Path to forget dataset CSV
+
+        retain_path (str): Path to retain dataset CSV
+        tokenizer: Tokenizer instance
+        max_length (int): Maximum sequence length
+        template_format (str, optional): Format template
+        
+    Returns:
+        DualDataset: Initialized dual dataset with interleaved data
+    """
+    forget_data = load_dataset_from_path(forget_path)
+    retain_data = load_dataset_from_path(retain_path)
+    return VanillaInterleavedDataset(forget_data, retain_data, tokenizer, max_length, bs, template_format)
+
+def create_interleaved_dual_dataset(forget_path, retain_path, tokenizer, max_length, n, bs, template_format=None):
+    """
+    Helper function to create a DualDataset with interleaved data from file paths
+    
+    Args:
+        forget_path (str): Path to forget dataset CSV
+        retain_path (str): Path to retain dataset CSV
+        tokenizer: Tokenizer instance
+        max_length (int): Maximum sequence length
+        template_format (str, optional): Format template
+        
+    Returns:
+        DualDataset: Initialized dual dataset with interleaved data
+    """
+    forget_data = load_dataset_from_path(forget_path)
+    retain_data = load_dataset_from_path(retain_path)
+    return InterleavedDualDataset(forget_data, retain_data, tokenizer, max_length, n, bs,template_format)
 
 
 def create_single_dataset(data_path, tokenizer, max_length, template_format=None):

@@ -423,7 +423,7 @@ def generate_outputs(text, model, tokenizer, device):
     inputs = tokenizer(formatted_input, return_tensors="pt", add_special_tokens=True).to(device)
     
     # Generate outputs
-    outputs = model.generate(**inputs)
+    outputs = model.generate(**inputs, max_new_tokens = 50)
     
     # Decode the outputs
     full_output = tokenizer.batch_decode(outputs, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]

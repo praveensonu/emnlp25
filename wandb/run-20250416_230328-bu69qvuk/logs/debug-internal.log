@@ -1,0 +1,8 @@
+{"time":"2025-04-16T23:03:28.294627218+02:00","level":"INFO","msg":"stream: starting","core version":"0.19.9","symlink path":"/home/praveen/theoden/emnlp_25/wandb/run-20250416_230328-bu69qvuk/logs/debug-core.log"}
+{"time":"2025-04-16T23:03:28.713065352+02:00","level":"INFO","msg":"created new stream","id":"bu69qvuk"}
+{"time":"2025-04-16T23:03:28.713182741+02:00","level":"INFO","msg":"stream: started","id":"bu69qvuk"}
+{"time":"2025-04-16T23:03:28.71324057+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"bu69qvuk"}
+{"time":"2025-04-16T23:03:28.713419588+02:00","level":"INFO","msg":"handler: started","stream_id":"bu69qvuk"}
+{"time":"2025-04-16T23:03:28.713301019+02:00","level":"INFO","msg":"sender: started","stream_id":"bu69qvuk"}
+{"time":"2025-04-16T23:03:29.190560456+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-16T23:59:59.92626913+02:00","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/praveenbushipaka942/huggingface/bu69qvuk/file_stream","body":"\n<html><head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<title>502 Server Error</title>\n</head>\n<body text=#000000 bgcolor=#ffffff>\n<h1>Error: Server Error</h1>\n<h2>The server encountered a temporary error and could not complete your request.<p>Please try again in 30 seconds.</h2>\n<h2></h2>\n</body></html>\n"}

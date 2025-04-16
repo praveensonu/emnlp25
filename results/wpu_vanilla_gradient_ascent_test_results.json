@@ -1,0 +1,33 @@
+{
+    "grad_ascent": {
+        "forget_efficacy": 0.9846453619472125,
+        "model_utility_retain": 0.0,
+        "model_utility_test": 0.0,
+        "forget_scores": [
+            0.0,
+            0.00020408163265306123,
+            0.04585983252570945
+        ],
+        "retain_scores": [
+            0.0,
+            0.0002780768054028941,
+            0.051207518572714814
+        ],
+        "test_scores": [
+            0.0,
+            0.00021680216802168022,
+            0.052946473734306936
+        ],
+        "qa_perplexity_forget": Infinity,
+        "qa_perplexity_retain": Infinity,
+        "test_perplexity": Infinity,
+        "exp_type": "vanilla_gradient_ascent",
+        "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        "batch_size": 4,
+        "num_epochs": 20,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 16
+    }
+}
