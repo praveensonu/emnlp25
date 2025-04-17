@@ -3,5 +3,8 @@ outputs
 tokens.txt
 config.py
 .fuse_hidden*
+wandb
+*.wandb
+
 
 

@@ -2,7 +2,7 @@
 # os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
 # to run the script, use the command: 
 # 1. export CUDA_VISIBLE_DEVICES=4,5
-# 2. deepspeed --num_gpus=2 run.py
+# 2. accelerate launch --num_processes 2 run.py
 
 
 import torch
@@ -173,26 +173,6 @@ if cfg.loss_type == 'grad_ascent' :
             data_collator = custom_data_collator_forget,
             )
 
-# print("\nChecking trainable parameters *immediately before* trainer.train():")
-# model.print_trainable_parameters()
-# # Optional deeper check:
-# print("Detailed requires_grad status for some named parameters:")
-# count = 0
-# for name, param in model.named_parameters():
-#     if param.requires_grad:
-#         print(f"- {name}: requires_grad={param.requires_grad}")
-#         count += 1
-#     if count >= 10: # Print first few trainable ones
-#         break
-# if count == 0:
-#     print("!!! WARNING: No parameters found with requires_grad=True !!!")
-# # --- END CHECK ---
-
-# # --- Train ---
-# print("Starting trainer.train()...")
-
-
-
 
 trainer.train()
 
@@ -203,116 +183,3 @@ print(f'\nForget LoRA adapter saved at {cfg.save_dir}')
 
 
 
-# batch_size = cfg.batch_size
-# max_length = 512
-
-
-
-# ## perplexity on forget set after unlearning
-# ## -> conditional perplexity calculation on answer given a question P(a|q)
-
-# print(f'Calculating perplexity on forget set after {cfg.loss_type} unlearning')
-
-# qa_perplexity_forget, _ = Perplexity_QA_from_df(
-#     model = model,
-#     df_path = forget_path,
-#     tokenizer =tokenizer,
-#     max_length =max_length,
-#     batch_size = batch_size,
-#     device = device
-# )
-# print('\nForget Perplexity',qa_perplexity_forget)
-
-
-# ## perplexity on retain after unlearning
-# ## -> conditional perplexity calculation on answer given a question P(a|q)
-
-# print(f'Calculating perplexity on retain set after {cfg.loss_type} unlearning')
-# qa_perplexity_retain, _ = Perplexity_QA_from_df(
-#     model = model,
-#     df_path = retain_path,
-#     tokenizer =tokenizer,
-#     max_length =max_length,
-#     batch_size = batch_size,
-#     device = device
-# )
-# print('\nRetain Perplexity', qa_perplexity_retain)
-
-# ## perplexity on retain after unlearning
-# ## -> conditional perplexity calculation on answer given a question P(a|q)
-
-# print(f'\nCalculating perplexity on test set after {cfg.loss_type} unlearning')
-# qa_perplexity_test, _ = Perplexity_QA_from_df(
-#     model = model,
-#     df_path = test_path,
-#     tokenizer =tokenizer,
-#     max_length =max_length,
-#     batch_size = batch_size,
-#     device = device
-# )
-# print('\nTest set Perplexity',qa_perplexity_test)
-
-
-
-# print('\ncalculating forget efficacy')
-
-# # all_scores contain a list of scores [probabilities, rouge-L, cosine similarity]
-
-# forget_df, all_forget_scores,forget_efficacy = compute_forget_efficacy(
-#     forget_path = forget_path,
-#     model = model,
-#     tokenizer = tokenizer,
-#     retriever_model= cfg.retriever_model,
-#     device = device,
-# )
-
-# print('forget efficacy', forget_efficacy.item())
-
-# print('\ncalculating model utility on retain set')
-
-# retain_df, all_retain_scores, retain_model_utility = compute_model_utility_retain(
-#     retain_path = retain_path,
-#     model = model,
-#     tokenizer = tokenizer,
-#     retriever_model= cfg.retriever_model,
-#     device = device,
-# )
-
-# print('model utility retain', retain_model_utility.item())
-# print('\ncalculating model utility on test set')
-
-# test_df, all_test_scores, test_model_utility = compute_model_utility_test(
-#     test_path = test_path,
-#     model = model,
-#     tokenizer = tokenizer,
-#     retriever_model= cfg.retriever_model,
-#     device = device,
-# )
-
-# print('model utility test', test_model_utility.item())
-# forget_df.to_csv(f'{cfg.exp_type}_forget_results.csv')
-# retain_df.to_csv(f'{cfg.exp_type}_retain_results.csv')
-# test_df.to_csv(f'{cfg.exp_type}_test_results.csv')
-
-
-# results = {cfg.loss_type: 
-#            {'forget_efficacy': forget_efficacy.item(),
-#            'model_utility_retain': retain_model_utility.item(),
-#            'model_utility_test': test_model_utility.item(),
-#            'forget_scores' : all_forget_scores.tolist(),
-#            'retain_scores': all_retain_scores.tolist(),
-#            'test_scores': all_test_scores.tolist(),
-#            'qa_perplexity_forget': qa_perplexity_forget,
-#            'qa_perplexity_retain': qa_perplexity_retain,
-#            'test_perplexity': qa_perplexity_test,
-#            'exp_type': cfg.exp_type,
-#            'model_id': cfg.model_id,
-#            'batch_size': cfg.batch_size,
-#            'num_epochs': cfg.num_epochs,
-#            'lr': cfg.lr,
-#            'weight_decay': cfg.weight_decay,
-#            'LoRA_r': cfg.LoRA_r,
-#            'LoRA_alpha': cfg.LoRA_alpha,
-#            }}
-
-# update_json_dict(cfg.results_path, results)
