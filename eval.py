@@ -1,14 +1,14 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '5'
+os.environ['CUDA_VISIBLE_DEVICES'] = '7'
 
 from eval_utils import compute_model_utility_retain, compute_forget_efficacy, compute_model_utility_test
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from config import Config
-from peft import  LoraConfig, get_peft_model, PeftModel
+from peft import PeftModel
 from perplexity import Perplexity_QA_from_df
-from utils import create_dual_dataset, create_single_dataset, update_json_dict, find_all_linear_names
+from utils import update_json_dict
 
 
 cfg = Config()

@@ -271,7 +271,7 @@ class VanillaInterleavedDataset(Dataset):
             # Calculate the overall forget index based on blocks and position within forget part
             effective_idx = (block_index * self.n_forget_per_block + pos_in_effective_block) % self.num_forget
             sample_row = self.forget.iloc[effective_idx]
-            fraction = -1.0
+            factor = -1.0
         else:
             # Retain sample
             if self.num_retain == 0:
@@ -280,7 +280,7 @@ class VanillaInterleavedDataset(Dataset):
             pos_in_retain_part = pos_in_effective_block - self.n_forget_per_block
             effective_idx = (block_index * self.n_retain_per_block + pos_in_retain_part) % self.num_retain
             sample_row = self.retain.iloc[effective_idx]
-            fraction = 1.0
+            factor = 1.0
 
         # Process the text using the conversion function
         processed_sample = convert_raw_data_to_model_qa( # Assuming this exists and works
@@ -292,7 +292,7 @@ class VanillaInterleavedDataset(Dataset):
         )
 
         input_ids, labels, attention_mask = processed_sample
-        return (input_ids, labels, attention_mask, fraction)
+        return (input_ids, labels, attention_mask, factor)
     
 
 
@@ -358,7 +358,7 @@ class InterleavedDualDataset(Dataset):
                  raise RuntimeError("Trying to get forget sample, but forget dataset is empty.")
             effective_idx = (block_index * self.n + pos_in_block) % self.num_forget # Correct index for n > 1
             sample_row = self.forget.iloc[effective_idx]
-            fraction = -1.0 # Use float
+            factor = -1.0 # Use float
         else:
             # Retain sample
             if self.num_retain == 0 or self.retain_per_block <= 0:
@@ -367,7 +367,7 @@ class InterleavedDualDataset(Dataset):
             # Correct index for retain part
             effective_idx = (block_index * self.retain_per_block + (pos_in_block - self.n)) % self.num_retain
             sample_row = self.retain.iloc[effective_idx]
-            fraction = 1.0 # Use float
+            factor = 1.0 # Use float
 
         # Process the text using the conversion function.
         processed_sample = convert_raw_data_to_model_qa( # Make sure this returns tensors or collator handles lists
@@ -381,7 +381,7 @@ class InterleavedDualDataset(Dataset):
         # Assuming processed_sample = (input_ids_tensor, labels_tensor, attention_mask_tensor)
         input_ids, labels, attention_mask = processed_sample
         # Return tuple that collator expects
-        return (input_ids, labels, attention_mask, fraction)
+        return (input_ids, labels, attention_mask, factor)
 
 
 def custom_data_collator_forget(samples):

@@ -1,26 +1,26 @@
 {
     "vanilla_grad_diff": {
         "forget_efficacy": 0.9711538853019881,
-        "model_utility_retain": 0.3123775753002592,
-        "model_utility_test": 0.3525519965468387,
+        "model_utility_retain": 0.30615882610352396,
+        "model_utility_test": 0.3511145304029041,
         "forget_scores": [
             0.0,
             0.00020408163265306123,
             0.08633426246138251
         ],
         "retain_scores": [
-            0.1703086158930107,
-            0.46786167861806444,
-            0.6270831071847697
+            0.1670114651715001,
+            0.45534981898386795,
+            0.6191532768030908
         ],
         "test_scores": [
-            0.1880150235664655,
-            0.5612178526528067,
-            0.7098139175352688
+            0.1834848518982551,
+            0.5849148633809386,
+            0.7222673444829497
         ],
-        "qa_perplexity_forget": 1e+308,
-        "qa_perplexity_retain": 5.468099594116211,
-        "test_perplexity": 3.922933578491211,
+        "qa_perplexity_forget": Infinity,
+        "qa_perplexity_retain": 5.827822685241699,
+        "test_perplexity": 3.8095638751983643,
         "exp_type": "vanilla_grad_diff",
         "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
         "batch_size": 4,
