@@ -9,9 +9,14 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
 from config import Config
 from peft import  LoraConfig, get_peft_model
-from data_module import  custom_data_collator_forget, custom_data_collator_interleaved_ga
-from utils import create_single_dataset, find_all_linear_names, create_vanilla_interleaved_dataset, create_interleaved_dual_dataset
-from forget_trainer import GATrainer, GradDiffTrainer
+from data_module import custom_data_collator_forget, custom_data_collator_interleaved_ga, custom_data_collator_paired_title
+from utils import (create_single_dataset, 
+                   find_all_linear_names, 
+                   create_vanilla_interleaved_dataset, 
+                   create_interleaved_dual_dataset, 
+                   create_batched_dataset,
+                   )
+from forget_trainer import GATrainer, GradDiffTrainer, NPOTrainer, BatchGradDiffTrainer
 from accelerate import PartialState
 
 
@@ -35,6 +40,8 @@ if device_map == "DDP":
 
 print(f"\nLoading the Tokenizer {cfg.model_id}")
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id, token = cfg.access_token)
+tokenizer.pad_token = tokenizer.eos_token
+
 
 print(f"\nLoading the Model {cfg.model_id}")
 model = AutoModelForCausalLM.from_pretrained(cfg.model_id, 
@@ -54,10 +61,9 @@ config = LoraConfig(
 
 print(f"{LoraConfig.target_modules}")
 # wrapping the model with the LoRA configuration
+
 model = get_peft_model(model, config)
 model.print_trainable_parameters()
-
-
 #model.generation_config.do_sample = True
 model.config.use_cache = False
 
@@ -68,6 +74,8 @@ n_forget = cfg.n_forget
 bsize = bsz * ngpus * grad_acc
 print(f'Batch size: {bsize}')
 
+
+## dataset and training args for the standard gradient difference method
 if cfg.loss_type == 'vanilla_grad_diff':
     print('creating the dataset for vanilla gradient diff')
     dataset = create_vanilla_interleaved_dataset(forget_path, 
@@ -103,6 +111,7 @@ if cfg.loss_type == 'vanilla_grad_diff':
         data_collator = custom_data_collator_interleaved_ga,
     )
 
+## dataset and training args for AILS-NTUA method
 if cfg.loss_type == 'ails_grad_diff':
     dataset = create_interleaved_dual_dataset(forget_path, 
                                   retain_path, 
@@ -139,9 +148,46 @@ if cfg.loss_type == 'ails_grad_diff':
     )
 
 
+## dataset and training args for the similar batching gradient difference method
+if cfg.loss_type == 'batch_grad_diff':
+    dataset = create_batched_dataset(forget_path = forget_path,
+                                     retain_path = retain_path,
+                                     tokenizer = tokenizer,
+                                     max_length = 512,
+                                     n = n_forget,
+                                     bs = bsize,
+                                     template_format=None
+    )
 
+    training_args = TrainingArguments(
+    output_dir = cfg.save_dir,
+    learning_rate = cfg.lr,
+    per_device_train_batch_size= cfg.batch_size, # for grad diff I used smaller batch size
+    num_train_epochs= cfg.num_epochs,
+    weight_decay = cfg.weight_decay,
+    logging_dir = f'{cfg.save_dir}/logs',
+    eval_strategy= 'no',
+    label_names = ['labels'],
+    bf16 = True,
+    gradient_accumulation_steps= 1,
+    #save_only_model=True,
+    gradient_checkpointing=True,
+    gradient_checkpointing_kwargs = {"use_reentrant": False},
+    report_to = 'wandb',
+)
+
+    trainer = BatchGradDiffTrainer(
+        model = model,
+        args = training_args,
+        train_dataset = dataset,
+        tokenizer = tokenizer,
+        data_collator = custom_data_collator_paired_title,
+    )
+
+
+## dataset and training args for the gradient ascent method
 if cfg.loss_type == 'grad_ascent' :
-    dataset = create_single_dataset(data_path = cfg.forget_path,
+    dataset = create_single_dataset(data_path = forget_path,
                                     tokenizer = tokenizer,
                                     max_length = 512,
                                     template_format = None) 
@@ -172,6 +218,44 @@ if cfg.loss_type == 'grad_ascent' :
             tokenizer = tokenizer,
             data_collator = custom_data_collator_forget,
             )
+
+
+## vanilla npo
+if cfg.loss_type == 'van_npo':
+    dataset = create_single_dataset(data_path = cfg.forget_path,
+                                    tokenizer = tokenizer,
+                                    max_length = 512,
+                                    template_format = None) 
+    
+    ref_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, torch_dtype=torch.bfloat16, device_map = device_map, token = cfg.access_token)
+    training_args = TrainingArguments(
+        output_dir = cfg.save_dir,
+        learning_rate = cfg.lr,
+        per_device_train_batch_size= cfg.batch_size,
+        num_train_epochs= cfg.num_epochs,
+        weight_decay = cfg.weight_decay,
+        logging_dir = f'{cfg.save_dir}/logs',
+        eval_strategy= 'no',
+        label_names = ['labels'],
+        bf16 = True,
+        gradient_accumulation_steps=1,
+        #save_only_model=True,
+        gradient_checkpointing=True,
+        gradient_checkpointing_kwargs = {"use_reentrant": False},
+        report_to = 'wandb',
+        ddp_find_unused_parameters=False,
+    )
+
+
+    trainer = NPOTrainer(
+            model = model, 
+            ref_model = ref_model,
+            args = training_args,
+            train_dataset = dataset,
+            tokenizer = tokenizer,
+            data_collator = custom_data_collator_forget,
+            )
+
 
 
 trainer.train()

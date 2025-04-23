@@ -1,12 +1,11 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 
 from eval_utils import compute_model_utility_retain, compute_forget_efficacy, compute_model_utility_test
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from config import Config
-from peft import PeftModel
 from perplexity import Perplexity_QA_from_df
 from utils import update_json_dict
 
@@ -23,17 +22,14 @@ max_length = 512
 
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id)
 tokenizer.pad_token = tokenizer.eos_token
-base_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = "auto", torch_dtype=torch.bfloat16)
-#save_dir = f'{cfg.save_dir}/checkpoint-120'
-model = PeftModel.from_pretrained(base_model, cfg.save_dir, device_map="auto", torch_dtype=torch.bfloat16) #always load with the checkpoint, the last checkpoint is the model.
-
-model.merge_and_unload()
+model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = device, torch_dtype=torch.bfloat16)
+#
 
 
 ## perplexity on forget set after unlearning
 ## -> conditional perplexity calculation on answer given a question P(a|q)
 
-print(f'Calculating perplexity on forget set after {cfg.loss_type} unlearning')
+print(f'Calculating perplexity on forget set before unlearning')
 
 qa_perplexity_forget, _ = Perplexity_QA_from_df(
     model = model,
@@ -49,7 +45,7 @@ print('\nForget Perplexity',qa_perplexity_forget)
 ## perplexity on retain after unlearning
 ## -> conditional perplexity calculation on answer given a question P(a|q)
 
-print(f'Calculating perplexity on retain set after {cfg.loss_type} unlearning')
+print(f'Calculating perplexity on retain set after before unlearning')
 qa_perplexity_retain, _ = Perplexity_QA_from_df(
     model = model,
     df_path = retain_path,
@@ -63,7 +59,7 @@ print('\nRetain Perplexity', qa_perplexity_retain)
 ## perplexity on retain after unlearning
 ## -> conditional perplexity calculation on answer given a question P(a|q)
 
-print(f'\nCalculating perplexity on test set after {cfg.loss_type} unlearning')
+print(f'\nCalculating perplexity on test set after before unlearning')
 qa_perplexity_test, _ = Perplexity_QA_from_df(
     model = model,
     df_path = test_path,
@@ -111,12 +107,12 @@ test_df, all_test_scores, test_model_utility = compute_model_utility_test(
 )
 
 print('model utility test', test_model_utility.item())
-forget_df.to_csv(f'{cfg.exp_type}_forget_results.csv')
-retain_df.to_csv(f'{cfg.exp_type}_retain_results.csv')
-test_df.to_csv(f'{cfg.exp_type}_test_results.csv')
+forget_df.to_csv('llama_forget_results.csv')
+retain_df.to_csv('llama_retain_results.csv')
+test_df.to_csv('llama_test_results.csv')
 
 
-results = {cfg.loss_type: 
+results = {'llama_3_1_8B': 
            {'forget_efficacy': forget_efficacy.item(),
            'model_utility_retain': retain_model_utility.item(),
            'model_utility_test': test_model_utility.item(),
@@ -126,7 +122,7 @@ results = {cfg.loss_type:
            'qa_perplexity_forget': qa_perplexity_forget,
            'qa_perplexity_retain': qa_perplexity_retain,
            'test_perplexity': qa_perplexity_test,
-           'exp_type': cfg.exp_type,
+           'exp_type': 'before unlearning',
            'model_id': cfg.model_id,
            'batch_size': cfg.batch_size,
            'num_epochs': cfg.num_epochs,
@@ -135,5 +131,5 @@ results = {cfg.loss_type:
            'LoRA_r': cfg.LoRA_r,
            'LoRA_alpha': cfg.LoRA_alpha,
            }}
-
-update_json_dict(cfg.results_path, results)
+results_path   = f'/home/praveen/theoden/emnlp_25/results/llama_3_1_8B_test_results.json'
+update_json_dict(results_path, results)

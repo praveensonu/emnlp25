@@ -1,5 +1,5 @@
 import pandas as pd
-from data_module import DualDataset, SingleDataset, VanillaInterleavedDataset, InterleavedDualDataset
+from data_module import DualDataset, SingleDataset, VanillaInterleavedDataset, InterleavedDualDataset, PairedTitleDataset
 import json
 from packed_data import SingleDatasetPacked, DualDatasetPacked
 import os
@@ -137,6 +137,32 @@ def create_single_dataset(data_path, tokenizer, max_length, template_format=None
     """
     return SingleDataset(data_path, tokenizer, max_length, template_format)
 
+
+def create_batched_dataset(forget_path, retain_path, tokenizer, max_length, n, bs, template_format=None):
+    """
+    Helper function to create a PairedTitleDataset from file paths
+    
+    Args:
+        forget_path (str): Path to forget dataset CSV
+        retain_path (str): Path to retain dataset CSV
+        tokenizer: Tokenizer instance
+        max_length (int): Maximum sequence length
+        bs (int): Batch size
+        template_format (str, optional): Format template
+        
+    Returns:
+        PairedTitleDataset: Initialized paired title dataset
+    """
+    forget_data = load_dataset_from_path(forget_path)
+    retain_data = load_dataset_from_path(retain_path)
+    return PairedTitleDataset(forget_data = forget_data, 
+                              retain_data = retain_data, 
+                              tokenizer = tokenizer, 
+                              max_length = max_length, 
+                              n = n, 
+                              bs = bs,
+                              title_key = 'title',
+                              template_format = template_format)
 
 
 def create_packed_dataset(data_path, tokenizer, template_format=None):

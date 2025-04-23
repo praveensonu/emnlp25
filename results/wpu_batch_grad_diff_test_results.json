@@ -1,0 +1,33 @@
+{
+    "batch_grad_diff": {
+        "forget_efficacy": 0.7682902650409784,
+        "model_utility_retain": 0.4863620079427031,
+        "model_utility_test": 0.39789694975154716,
+        "forget_scores": [
+            0.03376367472683079,
+            0.18104751391065912,
+            0.480318016239575
+        ],
+        "retain_scores": [
+            0.32620709527087377,
+            0.592033090439695,
+            0.7074072243752313
+        ],
+        "test_scores": [
+            0.22529228789655747,
+            0.5834744929371531,
+            0.7209330868155148
+        ],
+        "qa_perplexity_forget": 1627.527587890625,
+        "qa_perplexity_retain": 3.889896869659424,
+        "test_perplexity": 4.441405296325684,
+        "exp_type": "batch_grad_diff",
+        "model_id": "meta-llama/Meta-Llama-3.1-8B-Instruct",
+        "batch_size": 4,
+        "num_epochs": 4,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 16
+    }
+}

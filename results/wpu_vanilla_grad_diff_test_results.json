@@ -18,7 +18,7 @@
             0.5849148633809386,
             0.7222673444829497
         ],
-        "qa_perplexity_forget": Infinity,
+        "qa_perplexity_forget": 1e+308,
         "qa_perplexity_retain": 5.827822685241699,
         "test_perplexity": 3.8095638751983643,
         "exp_type": "vanilla_grad_diff",

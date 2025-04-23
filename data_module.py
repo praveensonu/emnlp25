@@ -5,7 +5,9 @@ from transformers import PreTrainedTokenizer
 from typing import Tuple
 import math
 import pandas as pd
-from typing import Optional
+from typing import Dict, List, Set, Tuple, Any
+import itertools
+import random
 
 
 def convert_raw_data_to_model_qa(tokenizer: PreTrainedTokenizer, 
@@ -384,6 +386,210 @@ class InterleavedDualDataset(Dataset):
         return (input_ids, labels, attention_mask, factor)
 
 
+## This is the Dataset class for batching similar forget and retain samples together.
+class PairedTitleDataset(Dataset):
+    def __init__(self, forget_data: pd.DataFrame, retain_data: pd.DataFrame,
+                 tokenizer: PreTrainedTokenizer, max_length: int, n: int, bs: int,
+                 template_format: str = None, title_key: str = 'title',
+                 question_key: str = 'question', answer_key: str = 'answer'):
+        """
+        Dataset that batches forget and retain samples based on a shared 'title'.
+
+        Args:
+            forget_data (pd.DataFrame): DataFrame with forget samples. Must contain title_key, question_key, answer_key.
+            retain_data (pd.DataFrame): DataFrame with retain samples. Must contain title_key, question_key, answer_key.
+            tokenizer (PreTrainedTokenizer): Tokenizer.
+            max_length (int): Maximum sequence length for tokenization.
+            n (int): Target number of forget samples per paired batch.
+            bs (int): Total batch size (block size).
+            template_format (str, optional): Custom template string. Defaults to None (uses tokenizer chat template).
+            title_key (str): Column name for the title/topic. Defaults to 'title'.
+            question_key (str): Column name for the question. Defaults to 'question'.
+            answer_key (str): Column name for the answer. Defaults to 'answer'.
+        """
+        if not isinstance(n, int) or not isinstance(bs, int) or n <= 0 or bs <= 0:
+             raise ValueError("n and bs must be positive integers.")
+        if n >= bs:
+            raise ValueError(f"n (forget samples={n}) must be strictly less than bs (block/batch size={bs})")
+
+        self.tokenizer = tokenizer
+        self.max_length = max_length
+        self.template_format = template_format
+        self.title_k = title_key
+        self.qk = question_key
+        self.ak = answer_key
+        self.n = n
+        self.bs = bs
+        self.retain_per_batch = self.bs - self.n
+
+        # --- Preprocessing: Assign Title IDs ---
+        print("Preprocessing data and assigning title IDs...")
+        self.forget_data = forget_data.reset_index(drop=True)
+        self.retain_data = retain_data.reset_index(drop=True)
+
+        # 1. Assign IDs to forget titles (1 to N)
+        unique_forget_titles = self.forget_data[self.title_k].unique()
+        self.title_to_id: Dict[str, int] = {title: i + 1 for i, title in enumerate(unique_forget_titles)}
+        self.forget_data['title_id'] = self.forget_data[self.title_k].map(self.title_to_id)
+        self.forget_title_ids: Set[int] = set(self.title_to_id.values())
+        print(f"Found {len(self.forget_title_ids)} unique forget titles.")
+
+        # 2. Assign IDs to retain titles (use existing if match forget, else N+1 onwards)
+        self.extra_retain_title_ids: Set[int] = set()
+        next_extra_id = len(self.forget_title_ids) + 1
+        retain_title_ids = []
+        for title in self.retain_data[self.title_k]:
+            if title in self.title_to_id:
+                retain_title_ids.append(self.title_to_id[title])
+            else:
+                # Assign a new ID if not seen before in *this* loop
+                if title not in self.title_to_id:
+                    self.title_to_id[title] = next_extra_id
+                    self.extra_retain_title_ids.add(next_extra_id)
+                    next_extra_id += 1
+                retain_title_ids.append(self.title_to_id[title]) # Use the newly assigned ID
+
+        self.retain_data['title_id'] = retain_title_ids
+        print(f"Found {len(self.extra_retain_title_ids)} unique extra retain titles (not in forget set).")
+        print(f"Total unique titles across both datasets: {len(self.title_to_id)}")
+
+        # --- Pre-compute Sample Definitions for Batches ---
+        print("Pre-computing batch structures...")
+        self.sample_definitions: List[Dict[str, Any]] = []
+
+        # Group indices by title_id
+        forget_indices_by_title = self.forget_data.groupby('title_id').groups
+        retain_indices_by_title = self.retain_data.groupby('title_id').groups
+
+        all_batches: List[List[Dict[str, Any]]] = []
+
+        # 1. Create paired batches for forget titles
+        for tid in self.forget_title_ids:
+            f_indices = forget_indices_by_title.get(tid)
+            r_indices = retain_indices_by_title.get(tid)
+
+            if f_indices is None or len(f_indices) == 0:
+                print(f"Warning: Forget title ID {tid} has no forget samples. Skipping pairing.")
+                continue
+            if r_indices is None or len(r_indices) == 0:
+                print(f"Warning: Forget title ID {tid} has no matching retain samples. Skipping pairing.")
+                continue
+
+            num_f = len(f_indices)
+            num_r = len(r_indices)
+
+            # Determine number of batches needed to cover all samples of the larger group for this title
+            num_forget_yields = math.ceil(num_f / self.n) * self.n
+            num_retain_yields = math.ceil(num_r / self.retain_per_batch) * self.retain_per_batch
+            total_yields = max(num_forget_yields, num_retain_yields)
+            num_batches_for_title = math.ceil(total_yields / self.bs)
+
+            if num_batches_for_title == 0: continue
+
+            print(f"Title ID {tid} (Forget): Num Forget={num_f}, Num Retain={num_r}. Creating {num_batches_for_title} paired batches.")
+
+            f_iter = itertools.cycle(f_indices)
+            r_iter = itertools.cycle(r_indices)
+
+            for _ in range(num_batches_for_title):
+                current_batch_samples = []
+                # Add forget samples
+                for _ in range(self.n):
+                    current_batch_samples.append({
+                        'type': 'forget',
+                        'index': next(f_iter),
+                        'title_id': tid,
+                        'factor': -1.0
+                    })
+                # Add retain samples
+                for _ in range(self.retain_per_batch):
+                    current_batch_samples.append({
+                        'type': 'retain',
+                        'index': next(r_iter),
+                        'title_id': tid,
+                        'factor': 1.0
+                    })
+                all_batches.append(current_batch_samples)
+
+        # 2. Create retain-only batches for extra retain titles
+        for tid in self.extra_retain_title_ids:
+            r_indices = retain_indices_by_title.get(tid)
+
+            if r_indices is None or len(r_indices) == 0:
+                 print(f"Warning: Extra Retain title ID {tid} has no samples?") # Should not happen based on logic above
+                 continue
+
+            num_r = len(r_indices)
+            num_batches_for_title = math.ceil(num_r / self.bs)
+
+            if num_batches_for_title == 0: continue
+
+            print(f"Title ID {tid} (Extra Retain): Num Retain={num_r}. Creating {num_batches_for_title} retain-only batches.")
+
+            r_iter = itertools.cycle(r_indices)
+
+            for _ in range(num_batches_for_title):
+                current_batch_samples = []
+                # Add retain samples
+                samples_to_add = min(self.bs, num_r) # Handle cases where num_r < bs
+                num_r -= samples_to_add # Track remaining samples for accurate count if needed, although cycle handles it
+                for _ in range(samples_to_add): # Add up to bs samples
+                     current_batch_samples.append({
+                        'type': 'retain',
+                        'index': next(r_iter),
+                        'title_id': tid,
+                        'factor': 1.0
+                    })
+                if current_batch_samples: # Only add if we actually got samples
+                     all_batches.append(current_batch_samples)
+
+
+        # 3. Shuffle the batches and flatten
+        random.shuffle(all_batches)
+        self.sample_definitions = [item for batch in all_batches for item in batch]
+
+        if not self.sample_definitions:
+            print("Warning: No samples were generated. Check input data and parameters (n, bs).")
+
+        print(f"Dataset initialized. Total samples to be yielded: {len(self.sample_definitions)}")
+
+
+    def __len__(self):
+        return len(self.sample_definitions)
+
+    def __getitem__(self, idx):
+        if idx >= len(self.sample_definitions):
+             raise IndexError("Index out of bounds")
+
+        sample_def = self.sample_definitions[idx]
+        sample_type = sample_def['type']
+        original_index = sample_def['index']
+        title_id = sample_def['title_id']
+        factor = sample_def['factor']
+
+        source_df = self.forget_data if sample_type == 'forget' else self.retain_data
+
+        try:
+            sample_row = source_df.loc[original_index]
+        except KeyError:
+             print(f"Error retrieving original_index {original_index} from {sample_type} data. Available indices: {source_df.index}")
+             # Handle error appropriately, maybe raise or return a dummy item?
+             # For now, re-raising might be best to catch issues early.
+             raise KeyError(f"Original index {original_index} not found in {sample_type} data.")
+
+
+        # Process the text using the conversion function.
+        input_ids, labels, attention_mask = convert_raw_data_to_model_qa(
+            self.tokenizer,
+            self.max_length,
+            sample_row[self.qk],
+            sample_row[self.ak],
+            self.template_format
+        )
+
+        # Return tuple: input_ids, labels, attention_mask, factor, title_id
+        return (input_ids, labels, attention_mask, torch.tensor(factor, dtype=torch.float), torch.tensor(title_id, dtype=torch.long))
+
 def custom_data_collator_forget(samples):
     """
     Collate function for the forget dataset only
@@ -428,6 +634,48 @@ def custom_data_collator_interleaved_ga(samples):
         'attention_mask': attention_mask,
         'factor': factors
     }
+
+
+def custom_data_collator_paired_title(samples: List[Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]]) -> Dict[str, torch.Tensor]:
+    """
+    Collate function specifically for PairedTitleDataset samples.
+
+    Each sample is expected to be a tuple:
+        (input_ids_tensor, labels_tensor, attention_mask_tensor, factor_tensor, title_id_tensor)
+
+    Returns:
+        dict: A dictionary with the following keys, where values are batched tensors:
+            - 'input_ids': Batched input_ids tensor.
+            - 'labels': Batched labels tensor.
+            - 'attention_mask': Batched attention_mask tensor.
+            - 'factor': Batched tensor of factors (-1.0 or +1.0) for each sample.
+            - 'title_id': Batched tensor of title IDs for each sample.
+    """
+    if not samples:
+        return {} # Handle empty batch case
+
+    # Ensure all samples have the expected number of elements
+    expected_elements = 5
+    if any(len(sample) != expected_elements for sample in samples):
+        raise ValueError(f"All samples must be tuples of length {expected_elements}")
+
+    # Stack the tensors from each sample
+    input_ids = torch.stack([sample[0] for sample in samples])
+    labels = torch.stack([sample[1] for sample in samples])
+    attention_mask = torch.stack([sample[2] for sample in samples])
+    # Factors are already tensors (sample[3]), just stack them
+    factors = torch.stack([sample[3] for sample in samples])
+    # Title IDs are already tensors (sample[4]), just stack them
+    title_ids = torch.stack([sample[4] for sample in samples])
+
+    return {
+        'input_ids': input_ids,
+        'labels': labels,
+        'attention_mask': attention_mask,
+        'factor': factors,
+        'title_id': title_ids  # Add the title_id field
+    }
+
 
 
 
