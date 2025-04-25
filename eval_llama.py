@@ -1,6 +1,6 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '5'
 
 from eval_utils import compute_model_utility_retain, compute_forget_efficacy, compute_model_utility_test
 import torch
@@ -8,6 +8,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from config import Config
 from perplexity import Perplexity_QA_from_df
 from utils import update_json_dict
+from peft import PeftModel
 
 
 cfg = Config()
@@ -18,13 +19,15 @@ test_path = cfg.test_path
 
 device = 'cuda'
 batch_size = cfg.batch_size
-max_length = 512
+max_length = 256
+
+cfg.save_dir = '/home/praveen/theoden/emnlp_25/outputs/finetuned_llama_3_1_8bmodel'
 
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id)
 tokenizer.pad_token = tokenizer.eos_token
-model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = device, torch_dtype=torch.bfloat16)
-#
-
+base_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = device, torch_dtype=torch.bfloat16)
+model = PeftModel.from_pretrained(base_model, cfg.save_dir, device_map="auto", torch_dtype=torch.bfloat16) #always load with the checkpoint, the last checkpoint is the model.
+model.merge_and_unload()
 
 ## perplexity on forget set after unlearning
 ## -> conditional perplexity calculation on answer given a question P(a|q)

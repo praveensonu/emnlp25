@@ -111,9 +111,9 @@ test_df, all_test_scores, test_model_utility = compute_model_utility_test(
 )
 
 print('model utility test', test_model_utility.item())
-forget_df.to_csv(f'{cfg.exp_type}_forget_results.csv')
-retain_df.to_csv(f'{cfg.exp_type}_retain_results.csv')
-test_df.to_csv(f'{cfg.exp_type}_test_results.csv')
+forget_df.to_csv(f'/home/praveen/theoden/emnlp_25/results/datasets/{cfg.exp_type}_forget_results.csv')
+retain_df.to_csv(f'/home/praveen/theoden/emnlp_25/results/datasets/{cfg.exp_type}_retain_results.csv')
+test_df.to_csv(f'/home/praveen/theoden/emnlp_25/results/datasets/{cfg.exp_type}_test_results.csv')
 
 
 results = {cfg.loss_type: 
