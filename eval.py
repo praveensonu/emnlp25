@@ -1,6 +1,6 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '5'
 
 from eval_utils import compute_model_utility_retain, compute_forget_efficacy, compute_model_utility_test
 import torch
@@ -19,15 +19,16 @@ test_path = cfg.test_path
 
 device = 'cuda'
 batch_size = cfg.batch_size
-max_length = 512
+max_length = 256
+cfg.model_id = 'praveensonu/llama_3_1_8b_finetuned'
 
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id)
 tokenizer.pad_token = tokenizer.eos_token
 base_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = "auto", torch_dtype=torch.bfloat16)
 #save_dir = f'{cfg.save_dir}/checkpoint-120'
-model = PeftModel.from_pretrained(base_model, cfg.save_dir, device_map="auto", torch_dtype=torch.bfloat16) #always load with the checkpoint, the last checkpoint is the model.
+model = PeftModel.from_pretrained(base_model, cfg.save_dir, device_map="auto", torch_dtype=torch.bfloat16) #the last checkpoint is the model.
 
-model.merge_and_unload()
+model = model.merge_and_unload()
 
 
 ## perplexity on forget set after unlearning

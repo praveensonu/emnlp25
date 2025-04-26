@@ -5,6 +5,7 @@ config.py
 .fuse_hidden*
 wandb
 *.wandb
+model_push.py
 
 
 
