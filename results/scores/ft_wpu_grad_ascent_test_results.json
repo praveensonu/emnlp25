@@ -1,0 +1,33 @@
+{
+    "grad_ascent": {
+        "forget_efficacy": 0.9865313394432317,
+        "model_utility_retain": 0.0,
+        "model_utility_test": 0.0,
+        "forget_scores": [
+            0.0,
+            0.0,
+            0.040405981670304826
+        ],
+        "retain_scores": [
+            0.0,
+            0.0,
+            0.039252601059485664
+        ],
+        "test_scores": [
+            0.0,
+            2.7100271002710027e-05,
+            0.03669481269818375
+        ],
+        "qa_perplexity_forget": 1e+308,
+        "qa_perplexity_retain": 2.6415008380167123e+29,
+        "test_perplexity": 1.1473917816698786e+34,
+        "exp_type": "grad_ascent",
+        "model_id": "praveensonu/llama_3_1_8b_finetuned",
+        "batch_size": 4,
+        "num_epochs": 10,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 16
+    }
+}

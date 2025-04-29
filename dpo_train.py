@@ -1,6 +1,6 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '7'
 
 
 import pandas as pd
@@ -26,6 +26,7 @@ train_dataset = Dataset.from_pandas(df)
 # if device_map == "DDP":
 #     device_string = PartialState().process_index
 #     device_map={'':device_string}
+
 device = 'cuda'
 
 print(f"\nLoading the Tokenizer {cfg.model_id}")
@@ -76,8 +77,8 @@ training_args= DPOConfig(
         #gradient_checkpointing_kwargs = {"use_reentrant": False},
         #ddp_find_unused_parameters=False,
         beta = 0.1,
-        max_length = 512,
-        max_prompt_length = 512,
+        max_length = 256,
+        max_prompt_length = 256,
     )
 
 dpo_trainer = DPOTrainer(
