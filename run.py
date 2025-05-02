@@ -41,6 +41,7 @@ if device_map == "DDP":
 print(f"\nLoading the Tokenizer {cfg.model_id}")
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id, token = cfg.access_token)
 tokenizer.pad_token = tokenizer.eos_token
+tokenizer.padding_side = "left"
 
 
 print(f"\nLoading the Model {cfg.model_id}")
@@ -230,7 +231,11 @@ if cfg.loss_type == 'van_npo':
                                     max_length = 256,
                                     template_format = None) 
     
-    ref_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, torch_dtype=torch.bfloat16, device_map = device_map, token = cfg.access_token)
+    ref_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, torch_dtype=torch.bfloat16, token = cfg.access_token)
+    ref_model.eval()
+    for param in ref_model.parameters():
+        param.requires_grad = False
+
     training_args = TrainingArguments(
         output_dir = cfg.save_dir,
         overwrite_output_dir= True,
@@ -247,26 +252,41 @@ if cfg.loss_type == 'van_npo':
         gradient_checkpointing=True,
         gradient_checkpointing_kwargs = {"use_reentrant": False},
         report_to = 'wandb',
-        ddp_find_unused_parameters=False,
+        ddp_find_unused_parameters=True,
+        remove_unused_columns=False
     )
-
+    if torch.cuda.is_available():
+        local_rank = training_args.local_rank
+        if local_rank != -1:
+            device = torch.device('cuda', local_rank)
+            ref_model.to(device)
+            print(f"Rank {local_rank}: moved ref_model to {device}")
+        else:
+            device = training_args.device
+            ref_model.to(device)
+            print(f"Moved ref_model to {device}")
 
     trainer = NPOTrainer(
             model = model, 
             ref_model = ref_model,
             args = training_args,
+            beta = cfg.npo_beta,
             train_dataset = dataset,
             tokenizer = tokenizer,
             data_collator = custom_data_collator_forget,
             )
 
 
-
 trainer.train()
 
 #model.merge_and_unload()
-model.save_pretrained(cfg.save_dir)
-tokenizer.save_pretrained(cfg.save_dir)
+if cfg.loss_type == 'van_npo': 
+    model.save_pretrained(cfg.save_dir)
+    if training_args.local_rank <= 0: # Save only on rank 0 (or just check == 0)
+        tokenizer.save_pretrained(f"{cfg.save_dir}/unlearned_model_final")
+        print(f"Rank {training_args.local_rank}: Tokenizer saved.")
+else:
+    tokenizer.save_pretrained(cfg.save_dir)
 print(f'\nForget LoRA adapter saved at {cfg.save_dir}')
 
 

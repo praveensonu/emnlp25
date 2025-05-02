@@ -168,99 +168,218 @@ class BatchGradDiffTrainer(Trainer):
     
 
 
-class NPOTrainer(Trainer):
-    def __init__(self, *args, ref_model=None, beta=0.01, **kwargs):
-        if ref_model is None:
-            raise ValueError("Reference model must be provided.")
-        super().__init__(*args, **kwargs)
-        self.ref_model = ref_model
-        self.beta = beta
-        ref_device = next(self.ref_model.parameters()).device
-        current_process_device = f"cuda:{self.args.local_rank}"
+# class NPOTrainer(Trainer):
+#     def __init__(self, *args, ref_model=None, beta=0.01, **kwargs):
+#         if ref_model is None:
+#             raise ValueError("Reference model must be provided.")
+#         super().__init__(*args, **kwargs)
+#         self.ref_model = ref_model
+#         self.beta = beta
+#         ref_device = next(self.ref_model.parameters()).device
+#         current_process_device = f"cuda:{self.args.local_rank}"
 
-        if str(ref_device) != current_process_device:
-            print(f"WARNING (Process {self.args.local_rank}): ref_model device ({ref_device}) "
-                   f"might not match expected DDP device ({current_process_device}). Check device_map.")
-            try:
-                self.ref_model.to(current_process_device)
-                ref_device = next(self.ref_model.parameters()).device
-                print(f"moved ref_model to {ref_device}")
-            except Exception as e:
-                print(f'ERROR moving ref_model: {e}')
+#         if str(ref_device) != current_process_device:
+#             print(f"WARNING (Process {self.args.local_rank}): ref_model device ({ref_device}) "
+#                    f"might not match expected DDP device ({current_process_device}). Check device_map.")
+#             try:
+#                 self.ref_model.to(current_process_device)
+#                 ref_device = next(self.ref_model.parameters()).device
+#                 print(f"moved ref_model to {ref_device}")
+#             except Exception as e:
+#                 print(f'ERROR moving ref_model: {e}')
 
-        self.ref_model.eval()  # Set reference model to evaluation mode
-        for param in self.ref_model.parameters():
-            param.requires_grad = False # freezing the ref_model params explicitly 
+#         self.ref_model.eval()  # Set reference model to evaluation mode
+#         for param in self.ref_model.parameters():
+#             param.requires_grad = False # freezing the ref_model params explicitly 
 
 
-    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+#     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
              
-        input_ids = inputs['input_ids']
-        labels = inputs['labels']
-        attention_mask = inputs['attention_mask']
+#         input_ids = inputs['input_ids']
+#         labels = inputs['labels']
+#         attention_mask = inputs['attention_mask']
+
+#         outputs = model(input_ids, labels=labels,
+#                         attention_mask=attention_mask)
+#         loss_current = get_batch_loss(outputs.logits, labels)
+
+#         with torch.no_grad():
+#             ref_outputs = self.ref_model(input_ids, labels=labels,
+#                                     attention_mask=attention_mask)
+#             loss_ref = get_batch_loss(ref_outputs.logits, labels)
+
+#         log_probs_policy = -loss_current
+#         log_probs_ref = -loss_ref
+#         logits = log_probs_policy - log_probs_ref
+
+#         if is_main_process(self.args.local_rank):
+#          # Print stats for the first element in the batch for inspection
+#             print(f"\n--- compute_loss Debug (Rank {self.args.local_rank}) ---")
+#             print(f"  loss_current[0]: {loss_current[0].item()}")
+#             print(f"  loss_ref[0]: {loss_ref[0].item()}")
+#             print(f"  log_probs_policy[0]: {log_probs_policy[0].item()}")
+#             print(f"  log_probs_ref[0]: {log_probs_ref[0].item()}")
+#             print(f"  logits[0]: {logits[0].item()}")
+#             # Check for NaNs/Infs *before* logsigmoid
+#             if torch.isnan(logits).any() or torch.isinf(logits).any():
+#                 print("  WARNING: logits contains NaN or Inf!")
+#             # Calculate the term inside logsigmoid
+#             inner_term = -self.beta * logits
+#             print(f"  inner_term[0] (-beta * logits): {inner_term[0].item()}")
+#             if torch.isnan(inner_term).any() or torch.isinf(inner_term).any():
+#                 print("  WARNING: inner_term contains NaN or Inf!")
+        
+#         # Check for stability BEFORE the main calculation
+#         if torch.isnan(logits).any() or torch.isinf(logits).any():
+#             print(f"ERROR (Rank {self.args.local_rank}): NaN/Inf detected in logits. Returning dummy loss 0.")
+#             dummy_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
+#             return (dummy_loss, outputs) if return_outputs else dummy_loss
+        
+#         npo_loss_terms = -F.logsigmoid(inner_term)
+#         if torch.isnan(npo_loss_terms).any() or torch.isinf(npo_loss_terms).any():
+#             print(f"ERROR (Rank {self.args.local_rank}): NaN/Inf detected in npo_loss_terms. Returning dummy loss 0.")
+#             dummy_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
+#             return (dummy_loss, outputs) if return_outputs else dummy_loss
+
+#         # Final check
+#         if torch.isnan(npo_loss_terms).any() or torch.isinf(npo_loss_terms).any():
+#             print(f"ERROR (Rank {self.args.local_rank}): NaN/Inf detected in npo_loss_terms. Returning dummy loss 0.")
+#             dummy_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
+#             return (dummy_loss, outputs) if return_outputs else dummy_loss
+
+#         npo_loss = npo_loss_terms.mean()
+
+#         if is_main_process(self.args.local_rank):
+#             print(f"  npo_loss (mean): {npo_loss.item()}")
+#             print(f"--- End compute_loss Debug ---\n")
+
+#         if torch.isnan(npo_loss) or torch.isinf(npo_loss):
+#             print(f"ERROR (Rank {self.args.local_rank}): Final npo_loss is NaN/Inf. Returning dummy loss 0.")
+#             dummy_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
+#             return (dummy_loss, outputs) if return_outputs else dummy_loss
+
+#         loss = npo_loss
+#         return (loss, outputs) if return_outputs else loss
+
+
+class NPOTrainer(Trainer):
+    def __init__(self, *args, ref_model=None, beta=0.1, **kwargs):
+        super().__init__(*args, **kwargs)
+        if ref_model is None:
+            raise ValueError("NPOTrainer requires a 'ref_model' argument.")
+
+        self.ref_model = ref_model
+        self.beta = beta # Store beta
+
+        # Ensure ref_model is in eval mode and gradients are disabled
+        self.ref_model.eval()
+        for param in self.ref_model.parameters():
+            param.requires_grad = False
+
+    def compute_loss(self, model, inputs,  return_outputs=False, num_items_in_batch=None):
+        """
+        Computes the NPO loss for unlearning.
+
+        Args:
+            model: The DDP-wrapped model being trained.
+            inputs: A dictionary expected to contain 'input_ids', 'attention_mask',
+                    and 'labels' after the data collator.
+            return_outputs: Whether to return model outputs alongside the loss.
+        """
+        # Ensure ref_model is on the same device as the main model for this rank
+        # Trainer should handle input device placement. Model is already on the correct device.
+        # We might need to explicitly move ref_model if it wasn't placed correctly initially.
+        # Usually, the DDP setup handles placing the main 'model' on self.args.device or self.args.local_rank
+        if self.ref_model.device != model.device:
+             self.ref_model.to(model.device) # Move ref_model if necessary
+
+        # Extract inputs - Assuming collator provides a standard dictionary
+        input_ids = inputs.get("input_ids")
+        attention_mask = inputs.get("attention_mask")
+        labels = inputs.get("labels")
+
+        if labels is None:
+             raise ValueError("NPOTrainer requires 'labels' in the inputs.")
+
+        # --- NPO Loss Calculation ---
+        # Get outputs & loss from the current model (the one being trained)
+        # The 'model' here is the DDP-wrapped model. Forward pass runs on the local data shard.
+        outputs = model(input_ids, attention_mask=attention_mask, labels=labels) # Use model's internal loss if possible, or logits
+
+        # Calculate loss_current using get_batch_loss for consistency
+        # Logits might be needed if internal loss isn't per-sequence
+        logits_current = outputs.logits
+        loss_current = get_batch_loss(logits_current, labels) # Shape: (local_batch_size,)
+
+        # Get outputs & loss from the reference model (frozen)
+        with torch.no_grad():
+            # Ensure ref_model is explicitly in eval mode inside no_grad context as well
+            self.ref_model.eval()
+            # Run ref_model on the same inputs for this rank
+            ref_outputs = self.ref_model(input_ids, attention_mask=attention_mask, labels=labels)
+            logits_ref = ref_outputs.logits
+            loss_ref = get_batch_loss(logits_ref, labels) # Shape: (local_batch_size,)
+
+
+        # Calculate NPO loss components
+        neg_log_ratios = loss_current - loss_ref # Shape: (local_batch_size,)
+
+        # Calculate final loss per sequence using logsigmoid
+        # Loss aims to make loss_current > loss_ref for forget data
+        npo_loss_per_sequence = -F.logsigmoid(self.beta * neg_log_ratios) * 2 / self.beta
+
+        # Average the loss across the local batch.
+        # DDP will average the gradients resulting from this loss across all ranks.
+        loss = npo_loss_per_sequence.mean()
+
+        return (loss, outputs) if return_outputs else loss
+    
+
+class NPOTrainer_og(Trainer):
+    def compute_loss(model, ref_model, inputs, beta=0.1):
+        forget_inputs = inputs[0]
+        input_ids, labels, attention_mask = forget_inputs
 
         outputs = model(input_ids, labels=labels,
                         attention_mask=attention_mask)
         loss_current = get_batch_loss(outputs.logits, labels)
 
         with torch.no_grad():
-            ref_outputs = self.ref_model(input_ids, labels=labels,
+            ref_outputs = ref_model(input_ids, labels=labels,
                                     attention_mask=attention_mask)
             loss_ref = get_batch_loss(ref_outputs.logits, labels)
 
-        log_probs_policy = -loss_current
-        log_probs_ref = -loss_ref
-        logits = log_probs_policy - log_probs_ref
+        neg_log_ratios = loss_current - loss_ref
+        loss = - F.logsigmoid(beta * neg_log_ratios).mean() * 2 / beta
 
-        if is_main_process(self.args.local_rank):
-         # Print stats for the first element in the batch for inspection
-            print(f"\n--- compute_loss Debug (Rank {self.args.local_rank}) ---")
-            print(f"  loss_current[0]: {loss_current[0].item()}")
-            print(f"  loss_ref[0]: {loss_ref[0].item()}")
-            print(f"  log_probs_policy[0]: {log_probs_policy[0].item()}")
-            print(f"  log_probs_ref[0]: {log_probs_ref[0].item()}")
-            print(f"  logits[0]: {logits[0].item()}")
-            # Check for NaNs/Infs *before* logsigmoid
-            if torch.isnan(logits).any() or torch.isinf(logits).any():
-                print("  WARNING: logits contains NaN or Inf!")
-            # Calculate the term inside logsigmoid
-            inner_term = -self.beta * logits
-            print(f"  inner_term[0] (-beta * logits): {inner_term[0].item()}")
-            if torch.isnan(inner_term).any() or torch.isinf(inner_term).any():
-                print("  WARNING: inner_term contains NaN or Inf!")
-        
-        # Check for stability BEFORE the main calculation
-        if torch.isnan(logits).any() or torch.isinf(logits).any():
-            print(f"ERROR (Rank {self.args.local_rank}): NaN/Inf detected in logits. Returning dummy loss 0.")
-            dummy_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
-            return (dummy_loss, outputs) if return_outputs else dummy_loss
-        
-        npo_loss_terms = -F.logsigmoid(inner_term)
-        if torch.isnan(npo_loss_terms).any() or torch.isinf(npo_loss_terms).any():
-            print(f"ERROR (Rank {self.args.local_rank}): NaN/Inf detected in npo_loss_terms. Returning dummy loss 0.")
-            dummy_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
-            return (dummy_loss, outputs) if return_outputs else dummy_loss
+        return loss
 
-        # Final check
-        if torch.isnan(npo_loss_terms).any() or torch.isinf(npo_loss_terms).any():
-            print(f"ERROR (Rank {self.args.local_rank}): NaN/Inf detected in npo_loss_terms. Returning dummy loss 0.")
-            dummy_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
-            return (dummy_loss, outputs) if return_outputs else dummy_loss
 
-        npo_loss = npo_loss_terms.mean()
-
-        if is_main_process(self.args.local_rank):
-            print(f"  npo_loss (mean): {npo_loss.item()}")
-            print(f"--- End compute_loss Debug ---\n")
-
-        if torch.isnan(npo_loss) or torch.isinf(npo_loss):
-            print(f"ERROR (Rank {self.args.local_rank}): Final npo_loss is NaN/Inf. Returning dummy loss 0.")
-            dummy_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
-            return (dummy_loss, outputs) if return_outputs else dummy_loss
-
-        loss = npo_loss
-        return (loss, outputs) if return_outputs else loss
-    
+class DPOTrainer(Trainer):
+     def compute_loss(model, ref_model, inputs, beta=0.1, return_outputs=False, num_items_in_batch=None):
+            idk_inputs, forget_inputs, retain_inputs = inputs
+            idk_input_ids, idk_labels, idk_attention_mask = idk_inputs
+            forget_input_ids, forget_labels, forget_attention_mask = forget_inputs
+            idk_outputs = model(idk_input_ids,labels=idk_labels, attention_mask=idk_attention_mask)
+            forget_outputs = model(forget_input_ids,labels=forget_labels, attention_mask=forget_attention_mask)
+            with torch.no_grad():
+                idk_outputs_oracle = ref_model(idk_input_ids,labels=idk_labels, attention_mask=idk_attention_mask)
+                forget_outputs_oracle = ref_model(forget_input_ids,labels=forget_labels, attention_mask=forget_attention_mask)
+                idk_logits_oracle = idk_outputs_oracle.logits
+                forget_logits_oracle = forget_outputs_oracle.logits
+            idk_loss_oracle = -1 * get_batch_loss(idk_logits_oracle, idk_labels)
+            forget_loss_oracle = -1 * get_batch_loss(forget_logits_oracle, forget_labels)
+          
+            idk_loss_current = -1 * get_batch_loss(idk_outputs.logits, idk_labels)
+            forget_loss_current = -1 * get_batch_loss(forget_outputs.logits, forget_labels)
+            pi_logratios = idk_loss_current - forget_loss_current
+            ref_logratios = idk_loss_oracle - forget_loss_oracle
+            beta = 0.1
+            loss = -F.logsigmoid(beta * (pi_logratios - ref_logratios)).mean()
+            print(loss.item())
+            outputs = forget_outputs
+            return loss
+     
     
 class NPO_GradDiffTrainer(Trainer):
     def compute_loss(self, model, inputs, return_outputs = False, num_items_in_batch = None):

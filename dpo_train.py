@@ -65,6 +65,7 @@ training_args= DPOConfig(
         num_train_epochs = cfg.num_epochs,
         learning_rate = cfg.lr,
         bf16 = True,
+        overwrite_output_dir = True,
         #logging_steps = 1,
         # optim = "adamw_8bit",
         # lr_scheduler_type = "linear",
