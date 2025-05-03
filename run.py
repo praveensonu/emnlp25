@@ -16,7 +16,7 @@ from utils import (create_single_dataset,
                    create_interleaved_dual_dataset, 
                    create_batched_dataset,
                    )
-from forget_trainer import GATrainer, GradDiffTrainer, NPOTrainer, BatchGradDiffTrainer
+from forget_trainer import GATrainer, GradDiffTrainer, BatchGradDiffTrainer, InterleavedNPOTrainer
 from accelerate import PartialState
 
 
@@ -226,10 +226,13 @@ if cfg.loss_type == 'grad_ascent' :
 
 ## vanilla npo
 if cfg.loss_type == 'van_npo':
-    dataset = create_single_dataset(data_path = cfg.forget_path,
-                                    tokenizer = tokenizer,
-                                    max_length = 256,
-                                    template_format = None) 
+    dataset = create_vanilla_interleaved_dataset(forget_path, 
+                                  retain_path, 
+                                  tokenizer, 
+                                  256, 
+                                  bs = bsize,
+                                  template_format=None
+        )
     
     ref_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, torch_dtype=torch.bfloat16, token = cfg.access_token)
     ref_model.eval()
@@ -252,28 +255,26 @@ if cfg.loss_type == 'van_npo':
         gradient_checkpointing=True,
         gradient_checkpointing_kwargs = {"use_reentrant": False},
         report_to = 'wandb',
-        ddp_find_unused_parameters=True,
+        ddp_find_unused_parameters=False,
         remove_unused_columns=False
     )
     if torch.cuda.is_available():
         local_rank = training_args.local_rank
-        if local_rank != -1:
-            device = torch.device('cuda', local_rank)
-            ref_model.to(device)
-            print(f"Rank {local_rank}: moved ref_model to {device}")
-        else:
-            device = training_args.device
-            ref_model.to(device)
-            print(f"Moved ref_model to {device}")
+        device = torch.device('cuda', local_rank) if local_rank != -1 else training_args.device
+        ref_model.to(device)
+        print(f"Rank {local_rank if local_rank != -1 else 'N/A'}: Moved ref_model to {device}")
 
-    trainer = NPOTrainer(
+
+    trainer = InterleavedNPOTrainer(
             model = model, 
             ref_model = ref_model,
             args = training_args,
             beta = cfg.npo_beta,
+            alpha = 0,
+            gamma = cfg.npo_forget_gamma,
             train_dataset = dataset,
             tokenizer = tokenizer,
-            data_collator = custom_data_collator_forget,
+            data_collator = custom_data_collator_interleaved_ga,
             )
 
 
