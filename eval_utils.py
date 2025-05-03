@@ -80,55 +80,6 @@ def convert_raw_data_to_model_format(tokenizer: PreTrainedTokenizer,
     
     return torch.tensor(pad_input_ids), torch.tensor(label), torch.tensor(pad_attention_mask)
 
-# def convert_raw_data_to_model_format(tokenizer: PreTrainedTokenizer, 
-#                                      max_length: int, 
-#                                      question : str, 
-#                                      answer : str,
-#                                      template_format = None) -> torch.Tensor:
-    
-#     """
-#     Tokenizes question answer pair and returns input_ids, labels, and attention_mask into SFT format.
-    
-#     Args:
-#         tokenizer (PreTrainedTokenizer): Tokenizer to tokenize the input.
-#         max_length (int): Maximum sequence length. This includes max_new_tokens + token length of question.
-#         question (str): Question to be tokenized.
-#         answer (str): Answer to be tokenized.
-#         question_start_token (str): Start token for question.
-#         question_end_token (str): End token for question.
-#         answer_token (str): Start token for answer.
-    
-#     Returns:
-#         torch.Tensor: Each input_ids, labels, and attention_mask in their own tensor.
-#     """
-#     if template_format:
-#         new_question = template_format.format(instruction=question)
-#     else:
-#         new_question = f"Question: {question}\nAnswer:"
-
-     
-    
-#     full_text = new_question + answer
-
-#     num_question_tokens = len(tokenizer.tokenize(new_question, add_special_tokens=True))
-
-#     encoded = tokenizer(
-#         full_text,
-#         add_special_tokens=True,
-#         max_length=max_length,
-#         truncation=True,
-#     )
-#     pad_length = max_length - len(encoded["input_ids"])
-#     pad_input_ids = encoded['input_ids'] + [128009] + [128004] * (pad_length -1)
-#     pad_attention_mask = encoded['attention_mask'] + [0] * pad_length
-#     if len(encoded['input_ids']) == max_length:
-#         label = encoded.input_ids
-#     else:
-#         label = encoded['input_ids'] + [tokenizer.eos_token_id] + [-100] * (pad_length - 1)
-    
-#     for i in range(num_question_tokens): label[i] = -100
-
-#     return torch.tensor(pad_input_ids), torch.tensor(label), torch.tensor(pad_attention_mask)
 
 
 def add_dataset_index(dataset):
@@ -391,20 +342,6 @@ def calculate_cond_prob(prompt, answer, tokenizer, model, device):
     
     return p_y_given_x
 
-
-# def calculate_cond_prob(prompt, answer, tokenizer, model, device):
-#     full_text = prompt + " " + answer + tokenizer.eos_token
-#     encoded = tokenizer(full_text, return_tensors='pt', add_special_tokens=True).to(device)
-#     full_input_ids = encoded['input_ids']
-#     prompt_encoded = tokenizer(prompt, return_tensors='pt', add_special_tokens=True).to(device)
-#     prompt_len = prompt_encoded['input_ids'].size(1)
-#     labels = full_input_ids.clone()
-#     labels[0, :prompt_len] = -100
-#     with torch.no_grad():
-#         outputs = model(full_input_ids)
-#     p_y_given_x, T, loss_avg = get_probs(outputs, labels)
-    
-#     return p_y_given_x
 
 
 def generate_outputs(text, model, tokenizer, device):
