@@ -1,5 +1,5 @@
 import pandas as pd
-from data_module import DualDataset, SingleDataset, VanillaInterleavedDataset, InterleavedDualDataset, PairedTitleDataset
+from data_module import BasicGradDiffDataset, SingleDataset, VanillaInterleavedDataset, InterleavedDualDataset, PairedTitleDataset
 import json
 from packed_data import SingleDatasetPacked, DualDatasetPacked
 import os
@@ -66,7 +66,7 @@ def load_dataset_from_path(data_path):
     return df
 
 
-def create_dual_dataset(forget_path, retain_path, tokenizer, max_length, template_format=None):
+def create_gd_dataset(forget_path, retain_path, tokenizer, max_length, template_format=None):
     """
     Helper function to create a DualDataset from file paths
     
@@ -78,11 +78,12 @@ def create_dual_dataset(forget_path, retain_path, tokenizer, max_length, templat
         template_format (str, optional): Format template
         
     Returns:
-        DualDataset: Initialized dual dataset
+        GradDiffDataset: Initialized dual dataset
     """
     forget_data = load_dataset_from_path(forget_path)
     retain_data = load_dataset_from_path(retain_path)
-    return DualDataset(forget_data, retain_data, tokenizer, max_length, template_format)
+    return BasicGradDiffDataset(forget_data, retain_data, tokenizer, max_length, template_format)
+
 
 def create_vanilla_interleaved_dataset(forget_path, retain_path, tokenizer, max_length, bs, template_format=None):
     """
@@ -165,36 +166,6 @@ def create_batched_dataset(forget_path, retain_path, tokenizer, max_length, n, b
                               template_format = template_format)
 
 
-def create_packed_dataset(data_path, tokenizer, template_format=None):
-    """
-    Helper function to create a QAForgetDataset with constrained packing from file path
-    
-    Args:
-        data_path (str): Path to dataset CSV
-        tokenizer: Tokenizer instance
-        template_format (str, optional): Format template
-        
-    Returns:
-        QAForgetDataset: Initialized dataset with constrained packing
-    """
-    return SingleDatasetPacked(data_path, tokenizer, template_format)
-
-def create_packed_dual_dataset(forget_path, retain_path, tokenizer, template_format=None):
-    """
-    Helper function to create a DualDataset with constrained packing from file paths
-    
-    Args:
-        forget_path (str): Path to forget dataset CSV
-        retain_path (str): Path to retain dataset CSV
-        tokenizer: Tokenizer instance
-        template_format (str, optional): Format template
-        
-    Returns:
-        DualDataset: Initialized dual dataset with constrained packing
-    """
-    forget_data = load_dataset_from_path(forget_path)
-    retain_data = load_dataset_from_path(retain_path)
-    return DualDatasetPacked(forget_data, retain_data, tokenizer, template_format)
 
 
 

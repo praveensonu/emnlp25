@@ -1,0 +1,33 @@
+{
+    "retain_npo": {
+        "forget_efficacy": 0.3924324033349662,
+        "model_utility_retain": 0.42859025232595194,
+        "model_utility_test": 0.5908846418284094,
+        "forget_scores": [
+            0.40092254344763806,
+            0.6340870872158387,
+            0.7876931593316246
+        ],
+        "retain_scores": [
+            0.26934739197985275,
+            0.5407433602859438,
+            0.6955510680907628
+        ],
+        "test_scores": [
+            0.42223288312105156,
+            0.6839359067596592,
+            0.8021519606463551
+        ],
+        "qa_perplexity_forget": 2.0707030296325684,
+        "qa_perplexity_retain": 2.6646273136138916,
+        "test_perplexity": 1.944138526916504,
+        "exp_type": "retain_npo",
+        "model_id": "praveensonu/llama_3_1_8b_finetuned",
+        "batch_size": 4,
+        "num_epochs": 10,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 16
+    }
+}

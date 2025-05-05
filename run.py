@@ -6,18 +6,20 @@
 
 
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
+from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, default_data_collator
 from config import Config
-from peft import  LoraConfig, get_peft_model, PeftModel
-from data_module import custom_data_collator_forget, custom_data_collator_interleaved_ga, custom_data_collator_paired_title
+from peft import  LoraConfig, get_peft_model
+from data_module import BasicGradDiffDataset
+from collators import grad_diff_collator, custom_data_collator_interleaved_ga
 from utils import (create_single_dataset, 
                    find_all_linear_names, 
-                   create_vanilla_interleaved_dataset, 
+                   #create_gd_dataset, 
                    create_interleaved_dual_dataset, 
                    create_batched_dataset,
                    )
-from forget_trainer import GATrainer, GradDiffTrainer, BatchGradDiffTrainer, InterleavedNPOTrainer
+from forget_trainer import GATrainer, GradDiffTrainer, BatchGradDiffTrainer
 from accelerate import PartialState
+import pandas as pd
 
 
 
@@ -27,6 +29,8 @@ cfg = Config()
 # loading the paths
 
 print('loading the paths to forget, retain and test set')
+forget = pd.read_csv(cfg.forget_path) #cfg.forget_path
+retain = pd.read_csv(cfg.retain_path) #cfg.retain_path
 forget_path = cfg.forget_path
 retain_path = cfg.retain_path
 test_path = cfg.test_path
@@ -78,19 +82,13 @@ print(f'Batch size: {bsize}')
 ## dataset and training args for the standard gradient difference method
 if cfg.loss_type == 'vanilla_grad_diff':
     print('creating the dataset for vanilla gradient diff')
-    dataset = create_vanilla_interleaved_dataset(forget_path, 
-                                  retain_path, 
-                                  tokenizer, 
-                                  256, 
-                                  bs = bsize,
-                                  template_format=None
-    )
+    dataset = BasicGradDiffDataset(forget, retain, tokenizer, 256, template_format=None) 
 
     training_args = TrainingArguments(
         output_dir = cfg.save_dir,
         overwrite_output_dir= True,
         learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size, # for grad diff I used smaller batch size
+        per_device_train_batch_size= cfg.batch_size, 
         num_train_epochs= cfg.num_epochs,
         weight_decay = cfg.weight_decay,
         logging_dir = f'{cfg.save_dir}/logs',
@@ -104,12 +102,12 @@ if cfg.loss_type == 'vanilla_grad_diff':
         report_to = 'wandb',
     )
 
-    trainer = GradDiffTrainer(
+    trainer = BatchGradDiffTrainer(
         model = model,
         args = training_args,
         train_dataset = dataset,
         tokenizer = tokenizer,
-        data_collator = custom_data_collator_interleaved_ga,
+        data_collator = grad_diff_collator,
     )
 
 ## dataset and training args for AILS-NTUA method
@@ -224,70 +222,12 @@ if cfg.loss_type == 'grad_ascent' :
             )
 
 
-## vanilla npo
-if cfg.loss_type == 'van_npo':
-    dataset = create_vanilla_interleaved_dataset(forget_path, 
-                                  retain_path, 
-                                  tokenizer, 
-                                  256, 
-                                  bs = bsize,
-                                  template_format=None
-        )
-    
-    ref_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, torch_dtype=torch.bfloat16, token = cfg.access_token)
-    ref_model.eval()
-    for param in ref_model.parameters():
-        param.requires_grad = False
-
-    training_args = TrainingArguments(
-        output_dir = cfg.save_dir,
-        overwrite_output_dir= True,
-        learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size,
-        num_train_epochs= cfg.num_epochs,
-        weight_decay = cfg.weight_decay,
-        logging_dir = f'{cfg.save_dir}/logs',
-        eval_strategy= 'no',
-        label_names = ['labels'],
-        bf16 = True,
-        gradient_accumulation_steps=1,
-        #save_only_model=True,
-        gradient_checkpointing=True,
-        gradient_checkpointing_kwargs = {"use_reentrant": False},
-        report_to = 'wandb',
-        ddp_find_unused_parameters=False,
-        remove_unused_columns=False
-    )
-    if torch.cuda.is_available():
-        local_rank = training_args.local_rank
-        device = torch.device('cuda', local_rank) if local_rank != -1 else training_args.device
-        ref_model.to(device)
-        print(f"Rank {local_rank if local_rank != -1 else 'N/A'}: Moved ref_model to {device}")
-
-
-    trainer = InterleavedNPOTrainer(
-            model = model, 
-            ref_model = ref_model,
-            args = training_args,
-            beta = cfg.npo_beta,
-            alpha = 0,
-            gamma = cfg.npo_forget_gamma,
-            train_dataset = dataset,
-            tokenizer = tokenizer,
-            data_collator = custom_data_collator_interleaved_ga,
-            )
-
 
 trainer.train()
 
-#model.merge_and_unload()
-if cfg.loss_type == 'van_npo': 
-    model.save_pretrained(cfg.save_dir)
-    if training_args.local_rank <= 0: # Save only on rank 0 (or just check == 0)
-        tokenizer.save_pretrained(f"{cfg.save_dir}/unlearned_model_final")
-        print(f"Rank {training_args.local_rank}: Tokenizer saved.")
-else:
-    tokenizer.save_pretrained(cfg.save_dir)
+
+model.save_pretrained(cfg.save_dir)
+tokenizer.save_pretrained(cfg.save_dir)
 print(f'\nForget LoRA adapter saved at {cfg.save_dir}')
 
 

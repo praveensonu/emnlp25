@@ -1,7 +1,7 @@
 from torch.utils.data import Dataset
 import torch
 import pandas as pd
-from transformers import PreTrainedTokenizer
+from transformers import PreTrainedTokenizer, default_data_collator
 from typing import Tuple
 import math
 import pandas as pd
@@ -10,73 +10,39 @@ import itertools
 import random
 
 
-def convert_raw_data_to_model_qa(tokenizer: PreTrainedTokenizer, 
-                                    max_length: int, 
-                                    question: str, 
-                                    answer: str,
-                                    template_format=None) -> torch.Tensor:
-    """
-    Tokenizes question answer pair and returns input_ids, labels, and attention_mask into SFT format.
+def convert_raw_data_to_model_qa(tokenizer, max_length,  question, answer, configs):
+    question = str(question)
+    answer = str(answer)
     
-    Args:
-        tokenizer (PreTrainedTokenizer): Tokenizer to tokenize the input.
-        max_length (int): Maximum sequence length. This includes max_new_tokens + token length of question.
-        question (str): Question to be tokenized.
-        answer (str): Answer to be tokenized.
-        template_format (str, optional): Custom template format. If None, will use the tokenizer's chat template.
-    
-    Returns:
-        torch.Tensor: Each input_ids, labels, and attention_mask in their own tensor.
-    """
-    # Format the question using either custom template or chat template
-    if template_format:
-        new_question = template_format.format(instruction=question)
-    else:
-        # Use the tokenizer's built-in chat template
-        messages = [{"role": "user", "content": question}]
-        new_question = tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True
-        )
-    
-    full_text = new_question + answer
-    
-    # Get the number of tokens in the question part
-    prompt_inputs = tokenizer(new_question, return_tensors="pt")
-    num_question_tokens = prompt_inputs["input_ids"].size(1)
-    
-    # Tokenize the full text
-    encoded = tokenizer(
-        full_text,
-        add_special_tokens=True,
-        max_length=max_length,
-        truncation=True,
+    messages = [{"role": "user", "content": question}]
+    new_question = tokenizer.apply_chat_template(
+        messages,
+        tokenizer = False,
+        add_generataion_prompt=True
     )
     
-    # Padding logic
-    pad_length = max_length - len(encoded["input_ids"])
+    full_text = str(new_question) + answer
+    num_question_tokens = len(tokenizer.tokenize(str(new_question), add_special_tokens=True))
+
+    encoded = tokenizer(
+        full_text, 
+        add_special_tokens=True, 
+        max_length=max_length, 
+        truncation=True, 
+    )
+    pad_length = max_length - len(encoded.input_ids)
     
-    # Use the tokenizer's pad token instead of hardcoded values if available
-    pad_token_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
-    
-    # Create padded input_ids
-    pad_input_ids = encoded['input_ids'] + [tokenizer.eos_token_id] + [pad_token_id] * (pad_length - 1) if pad_length > 0 else encoded['input_ids']
-    
-    # Create padded attention mask
-    pad_attention_mask = encoded['attention_mask'] + [0] * pad_length if pad_length > 0 else encoded['attention_mask']
-    
-    # Create labels, masking the prompt tokens
-    if len(encoded['input_ids']) == max_length:
-        label = encoded['input_ids'].copy()
+    pad_input_ids = encoded['input_ids'] + [tokenizer.eos_token_id] * pad_length
+    pad_attention_mask = encoded['attention_mask'] + [0] * pad_length
+    if len(encoded.input_ids) == max_length:
+        label = encoded.input_ids
     else:
-        label = encoded['input_ids'] + [tokenizer.eos_token_id] + [-100] * (pad_length - 1)
-    
-    # Mask prompt tokens in labels
-    for i in range(num_question_tokens):
-        label[i] = -100
-    
-    return torch.tensor(pad_input_ids), torch.tensor(label), torch.tensor(pad_attention_mask)
+        label = encoded['input_ids'] + [tokenizer.eos_token_id] + [-100] * (pad_length-1)
+
+    #change label to -100 for question tokens
+    for i in range(num_question_tokens): label[i] = -100
+
+    return torch.tensor(pad_input_ids),torch.tensor(label),torch.tensor(pad_attention_mask)
 
 
 class SingleDataset(Dataset):
@@ -168,6 +134,65 @@ class DualDataset(Dataset):
         )
 
         return (forget_data, retain_data)
+
+
+class BasicGradDiffDataset(Dataset):
+    """
+    Combines a forget-df and a retain-df (each with 'question' & 'answer'),
+    tokenizes both, and returns:
+      {
+        'input_ids': Tensor,
+        'labels': Tensor,
+        'attention_mask': Tensor,
+        'factor': Tensor(-1 or +1)
+      }
+    """
+    def __init__(
+        self,
+        forget_data: pd.DataFrame,
+        retain_data: pd.DataFrame,
+        tokenizer,
+        max_length: int,
+        template_format: str = None,
+        question_key: str = 'question',
+        answer_key: str = 'answer',
+    ):
+        # validate
+        for df_name, df in [('forget_data', forget_data), ('retain_data', retain_data)]:
+            if not all(col in df.columns for col in [question_key, answer_key]):
+                raise ValueError(f"{df_name} must contain columns: {question_key}, {answer_key}")
+
+        # tag factors
+        forget_df = forget_data[[question_key, answer_key]].copy()
+        forget_df['factor'] = -1.0
+        retain_df = retain_data[[question_key, answer_key]].copy()
+        retain_df['factor'] = 1.0
+
+        # merge
+        self.data = pd.concat([forget_df, retain_df], ignore_index=True)
+        self.tokenizer = tokenizer
+        self.max_length = max_length
+        self.template_format = template_format
+        self.qk = question_key
+        self.ak = answer_key
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        row = self.data.iloc[idx]
+        q, ans, factor = row[self.qk], row[self.ak], float(row['factor'])
+
+        input_ids, labels, attention_mask = convert_raw_data_to_model_qa(
+            self.tokenizer, self.max_length, q, ans, self.template_format
+        )
+        return (
+            input_ids,
+            labels,
+            attention_mask,
+            torch.tensor(factor, dtype=torch.float),
+        )
+
 
 
 class VanillaInterleavedDataset(Dataset):
@@ -609,129 +634,7 @@ class PairedTitleDataset(Dataset):
         return (input_ids, labels, attention_mask, torch.tensor(factor, dtype=torch.float), torch.tensor(title_id, dtype=torch.long))
 
 
-def custom_data_collator_forget(samples):
-    """
-    Collate function for the forget dataset only
 
-    Args:
-        samples (list of tuples): Each tuple contains (input_ids, labels, attention_mask)
-
-    Returns:
-        dict: batched_inputs, labels, attention_masks.
-
-    """
-    input_ids = torch.stack([sample[0] for sample in samples])
-    labels = torch.stack([sample[1] for sample in samples])
-    attention_mask = torch.stack([sample[2] for sample in samples])
-    return {'input_ids': input_ids, 'labels': labels, 'attention_mask': attention_mask}
-
-
-
-
-def custom_data_collator_interleaved_ga(samples):
-    """
-    Collate function for the forget dataset samples.
-
-    Each sample is expected to be a tuple:
-        (input_ids, labels, attention_mask, fraction)
-    
-    Returns:
-        dict: A dictionary with the following keys:
-            - 'input_ids': Batched input_ids tensor.
-            - 'labels': Batched labels tensor.
-            - 'attention_mask': Batched attention_mask tensor.
-            - 'factor': Batched tensor of factors (-1 or +1) for each sample.
-    """
-    input_ids = torch.stack([sample[0] for sample in samples])
-    labels = torch.stack([sample[1] for sample in samples])
-    attention_mask = torch.stack([sample[2] for sample in samples])
-    factors = torch.tensor([sample[3] for sample in samples], dtype=torch.float)
-    
-    return {
-        'input_ids': input_ids,
-        'labels': labels,
-        'attention_mask': attention_mask,
-        'factor': factors
-    }
-
-
-def custom_data_collator_paired_title(samples: List[Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]]) -> Dict[str, torch.Tensor]:
-    """
-    Collate function specifically for PairedTitleDataset samples.
-
-    Each sample is expected to be a tuple:
-        (input_ids_tensor, labels_tensor, attention_mask_tensor, factor_tensor, title_id_tensor)
-
-    Returns:
-        dict: A dictionary with the following keys, where values are batched tensors:
-            - 'input_ids': Batched input_ids tensor.
-            - 'labels': Batched labels tensor.
-            - 'attention_mask': Batched attention_mask tensor.
-            - 'factor': Batched tensor of factors (-1.0 or +1.0) for each sample.
-            - 'title_id': Batched tensor of title IDs for each sample.
-    """
-    if not samples:
-        return {} # Handle empty batch case
-
-    # Ensure all samples have the expected number of elements
-    expected_elements = 5
-    if any(len(sample) != expected_elements for sample in samples):
-        raise ValueError(f"All samples must be tuples of length {expected_elements}")
-
-    # Stack the tensors from each sample
-    input_ids = torch.stack([sample[0] for sample in samples])
-    labels = torch.stack([sample[1] for sample in samples])
-    attention_mask = torch.stack([sample[2] for sample in samples])
-    # Factors are already tensors (sample[3]), just stack them
-    factors = torch.stack([sample[3] for sample in samples])
-    # Title IDs are already tensors (sample[4]), just stack them
-    title_ids = torch.stack([sample[4] for sample in samples])
-
-    return {
-        'input_ids': input_ids,
-        'labels': labels,
-        'attention_mask': attention_mask,
-        'factor': factors,
-        'title_id': title_ids  # Add the title_id field
-    }
-
-
-
-
-def custom_gd_collator_forget(samples):
-    """
-    Custom data collator for forget and retain data
-
-    Args:
-        samples: list of tuples (forget_data, retain_data) from the DualDataset class
-
-    Returns:
-        rets: list of tuples (input_ids, labels, attention_mask)
-        example output for batch size 2
-        
-        [(  #forget data for batch of 2
-            torch.tensor([[1, 2, 3, 4], [5, 6, 7, 8]]), # input_ids
-            torch.tensor([[1, 2, 3, 4], [5, 6, 7, 8]]), # labels
-            torch.tensor([[1, 2, 3, 4], [5, 6, 7, 8]]), # attention_mask
-            ),
-            (  #retain data for batch of 2
-            torch.tensor([[1, 2, 3, 4], [5, 6, 7, 8]]), # input_ids
-            torch.tensor([[1, 2, 3, 4], [5, 6, 7, 8]]), # labels
-            torch.tensor([[1, 2, 3, 4], [5, 6, 7, 8]]), # attention_mask
-            ),
-        ]
-
-    """
-
-    forget_samples, retain_samples = [sample[0] for sample in samples], [sample[1] for sample in samples]
-    rets = []
-    for data_type in ["forget", "retain"]:
-        data = forget_samples if data_type == "forget" else retain_samples
-        input_ids = [s[0] for s in data]
-        labels = [s[1] for s in data]
-        attention_mask = [s[2] for s in data]
-        rets.append((torch.stack(input_ids), torch.stack(labels), torch.stack(attention_mask)))
-    return rets
 
 
 
