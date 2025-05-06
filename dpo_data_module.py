@@ -1,8 +1,12 @@
 from data_module import convert_raw_data_to_model_qa
-from torch.utils.data import Dataset
+import torch
+from torch.utils.data import Dataset, ConcatDataset, DataLoader, Sampler
 from typing import Any
 import pandas as pd
-
+import math
+import random
+import itertools
+from transformers import default_data_collator
 
 
 class VanillaDPODataset(Dataset):
@@ -86,6 +90,8 @@ class ForgetIdkRetainDataset(Dataset):
         'retain_labels': …,
         'retain_attention_mask': …,
       }
+
+    Basically, for each sample, it return a dictionary of forget + idk and retain inputs.
     """
     def __init__(
         self,
@@ -144,3 +150,109 @@ class ForgetIdkRetainDataset(Dataset):
             'retain_labels':         rl,
             'retain_attention_mask': rm,
         }
+    
+
+
+class RetainOnlyDataset(Dataset):
+    def __init__(self, retain_df, tokenizer,
+                 max_length, template_format = None,
+                 question_key = 'question',
+                 answer_key = 'answer'):
+        self.df = retain_df.reset_index(drop=True)
+        self.tk = tokenizer
+        self.max_length = max_length
+        self.template_format = template_format
+        self.qk = question_key
+        self.ak = answer_key
+
+    def __len__(self):
+        return len(self.df)
+    
+
+    def __getitem__(self, idx):
+        row = self.df.iloc[idx]
+        q = row[self.qk]
+        ans = row[self.ak]
+
+        ri, rl, rm = convert_raw_data_to_model_qa(self.tk, self.max_length, q, ans, self.template_format)
+
+        return {
+            'retain_input_ids':      ri,
+            'retain_labels':         rl,
+            'retain_attention_mask': rm,
+        }
+    
+class TwoStreamBatchSampler(Sampler):
+    """
+    Yields batches of size B = primary_batch + secondary_bathc
+     - primary batch drawn from forget_data
+     - secondary batch drawn from retain_data (cyclically)
+    cycles the smaller 
+    
+    """
+    def __init__(self, forget_idx, retain_idx, batch_size, primary_batch_size):
+
+        if len(forget_idx) <= len(retain_idx):
+            self.primary, self.secondary = list(forget_idx), list(retain_idx)
+        else:
+            self.primary, self.secondary = list(retain_idx), list(forget_idx)
+        
+        self.batch_size = batch_size
+        self.primary_batch_size = primary_batch_size
+        self.secondary_batch_size = batch_size - primary_batch_size
+
+    def __iter__(self):
+        # shuffle primary every epoch
+        prim_order = random.sample(self.primary, len(self.primary))
+        # forever cycle secondary
+        sec_cycle = itertools.cycle(random.sample(self.secondary, len(self.secondary)))
+
+        for i in range(0, len(prim_order), self.primary_batch_size):
+            p_batch = prim_order[i:i+self.primary_batch_size]
+
+            if len(p_batch) < self.primary_batch_size:
+                break
+
+            s_batch = [next(sec_cycle) for _ in range(self.secondary_batch_size)]
+            batch = p_batch + s_batch
+            random.shuffle(batch)
+            yield batch
+    
+    def __len__(self):
+        return math.floor(len(self.primary) / self.primary_batch_size)
+
+          
+
+def mixed_collate_fn_dpo(features):
+    """
+    collates a list of features containing potentially mixed dictionaries
+    from forget and retain dataset
+    """
+
+    forget_features = []
+    retain_features = []
+
+    for feature in features:
+        if 'answer_input_ids' in feature:
+            forget_features.append({k:v for k,v in feature.items() if isinstance(v, torch.Tensor)})
+        elif 'retain_input_ids' in feature:
+            retain_features.append({k:v for k,v in feature.items() if isinstance(v, torch.Tensor)})
+
+    collated_batch = {}
+    num_forget = len(forget_features)
+    num_retain = len(retain_features)
+
+    if num_forget > 0:
+        forget_collated = default_data_collator(forget_features)
+        collated_batch.update(forget_collated)
+
+    if num_retain > 0:
+        retain_collated = default_data_collator(retain_features)
+        collated_batch.update(retain_collated)
+
+    collated_batch['num_forget'] = num_forget
+    collated_batch['num_retain'] = num_retain
+
+    return collated_batch
+
+        

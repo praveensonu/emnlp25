@@ -5,10 +5,12 @@ import torch.nn.functional as F
 import torch.nn as nn
 from accelerate import Accelerator
 from transformers import Trainer, TrainingArguments
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, ConcatDataset, DataLoader
 from typing import Any
 import pandas as pd
 import copy
+from dpo_data_module import TwoStreamBatchSampler, RetainOnlyDataset, ForgetIdkRetainDataset, mixed_collate_fn_dpo
+
 
 accelerator = Accelerator()
 
@@ -290,5 +292,86 @@ class RetainNPOTrainer(Trainer):
         retain_loss = compute_retain_loss(model, retain_inputs)
         loss = self.gamma * forget_loss + self.alpha * retain_loss
         return (loss, forget_outputs) if return_outputs else loss
+    
+
+
+class RetainDPOTrainerWithSampler(RetainDPOTrainer):
+    def __init__(self, args: TrainingArguments = None,
+                 forget_dataset: Dataset = None,
+                 retain_dataset: Dataset = None,
+                 n_forget_per_batch: int = 1,
+                 batch_size: int = 8,
+                 tokenizer = None,
+                 **kwargs,):
+        
+        if forget_dataset is None or retain_dataset is None:
+            raise ValueError("Both forget_dataset and retain_dataset must be provided.")
+
+        self.forget_dataset = forget_dataset
+        self.retain_dataset = retain_dataset
+        self.n_forget_per_batch = n_forget_per_batch
+        self._train_batch_size = batch_size
+
+        self.combined_dataset = ConcatDataset([self.forget_dataset, self.retain_dataset])
+
+        super().__init__(
+            model = kwargs.get('model'),
+            ref_model = kwargs.get('ref_model'),
+            beta = kwargs.get('beta', 0.1),
+            gamma = kwargs.get('gamma', 1.0),
+            alpha = kwargs.get('alpha', 1.0),
+            args = args,
+            train_dataset = self.combined_dataset,
+            data_collator = None,
+            **{k:v for k,v in kwargs.items() if k not in ['model', 'ref_model', 'beta', 'gamma', 'alpha']}
+        )
+    
+    def get_train_dataloader(self) -> DataLoader:
+        """
+        Overrides the default method to use Twostreambatchsampler and the simple collate function
+        """
+
+        if self.train_dataset is None:
+            raise ValueError("Trainer: training requires a train_dataset.")
+        
+        total_batch_size = self._train_batch_size
+        num_forget_total = len(self.forget_dataset)
+        num_retain_total = len(self.retain_dataset)
+
+        n_retain_per_batch = total_batch_size - self.n_forget_per_batch
+
+        retain_batch_size = n_retain_per_batch
+        forget_batch_size = total_batch_size - retain_batch_size
+
+        if n_retain_per_batch < 0:
+            raise ValueError("n_forget_per_batch cannot exceed total batch size.")
+
+        if n_retain_per_batch == 0 and self.alpha > 0:
+            print("Warning: n_retain_per_batch is 0, but forget loss weight (alpha) > 0")
+
+        if self.n_forget_per_batch == 0 and self.gamma > 0:
+            print("Warning: n_forget_per_batch is 0, but forget loss weight (gamma) > 0")
+
+        
+        # --- creating the sampler ---
+        batch_sampler = TwoStreamBatchSampler(
+                forget_idx=range(num_forget_total),
+                retain_idx = range(num_retain_total),
+                batch_size = total_batch_size,
+                primary_batch_size = self.n_forget_per_batch,
+            )
+
+        dataloader_params = {
+            "batch_sampler": batch_sampler,
+            "collate_fn": mixed_collate_fn_dpo,
+            "num_workers": self.args.dataloader_num_workers,
+            "pin_memory": self.args.dataloader_pin_memory,
+            "persistent_workers": self.args.dataloader_persistent_workers,
+        }
+
+        return DataLoader(
+            self.combined_dataset,
+            **dataloader_params,
+        )
 
     
