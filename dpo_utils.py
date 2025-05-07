@@ -65,7 +65,7 @@ def compute_dpo_loss(model, ref_model, win_inputs = None, lose_inputs = None, be
     return loss, (win_outputs, lose_outputs)
 
 
-def compute_retain_loss(model, retain_inputs):  #need to add loss_type of kl, batch loss
+def compute_retain_loss(model, retain_inputs):  
     retain_outputs = model(**retain_inputs)
     retain_loss = 0.0
     retain_loss += retain_outputs.loss
@@ -340,8 +340,6 @@ class RetainDPOTrainerWithSampler(RetainDPOTrainer):
 
         n_retain_per_batch = total_batch_size - self.n_forget_per_batch
 
-        retain_batch_size = n_retain_per_batch
-        forget_batch_size = total_batch_size - retain_batch_size
 
         if n_retain_per_batch < 0:
             raise ValueError("n_forget_per_batch cannot exceed total batch size.")
