@@ -23,7 +23,7 @@ log = logging.getLogger(__name__)
 cfg = Config()
 
 accelerator = Accelerator()
-accelerator.wait_for_everyone() 
+
 
 # --- Load tokenizer ---
 tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct', token = cfg.access_token)
@@ -110,7 +110,7 @@ training_args = TrainingArguments(
         remove_unused_columns=False,
         report_to = 'wandb',
         seed = 42,
-        dataloader_drop_last=True,
+        ddp_find_unused_parameters=True,
 )
 
 trainer = BatchRetainDPOTrainer(

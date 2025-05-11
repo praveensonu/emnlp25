@@ -314,11 +314,18 @@ class BatchRetainDPOTrainer(Trainer):
             self.data_collator = dpo_retain_collator
 
         
-    def _prepare_ref_model(self, model):
-        ref_model = copy.deepcopy(model)
-        ref_model.eval()
-
-        return self.accelerator.prepare_model(ref_model, evaluation_mode=True)
+    def _prepare_ref_model(self, ref_model):
+        if self.accelerator.is_local_main_process:
+            print("Preparing reference model...")
+    
+        print(f"Rank {self.accelerator.process_index}: In _prepare_ref_model. Accelerator device: {self.accelerator.device}, torch.cuda.current_device(): {torch.cuda.current_device()}") 
+        prepared_ref_model  = self.accelerator.prepare_model(ref_model, evaluation_mode=True)
+        prepared_ref_model.eval()
+        for param in prepared_ref_model.parameters():
+            param.requires_grad = False
+        if self.accelerator.is_local_main_process:
+            print("Reference model prepared and set to eval mode.")
+        return prepared_ref_model
     
     def get_train_dataloader(self) -> DataLoader:
         """
@@ -350,7 +357,7 @@ class BatchRetainDPOTrainer(Trainer):
                     train_dataset,
                     num_replicas=self.args.world_size,
                     rank=self.args.process_index,
-                    shuffle=False # Crucial for maintaining interleaved order across GPUs
+                    shuffle=False # for maintaining interleaved order across GPUs
                 )
             else:
                 dataloader_params["sampler"] = SequentialSampler(train_dataset) # doing this for single GPU
@@ -359,6 +366,7 @@ class BatchRetainDPOTrainer(Trainer):
     
 
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+        
         factors = inputs["factor"]
         device = factors.device
 
@@ -370,7 +378,7 @@ class BatchRetainDPOTrainer(Trainer):
         forget_mask = factors < 0.0
         if forget_mask.any():
             num_forget_samples = forget_mask.sum().item()
-
+            #print(f"num_forget_samples: {num_forget_samples}")
             win_inputs_forget = {
                 "input_ids":      inputs["idk_input_ids"][forget_mask],
                 "attention_mask": inputs["idk_attention_mask"][forget_mask],
@@ -402,7 +410,7 @@ class BatchRetainDPOTrainer(Trainer):
         retain_mask = factors > 0.0
         if retain_mask.any():
             num_retain_samples = retain_mask.sum().item()
-
+            #print(f"num_retain_samples: {num_retain_samples}")
             current_retain_inputs = {
                 "input_ids":      inputs["answer_input_ids"][retain_mask],
                 "attention_mask": inputs["answer_attention_mask"][retain_mask],
