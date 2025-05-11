@@ -344,7 +344,6 @@ class BatchRetainDPOTrainer(Trainer):
         if not isinstance(train_dataset, torch.utils.data.IterableDataset):
             dataloader_params["sampler"] = self._get_train_sampler()
             dataloader_params["drop_last"] = self.args.dataloader_drop_last
-            dataloader_params["worker_init_fn"] = self.args.worker_init_fn
 
             if self.args.world_size > 1:
                 dataloader_params["sampler"] = DistributedSampler(
@@ -356,11 +355,11 @@ class BatchRetainDPOTrainer(Trainer):
             else:
                 dataloader_params["sampler"] = SequentialSampler(train_dataset) # doing this for single GPU
 
-        return self.accelerator.prepare_dataloader(DataLoader(train_dataset, **dataloader_params))
+        return self.accelerator.prepare(DataLoader(train_dataset, **dataloader_params))
     
 
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
-        factors = inputs["factors"]
+        factors = inputs["factor"]
         device = factors.device
 
         total_forget_dpo_loss = torch.tensor(0.0, device=device)
@@ -405,9 +404,9 @@ class BatchRetainDPOTrainer(Trainer):
             num_retain_samples = retain_mask.sum().item()
 
             current_retain_inputs = {
-                "input_ids":      inputs["retain_input_ids"][retain_mask],
-                "attention_mask": inputs["retain_attention_mask"][retain_mask],
-                "labels":         inputs["retain_labels"][retain_mask],
+                "input_ids":      inputs["answer_input_ids"][retain_mask],
+                "attention_mask": inputs["answer_attention_mask"][retain_mask],
+                "labels":         inputs["answer_labels"][retain_mask],
             }
 
             if current_retain_inputs["input_ids"].shape[0] > 0:

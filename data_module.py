@@ -10,7 +10,7 @@ import itertools
 import random
 
 
-def convert_raw_data_to_model_qa(tokenizer, max_length,  question, answer, configs):
+def convert_raw_data_to_model_qa(tokenizer, max_length,  question, answer):
     question = str(question)
     answer = str(answer)
     

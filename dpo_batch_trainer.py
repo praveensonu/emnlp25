@@ -74,17 +74,22 @@ ref_model = AutoModelForCausalLM.from_pretrained(
 forget = pd.read_csv(cfg.forget_path)
 retain = pd.read_csv(cfg.retain_path)
 
+forget['factor'] = -1.0
+retain['factor'] = 1.0
+forget['factor'] = forget['factor'].astype('float')
+retain['factor'] = retain['factor'].astype('float')
+retain['idk'] = 'idk'
+
 
 total_batch_size = 8
 n_forget_in_batch = 1
 n_retain_in_batch = total_batch_size - n_forget_in_batch
 
 train_dataset =  CombinedForgetRetainDataset(
-    forget_ds = forget,
-    retain_ds = retain,
+    forget_df = forget,
+    retain_df = retain,
     tokenizer = tokenizer,
-    max_length = cfg.max_length,
-    padding = 'max_length',
+    max_length = 256,
     block_size = total_batch_size,
     n_forget   = n_forget_in_batch,
     n_retain   = n_retain_in_batch

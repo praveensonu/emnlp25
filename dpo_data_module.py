@@ -280,10 +280,7 @@ class CombinedForgetRetainDataset(Dataset):
                 raise ValueError("retain_df cannot be empty if n_retain > 0")
             if not all(k in retain_df.columns for k in required_cols):
                  raise ValueError(f"retain_df must contain columns: {required_cols}")
-            
-        forget_df['factor'] = -1.0
-        retain_df['factor'] = 1.0
-        retain_df['idk'] = 'idk'
+        
 
         _forget_df = forget_df if forget_df is not None else pd.DataFrame(columns=required_cols)
         _retain_df = retain_df if retain_df is not None else pd.DataFrame(columns=required_cols)
