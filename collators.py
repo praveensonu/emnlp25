@@ -157,3 +157,34 @@ def custom_gd_collator_forget(samples):
         attention_mask = [s[2] for s in data]
         rets.append((torch.stack(input_ids), torch.stack(labels), torch.stack(attention_mask)))
     return rets
+
+
+
+
+def dpo_retain_collator(samples: list[dict]) -> dict[str, torch.Tensor]:
+    """
+    Collates samples from CombinedForgetRetainDataset.
+    Each sample is a dict:
+    {
+        'answer_input_ids': Tensor, 'answer_labels': Tensor, 'answer_attention_mask': Tensor,
+        'idk_input_ids': Tensor, 'idk_labels': Tensor, 'idk_attention_mask': Tensor,
+        'factor': float
+    }
+    Returns a batch dict with stacked tensors.
+    """
+    if not samples:
+        return {}
+
+    keys = samples[0].keys()
+    batch = {}
+
+    for key in keys:
+        if key == 'factor':
+            batch[key] = torch.tensor([sample[key] for sample in samples], dtype=torch.float)
+        elif isinstance(samples[0][key], torch.Tensor):
+            batch[key] = torch.stack([sample[key] for sample in samples])
+        else:
+            # Handle other data types if necessary, though typically tensors or simple types
+            batch[key] = [sample[key] for sample in samples] 
+            
+    return batch

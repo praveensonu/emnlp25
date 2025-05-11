@@ -1,11 +1,9 @@
 from data_module import convert_raw_data_to_model_qa
 import torch
 from torch.utils.data import Dataset, ConcatDataset, DataLoader, Sampler
-from typing import Any
+from typing import Any, Dict
 import pandas as pd
 import math
-import random
-import itertools
 from transformers import default_data_collator
 
 
@@ -152,107 +150,208 @@ class ForgetIdkRetainDataset(Dataset):
         }
     
 
+# ================= Update 5/11/2025 code =================
+# =========== doing interleaving outside the dataset class through interleaving the dataframe itself =======
 
-class RetainOnlyDataset(Dataset):
-    def __init__(self, retain_df, tokenizer,
-                 max_length, template_format = None,
-                 question_key = 'question',
-                 answer_key = 'answer'):
-        self.df = retain_df.reset_index(drop=True)
-        self.tk = tokenizer
+def cycle_df_to_length(df, target_len):
+    """
+    Cyclically repeats rows of a DataFrame to reach a target length.
+    If target_len is 0, returns an empty DataFrame with original columns.
+    If df is empty and target_len > 0, raises ValueError.
+    """
+    if target_len == 0:
+        return pd.DataFrame(columns=df.columns)
+
+    original_len = len(df)
+    if original_len == 0:
+        raise ValueError(f"Cannot create {target_len} rows from an empty DataFrame.")
+    num_repeats = math.ceil(target_len / original_len)
+    
+    padded_df = pd.concat([df] * int(num_repeats), ignore_index=True).iloc[:target_len]
+    return padded_df
+
+
+def _arrange_and_combine_dataframes_internal(
+    forget_df: pd.DataFrame, 
+    retain_df: pd.DataFrame, 
+    block_size: int, 
+    n_forget: int, 
+    n_retain: int
+) -> pd.DataFrame:
+    """
+    Internal helper to combine forget_df and retain_df.
+    """
+    len_forget_orig = len(forget_df)
+    len_retain_orig = len(retain_df)
+
+    
+    if n_forget > 0:
+        if len_forget_orig == 0: 
+ 
+            num_blocks_for_forget = 0 
+        else:
+            num_blocks_for_forget = math.ceil(len_forget_orig / n_forget)
+    else: 
+        num_blocks_for_forget = 0 
+
+
+    if n_retain > 0:
+        if len_retain_orig == 0: 
+            num_blocks_for_retain = 0
+        else:
+            num_blocks_for_retain = math.ceil(len_retain_orig / n_retain)
+    else: 
+        num_blocks_for_retain = 0
+
+    provisional_total_blocks = max(num_blocks_for_forget, num_blocks_for_retain)
+    
+    
+    if provisional_total_blocks == 0 :
+        total_num_blocks = 0 
+    elif provisional_total_blocks % block_size == 0:
+        total_num_blocks = provisional_total_blocks
+    else:
+        total_num_units = provisional_total_blocks
+
+        if total_num_units > 0 and total_num_units % (n_forget + n_retain) != 0: 
+             total_num_units = (total_num_units // (n_forget+n_retain) + 1) * (n_forget+n_retain)
+
+
+    total_forget_needed = total_num_units * n_forget
+    total_retain_needed = total_num_units * n_retain
+    
+    # Pad dataframes
+    padded_forget_df = cycle_df_to_length(forget_df, total_forget_needed)
+    padded_retain_df = cycle_df_to_length(retain_df, total_retain_needed)
+
+    if total_num_units == 0:
+        cols = forget_df.columns if not forget_df.empty else (retain_df.columns if not retain_df.empty else [])
+        return pd.DataFrame(columns=cols)
+
+    combined_blocks_list = []
+    forget_ptr = 0
+    retain_ptr = 0
+
+    for _ in range(total_num_units):
+        if n_forget > 0:
+            combined_blocks_list.append(padded_forget_df.iloc[forget_ptr : forget_ptr + n_forget])
+            forget_ptr += n_forget
+        if n_retain > 0:
+            combined_blocks_list.append(padded_retain_df.iloc[retain_ptr : retain_ptr + n_retain])
+            retain_ptr += n_retain
+            
+    final_df = pd.concat(combined_blocks_list, ignore_index=True)
+    return final_df
+
+
+class CombinedForgetRetainDataset(Dataset):
+    """
+    Dataset class that combines 'forget' and 'retain' data in a specified ratio,
+    processes them into a DPO-like format (question/answer and question/idk pairs),
+    and includes a 'factor' to distinguish sample types.
+    """
+    def __init__(self, 
+                 forget_df: pd.DataFrame, 
+                 retain_df: pd.DataFrame, 
+                 tokenizer: Any, 
+                 max_length: int,
+                 block_size: int, 
+                 n_forget: int,   
+                 n_retain: int,   
+                 question_key: str = 'question',
+                 answer_key: str = 'answer',
+                 idk_key: str = 'idk',
+                 factor_key: str = 'factor',
+                 title_key: str = 'title' 
+                 ):
+        
+        if n_forget + n_retain != block_size:
+            raise ValueError(f"n_forget ({n_forget}) + n_retain ({n_retain}) must equal block_size ({block_size})")
+        if n_forget < 0 or n_retain < 0:
+             raise ValueError("n_forget and n_retain must be non-negative.")
+        required_cols = [question_key, answer_key, idk_key, factor_key, title_key]
+        if n_forget > 0:
+            if forget_df is None or forget_df.empty:
+                raise ValueError("forget_df cannot be empty if n_forget > 0")
+            if not all(k in forget_df.columns for k in required_cols):
+                 raise ValueError(f"forget_df must contain columns: {required_cols}")
+        if n_retain > 0:
+            if retain_df is None or retain_df.empty:
+                raise ValueError("retain_df cannot be empty if n_retain > 0")
+            if not all(k in retain_df.columns for k in required_cols):
+                 raise ValueError(f"retain_df must contain columns: {required_cols}")
+            
+        forget_df['factor'] = -1.0
+        retain_df['factor'] = 1.0
+        retain_df['idk'] = 'idk'
+
+        _forget_df = forget_df if forget_df is not None else pd.DataFrame(columns=required_cols)
+        _retain_df = retain_df if retain_df is not None else pd.DataFrame(columns=required_cols)
+
+
+        self.combined_data = _arrange_and_combine_dataframes_internal(
+            _forget_df, _retain_df, block_size, n_forget, n_retain
+        )
+        
+        self.tokenizer = tokenizer
         self.max_length = max_length
-        self.template_format = template_format
         self.qk = question_key
         self.ak = answer_key
+        self.ik = idk_key
+        self.fk = factor_key
+
+        print(f"Combined dataset initialized with {len(self.combined_data)} samples.")
+        if not self.combined_data.empty:
+            print("Verifying sample structure (first few blocks):")
+            num_verify_blocks = min(3, len(self.combined_data) // block_size)
+            for i in range(num_verify_blocks):
+                start_idx = i * block_size
+                f_count = self.combined_data.iloc[start_idx : start_idx + n_forget][self.fk].nunique() 
+                r_count = self.combined_data.iloc[start_idx + n_forget : start_idx + block_size][self.fk].nunique()
+                actual_n_forget = sum(self.combined_data.iloc[start_idx : start_idx + n_forget][self.fk] < 0)
+                actual_n_retain = sum(self.combined_data.iloc[start_idx + n_forget : start_idx + block_size][self.fk] > 0)
+                
+                print(f"  Block {i}: {actual_n_forget} forget, {actual_n_retain} retain samples. Expected: {n_forget}, {n_retain}")
+                if actual_n_forget != n_forget or actual_n_retain != n_retain :
+                    print(f"    WARN: Mismatch in block {i} structure. Got {actual_n_forget} forget, {actual_n_retain} retain.")
+                    print(f"    Data in block: \n{self.combined_data.iloc[start_idx : start_idx + block_size][[self.qk, self.fk]]}")
+
 
     def __len__(self):
-        return len(self.df)
-    
+        return len(self.combined_data)
 
-    def __getitem__(self, idx):
-        row = self.df.iloc[idx]
-        q = row[self.qk]
-        ans = row[self.ak]
+    def __getitem__(self, idx) -> Dict[str, Any]:
+        if idx >= len(self.combined_data):
+            raise IndexError("Index out of bounds")
+            
+        row = self.combined_data.iloc[idx]
+        
+        q = str(row[self.qk]) 
+        ans = str(row[self.ak])
+        raw_idk = row[self.ik]
+        if isinstance(raw_idk, bool): 
+            idk = "I don't know." if raw_idk else "This is known." 
+        else:
+            idk = str(raw_idk) 
 
-        ri, rl, rm = convert_raw_data_to_model_qa(self.tk, self.max_length, q, ans, self.template_format)
+        factor = float(row[self.fk])
+
+        ai, al, am = convert_raw_data_to_model_qa(self.tokenizer,
+                                                self.max_length,
+                                                q, ans,
+                                                )
+        ii, il, im = convert_raw_data_to_model_qa(self.tokenizer,
+                                                self.max_length,
+                                                q, idk,
+                                                )
 
         return {
-            'retain_input_ids':      ri,
-            'retain_labels':         rl,
-            'retain_attention_mask': rm,
+            'answer_input_ids':      ai,
+            'answer_labels':         al,
+            'answer_attention_mask': am,
+            'idk_input_ids':         ii,
+            'idk_labels':            il,
+            'idk_attention_mask':    im,
+            'factor':                factor 
         }
-    
-class TwoStreamBatchSampler(Sampler):
-    """
-    Yields batches of size B = primary_batch + secondary_bathc
-     - primary batch drawn from forget_data
-     - secondary batch drawn from retain_data (cyclically)
-    cycles the smaller 
-    
-    """
-    def __init__(self, forget_idx, retain_idx, batch_size, primary_batch_size):
-
-        if len(forget_idx) <= len(retain_idx):
-            self.primary, self.secondary = list(forget_idx), list(retain_idx)
-        else:
-            self.primary, self.secondary = list(retain_idx), list(forget_idx)
-        
-        self.batch_size = batch_size
-        self.primary_batch_size = primary_batch_size
-        self.secondary_batch_size = batch_size - primary_batch_size
-
-    def __iter__(self):
-        # shuffle primary every epoch
-        prim_order = random.sample(self.primary, len(self.primary))
-        # forever cycle secondary
-        sec_cycle = itertools.cycle(random.sample(self.secondary, len(self.secondary)))
-
-        for i in range(0, len(prim_order), self.primary_batch_size):
-            p_batch = prim_order[i:i+self.primary_batch_size]
-
-            if len(p_batch) < self.primary_batch_size:
-                break
-
-            s_batch = [next(sec_cycle) for _ in range(self.secondary_batch_size)]
-            batch = p_batch + s_batch
-            random.shuffle(batch)
-            yield batch
-    
-    def __len__(self):
-        return math.floor(len(self.primary) / self.primary_batch_size)
-
           
-
-def mixed_collate_fn_dpo(features):
-    """
-    collates a list of features containing potentially mixed dictionaries
-    from forget and retain dataset
-    """
-
-    forget_features = []
-    retain_features = []
-
-    for feature in features:
-        if 'answer_input_ids' in feature:
-            forget_features.append({k:v for k,v in feature.items() if isinstance(v, torch.Tensor)})
-        elif 'retain_input_ids' in feature:
-            retain_features.append({k:v for k,v in feature.items() if isinstance(v, torch.Tensor)})
-
-    collated_batch = {}
-    num_forget = len(forget_features)
-    num_retain = len(retain_features)
-
-    if num_forget > 0:
-        forget_collated = default_data_collator(forget_features)
-        collated_batch.update(forget_collated)
-
-    if num_retain > 0:
-        retain_collated = default_data_collator(retain_features)
-        collated_batch.update(retain_collated)
-
-    collated_batch['num_forget'] = num_forget
-    collated_batch['num_retain'] = num_retain
-
-    return collated_batch
-
-        

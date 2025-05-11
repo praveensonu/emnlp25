@@ -635,6 +635,147 @@ class PairedTitleDataset(Dataset):
 
 
 
+class InterleavedRatioDataset(Dataset):
+    def __init__(self,
+                 forget_data: pd.DataFrame,
+                 retain_data: pd.DataFrame,
+                 tokenizer: PreTrainedTokenizer,
+                 max_length: int,
+                 num_forget_in_logical_unit: int,
+                 num_retain_in_logical_unit: int,
+                 template_format: str = None,
+                 question_key: str = 'question',
+                 answer_key: str = 'answer'):
+
+        # --- Input Validations ---
+        if not isinstance(forget_data, pd.DataFrame):
+            raise TypeError("forget_data must be a pandas DataFrame.")
+        if not isinstance(retain_data, pd.DataFrame):
+            raise TypeError("retain_data must be a pandas DataFrame.")
+        if not isinstance(tokenizer, PreTrainedTokenizer):
+            raise TypeError("tokenizer must be a PreTrainedTokenizerBase instance.")
+        if not isinstance(max_length, int) or max_length <= 0:
+            raise ValueError("max_length must be a positive integer.")
+        if not isinstance(num_forget_in_logical_unit, int) or num_forget_in_logical_unit < 0:
+            raise ValueError("num_forget_in_logical_unit must be a non-negative integer.")
+        if not isinstance(num_retain_in_logical_unit, int) or num_retain_in_logical_unit < 0:
+            raise ValueError("num_retain_in_logical_unit must be a non-negative integer.")
+        if num_forget_in_logical_unit == 0 and num_retain_in_logical_unit == 0:
+            raise ValueError("Both num_forget_in_logical_unit and num_retain_in_logical_unit cannot be zero.")
+
+        for df_name, df, req_keys in [
+            ('forget_data', forget_data, [question_key, answer_key] if num_forget_in_logical_unit > 0 else []),
+            ('retain_data', retain_data, [question_key, answer_key] if num_retain_in_logical_unit > 0 else [])
+        ]:
+            if not df.empty or req_keys: # Only check columns if df is not empty or keys are expected
+                 if not all(col in df.columns for col in req_keys):
+                    raise ValueError(f"{df_name} must contain columns: {req_keys} if it's to be used.")
+
+
+        self.forget_df = forget_data.reset_index(drop=True)
+        self.retain_df = retain_data.reset_index(drop=True)
+        self.tokenizer = tokenizer
+        self.max_length = max_length
+        self.template_format = template_format
+        self.qk = question_key
+        self.ak = answer_key
+
+        self.num_total_forget = len(self.forget_df)
+        self.num_total_retain = len(self.retain_df)
+
+        self.n_forget_per_unit = 0
+        if self.num_total_forget > 0 and num_forget_in_logical_unit > 0:
+            self.n_forget_per_unit = num_forget_in_logical_unit
+        elif num_forget_in_logical_unit > 0 and self.num_total_forget == 0:
+            print(f"Warning: Requested {num_forget_in_logical_unit} forget samples per unit, but forget_data is empty. No forget samples will be yielded.")
+
+        self.n_retain_per_unit = 0
+        if self.num_total_retain > 0 and num_retain_in_logical_unit > 0:
+            self.n_retain_per_unit = num_retain_in_logical_unit
+        elif num_retain_in_logical_unit > 0 and self.num_total_retain == 0:
+            print(f"Warning: Requested {num_retain_in_logical_unit} retain samples per unit, but retain_data is empty. No retain samples will be yielded.")
+
+        self.logical_unit_length = self.n_forget_per_unit + self.n_retain_per_unit
+
+        if self.logical_unit_length == 0:
+            print("Warning: Effective logical unit length is 0. Dataset will be empty.")
+            self._len = 0
+            self.num_logical_units_to_iterate = 0
+        else:
+            num_f_units_needed = 0
+            if self.n_forget_per_unit > 0:
+                num_f_units_needed = math.ceil(self.num_total_forget / self.n_forget_per_unit)
+
+            num_r_units_needed = 0
+            if self.n_retain_per_unit > 0:
+                num_r_units_needed = math.ceil(self.num_total_retain / self.n_retain_per_unit)
+
+            self.num_logical_units_to_iterate = max(num_f_units_needed, num_r_units_needed)
+            if self.num_logical_units_to_iterate == 0 and (self.num_total_forget > 0 or self.num_total_retain > 0) :
+                 # This can happen if one unit count is >0 but the corresponding dataset is empty,
+                 # and the other unit count is 0. Max becomes 0.
+                 # If only one type of sample is active and has data, iterate through all of them.
+                 if self.n_forget_per_unit > 0 and self.num_total_forget > 0 and self.n_retain_per_unit == 0 :
+                     self._len = self.num_total_forget
+                     self.num_logical_units_to_iterate = num_f_units_needed # re-calc for clarity
+                 elif self.n_retain_per_unit > 0 and self.num_total_retain > 0 and self.n_forget_per_unit == 0:
+                     self._len = self.num_total_retain
+                     self.num_logical_units_to_iterate = num_r_units_needed # re-calc for clarity
+                 else: # Both requested but one or both data sources empty, making effective unit non-constructible.
+                     self._len = 0
+            else:
+                 self._len = self.num_logical_units_to_iterate * self.logical_unit_length
+
+
+        print(f"--- InterleavedRatioDataset Initialized ---")
+        print(f"Requested: {num_forget_in_logical_unit} Forget, {num_retain_in_logical_unit} Retain per logical unit.")
+        print(f"Available: {self.num_total_forget} Forget, {self.num_total_retain} Retain samples.")
+        print(f"Effective: {self.n_forget_per_unit} Forget, {self.n_retain_per_unit} Retain per logical unit.")
+        print(f"Logical Unit Length: {self.logical_unit_length}")
+        print(f"Num Logical Units to Iterate (to cover all data): {self.num_logical_units_to_iterate}")
+        print(f"Total Dataset Length (__len__): {self._len}")
+        print(f"-------------------------------------------")
+
+
+    def __len__(self):
+        return self._len
+
+    def __getitem__(self, idx):
+        if self._len == 0:
+            raise IndexError("Dataset is empty or improperly configured.")
+        if idx >= self._len:
+            raise IndexError(f"Index {idx} out of bounds for dataset of length {self._len}")
+
+        # Determine which logical unit this index falls into (for cycling through source data)
+        logical_unit_cycle_idx = idx // self.logical_unit_length
+        # Position within the current F,F,...,R,R,... pattern of the logical unit
+        pos_in_logical_unit = idx % self.logical_unit_length
+
+        sample_row = None
+        factor_val = 0.0
+
+        if pos_in_logical_unit < self.n_forget_per_unit:
+            # This slot is for a forget sample
+            if self.num_total_forget == 0: # Should be caught by _len == 0 if n_forget_per_unit > 0
+                raise RuntimeError("Attempting to fetch a forget sample, but no forget data is available (this should not happen if configured correctly).")
+            # Index into the original forget_df, cycling if necessary
+            effective_forget_idx = (logical_unit_cycle_idx * self.n_forget_per_unit + pos_in_logical_unit) % self.num_total_forget
+            sample_row = self.forget_df.iloc[effective_forget_idx]
+            factor_val = -1.0
+        else:
+            # This slot is for a retain sample
+            if self.num_total_retain == 0: # Should be caught
+                raise RuntimeError("Attempting to fetch a retain sample, but no retain data is available (this should not happen if configured correctly).")
+            # Position within the retain part of the logical unit
+            pos_in_retain_part = pos_in_logical_unit - self.n_forget_per_unit
+            effective_retain_idx = (logical_unit_cycle_idx * self.n_retain_per_unit + pos_in_retain_part) % self.num_total_retain
+            sample_row = self.retain_df.iloc[effective_retain_idx]
+            factor_val = 1.0
+
+        input_ids, labels, attention_mask = convert_raw_data_to_model_qa(
+            self.tokenizer, self.max_length, sample_row[self.qk], sample_row[self.ak], self.template_format
+        )
+        return (input_ids, labels, attention_mask, torch.tensor(factor_val, dtype=torch.float))
 
 
 
