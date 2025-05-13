@@ -96,7 +96,7 @@ training_args = TrainingArguments(
         max_grad_norm=1.0,
         learning_rate = cfg.lr,
         per_device_train_batch_size= cfg.batch_size, 
-        num_train_epochs= 4,
+        num_train_epochs= cfg.num_epochs,
         weight_decay = cfg.weight_decay,
         logging_dir = f'{cfg.save_dir}/logs',
         logging_steps= 1,
@@ -110,11 +110,20 @@ training_args = TrainingArguments(
         ddp_find_unused_parameters=True,
 )
 
-trainer = BatchRetainDPOTrainer(
+# trainer = BatchRetainDPOTrainer(
+#       model = model,
+#       ref_model= ref_model,
+#       args = training_args,
+#       train_dataset = train_dataset, 
+#       data_collator = dpo_retain_collator,
+#       beta=cfg.npo_beta,
+# )
+
+trainer = BatchRetainNPOTrainer(
       model = model,
       ref_model= ref_model,
       args = training_args,
-      train_dataset = train_dataset, #train_dataset_subset,#train_dataset,
+      train_dataset = train_dataset, 
       data_collator = dpo_retain_collator,
       beta=cfg.npo_beta,
 )

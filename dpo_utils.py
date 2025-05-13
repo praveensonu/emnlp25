@@ -446,3 +446,70 @@ class BatchRetainDPOTrainer(Trainer):
         
         policy_outputs_dict = {}
         return (loss, policy_outputs_dict) if return_outputs else loss
+    
+
+
+class BatchRetainNPOTrainer(BatchRetainDPOTrainer):
+
+    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+        
+        factors = inputs["factor"]
+        device = factors.device
+        lose_inputs_forget_path = {
+            "input_ids": inputs["answer_input_ids"],
+            "attention_mask": inputs["answer_attention_mask"],
+            "labels": inputs["answer_labels"],
+        }
+
+        # --- Prepare inputs for Retain CE path (answer) ---
+        # These will be used by all ranks, but only contribute to loss if factor > 0
+        retain_inputs_ce_path = {
+            "input_ids": inputs["answer_input_ids"],
+            "attention_mask": inputs["answer_attention_mask"],
+            "labels": inputs["answer_labels"],
+        }
+
+        # --- 1. Compute "potential" DPO loss for ALL samples ---
+        # The model and ref_model forward passes will occur for every sample.
+        # Gradients will flow through these paths.
+        potential_dpo_loss_val, _ = compute_dpo_loss( # We don't need dpo_policy_outputs for this test
+            model=model,
+            ref_model=self.ref_model,
+            win_inputs=None,
+            lose_inputs=lose_inputs_forget_path,
+            beta=self.beta,
+        )
+        potential_dpo_loss_val = potential_dpo_loss_val.mean()
+
+
+        # --- 2. Compute "potential" Retain CE loss for ALL samples ---
+        # The model forward pass will occur for every sample.
+        # Gradients will flow through this path.
+        # compute_retain_loss already returns model_outputs.loss which should be a scalar
+        potential_ce_loss_val = compute_retain_loss(
+            model=model,
+            retain_inputs=retain_inputs_ce_path
+        )
+        potential_ce_loss_val = potential_ce_loss_val.mean()
+        actual_dpo_contribution = torch.tensor(0.0, device=device, dtype=potential_dpo_loss_val.dtype)
+        actual_ce_contribution = torch.tensor(0.0, device=device, dtype=potential_ce_loss_val.dtype)
+        current_factor = factors.item()
+        if current_factor < 0.0: # It's a forget sample
+            actual_dpo_contribution = self.gamma * potential_dpo_loss_val 
+        elif current_factor > 0.0: # It's a retain sample
+            actual_ce_contribution = self.alpha * potential_ce_loss_val
+    
+        loss = actual_dpo_contribution + actual_ce_contribution
+
+        # --- Sanity Checks for NaN/Inf ---
+        if not torch.isfinite(potential_dpo_loss_val):
+            print(f"Rank {self.accelerator.process_index} - Potential DPO loss is NaN/Inf: {potential_dpo_loss_val} for factor {current_factor}")
+        if not torch.isfinite(potential_ce_loss_val):
+            print(f"Rank {self.accelerator.process_index} - Potential CE loss is NaN/Inf: {potential_ce_loss_val} for factor {current_factor}")
+        if not torch.isfinite(loss):
+            print(f"Rank {self.accelerator.process_index} - Final loss is NaN/Inf: {loss} for factor {current_factor}")
+            # raise ValueError(f"Rank {self.accelerator.process_index} - NaN/Inf loss detected")
+
+        
+        policy_outputs_dict = {}
+        return (loss, policy_outputs_dict) if return_outputs else loss
