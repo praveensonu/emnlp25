@@ -5,36 +5,6 @@ import pandas as pd
 from typing import Dict, List, Tuple 
 
 
-def grad_diff_collator(samples):
-    """
-    Collate function for your GradDiffDataset, which returns dicts:
-      (
-        'input_ids': Tensor[L],
-        'labels': Tensor[L],
-        'attention_mask': Tensor[L],
-        'factor': Tensor scalar
-      )
-
-    This will batch them into:
-      (
-        'input_ids': Tensor[B, L],
-        'labels': Tensor[B, L],
-        'attention_mask': Tensor[B, L],
-        'factor': Tensor[B]
-      )
-    """
-    input_ids = torch.stack([sample[0] for sample in samples])
-    labels = torch.stack([sample[1] for sample in samples])
-    attention_mask = torch.stack([sample[2] for sample in samples])
-    factor = torch.tensor([sample[3] for sample in samples], dtype=torch.float)
-
-    return {
-        'input_ids':       input_ids,
-        'labels':          labels,
-        'attention_mask':  attention_mask,
-        'factor':          factor,
-    }
-
 
 def custom_data_collator_forget(samples):
     """
@@ -53,7 +23,7 @@ def custom_data_collator_forget(samples):
     return {'input_ids': input_ids, 'labels': labels, 'attention_mask': attention_mask}
 
 
-def custom_data_collator_interleaved_ga(samples):
+def custom_data_collator_interleaved(samples):
     """
     Collate function for the forget dataset samples.
 
@@ -122,7 +92,6 @@ def custom_data_collator_paired_title(samples: List[Tuple[torch.Tensor, torch.Te
 
 
 
-
 def custom_gd_collator_forget(samples):
     """
     Custom data collator for forget and retain data
@@ -184,7 +153,6 @@ def dpo_retain_collator(samples: list[dict]) -> dict[str, torch.Tensor]:
         elif isinstance(samples[0][key], torch.Tensor):
             batch[key] = torch.stack([sample[key] for sample in samples])
         else:
-            # Handle other data types if necessary, though typically tensors or simple types
             batch[key] = [sample[key] for sample in samples] 
             
     return batch

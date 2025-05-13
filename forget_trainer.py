@@ -5,7 +5,9 @@ import torch.nn as nn
 from torch.nn import CrossEntropyLoss
 from accelerate import Accelerator
 from typing import Dict, Union, Any, Optional, List, Tuple, Type
-from torch.utils.data import Dataset, Sampler, DataLoader, SequentialSampler
+from torch.utils.data import DataLoader, SequentialSampler
+from collators import dpo_retain_collator
+from torch.utils.data import DataLoader, DistributedSampler
 
 
 
@@ -43,152 +45,95 @@ class GATrainer(Trainer):
 
         loss = forget_loss
         return (loss, outputs) if return_outputs else loss
-    
-    
 
+
+# using this for the gradient descent method applied in literature
 class GradDiffTrainer(Trainer):
-    ## since outputs.loss gives mean loss over a batch, we need to compute loss over a sequence and avg it.
-    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
-        # 1) extract the +1/-1 factors
-        factor = inputs.pop("factor")   # [B]
-        
-        # 2) forward pass (will return mean loss over batch, but we'll ignore it)
-        outputs = model(**inputs, return_dict=True)
-        logits = outputs.logits                               # [B, L, Vocab]
-        labels = inputs["labels"]                             # [B, L]
+    
+    def compute_loss(self, model, inputs, return_outputs = False, num_items_in_batch = None):
+        forget_inputs, retain_inputs = inputs
+        input_ids, labels, attention_mask = forget_inputs
 
-        # 3) shift for causal LM (predict token i from all tokens < i)
-        shift_logits = logits[..., :-1, :].contiguous()       # [B, L-1, V]
-        shift_labels = labels[..., 1:].contiguous()           # [B, L-1]
+        ## gradient ascent on the forget
+        outputs = model(input_ids,labels=labels, attention_mask=attention_mask)
+        forget_loss = outputs.loss
+        forget_loss = forget_loss * -1
 
-        # 4) token-level loss, no reduction
-        loss_fct = CrossEntropyLoss(ignore_index=-100, reduction="none")
-        token_loss = loss_fct(
-            shift_logits.view(-1, shift_logits.size(-1)),    # [B*(L-1), V]
-            shift_labels.view(-1)                             # [B*(L-1)]
-        )                                                     # [B*(L-1)]
-        
-        # 5) back to [B, L-1], average per example
-        token_loss = token_loss.view(shift_labels.size())    # [B, L-1]
-        example_loss = token_loss.mean(dim=1)                # [B]
+        ## gradient descent on the retain
+        retain_input_ids, retain_labels, retain_attention_mask = retain_inputs
+        retain_outputs = model(retain_input_ids,labels=retain_labels, attention_mask=retain_attention_mask)
+        retain_loss = retain_outputs.loss
+        loss = forget_loss + retain_loss
 
-        # 6) weight by factor and average
-        weighted_loss = (example_loss * factor).mean()       # scalar
+        return (loss, outputs) if return_outputs else loss
+    
+    
 
-        return (weighted_loss, outputs) if return_outputs else weighted_loss
-
-
-def process_inputs(inputs):
+def process_inputs_with_title(inputs):
     """
     Modifies the inputs dictionary by removing 'factor' and 'title_id'
     if they exist. Returns the potentially popped values.
     """
-    # Attempt to pop 'factor'. If it doesn't exist, factor_value will be None.
     factor_value = inputs.pop("factor", None)
-
-    # Attempt to pop 'title_id'. If it doesn't exist, title_id_value will be None.
     title_id_value = inputs.pop("title_id", None)
 
     print(f"Attempted to pop 'factor'. Value obtained: {factor_value}")
     print(f"Attempted to pop 'title_id'. Value obtained: {title_id_value}")
     print(f"Remaining keys in inputs: {list(inputs.keys())}")
-
-    # You can now use factor_value and title_id_value if they are not None
-    # The 'inputs' dictionary has been modified in place.
-
     return factor_value, title_id_value
 
-class BatchGradDiffTrainer(Trainer):
-    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
-        """
-        Computes the adjusted loss for gradient difference unlearning,
-        scaling each sequence's loss by the provided factor (-1 or +1).
-        Handles the presence of 'title_id' in inputs.
-        """
-        # Extract the factors and title_ids (per-sample) and remove them from inputs.
-        
-        factors, title_ids = process_inputs(inputs)  # Expected shape: (batch_size,) - Not used in loss calc but needs removal
 
-        # Forward pass: model should return logits and any additional outputs.
-        outputs = model(**inputs)
-        logits = outputs.logits
-
-        # Assume standard causal LM setup:
-        #   - logits: (batch_size, seq_len, vocab_size)
-        #   - labels: (batch_size, seq_len)
-        shift_logits = logits[..., :-1, :].contiguous()
-        shift_labels = inputs["labels"][..., 1:].contiguous() # Use labels from inputs dict
-
-        # Define loss function with no reduction to keep per-token loss.
-        loss_fct = CrossEntropyLoss(reduction="none")
-
-        # Flatten the logits and labels to compute loss for each token.
-        # Need to handle potential empty tensors if seq_len <= 1 after shift
-        if shift_logits.size(1) == 0:
-            # If sequence length is too short, loss is 0 or handle as error
-            # For now, return 0 loss for this case.
-            adjusted_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
-            print("Warning: Sequence length <= 1 after shifting, resulting in 0 loss for this batch.")
-            return (adjusted_loss, outputs) if return_outputs else adjusted_loss
-
-        loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
-        # Reshape loss to (batch_size, seq_len - 1)
-        loss = loss.view(shift_logits.size(0), -1)
-
-        # Compute the count of valid tokens for each sequence (ignoring tokens with label -100)
-        # Ensure valid_counts is float for division and handle division by zero
-        valid_counts = (shift_labels != -100).sum(dim=-1).float()
-        valid_counts = torch.max(valid_counts, torch.tensor(1.0, device=valid_counts.device)) # Avoid division by zero
-
-        # Calculate the average loss for each sequence independently.
-        per_sequence_loss = loss.sum(dim=-1) / valid_counts  # Shape: (batch_size,)
-
-        # Scale each sequence's loss by its corresponding factor (-1 or +1).
-        scaled_losses = per_sequence_loss * factors
-
-        # Average the scaled per-sequence losses to get a single scalar value.
-        adjusted_loss = scaled_losses.mean()
-
-        return (adjusted_loss, outputs) if return_outputs else adjusted_loss
-    
-
-
-def process_inputs_for_loss(inputs_dict):
+def process_inputs_without_title(inputs_dict):
     """
     Helper to pop 'factor' and other non-model args from inputs before passing to model.
     """
     factor_value = inputs_dict.pop("factor", None)
-    # Pop any other custom keys you might add to the collator output here
-    # title_id_value = inputs_dict.pop("title_id", None)
     return factor_value #, title_id_value
 
+# we use this for batch gradient ascent forget : retain ratio. 
+class BatchGradDiffTrainer(Trainer):
+    def get_train_dataloader(self) -> DataLoader:
+        """
+        Returns the training ['torch.utils.data.DataLoader'] 
+        will use no shuffle for this trainer to support our interleaving dataset
+        """
 
-class SequentialOrderTrainer(Trainer):
-    def _get_train_sampler(self) -> Sampler:
-        """
-        Forces the use of a SequentialSampler for the training dataloader,
-        as the dataset is already interleaved.
-        """
         if self.train_dataset is None:
-            return None
-        if self.args.world_size > 1: # DDP is active
-            from torch.utils.data.distributed import DistributedSampler
-            # Note: For DistributedSampler, shuffle=False means it will process
-            # its assigned shard of data sequentially. This is what we want.
-            return DistributedSampler(
-                self.train_dataset,
-                num_replicas=self.args.world_size,
-                rank=self.args.process_index,
-                shuffle=False # Crucial for maintaining interleaved order across GPUs
-            )
-        else: # Single GPU or CPU
-            return SequentialSampler(self.train_dataset)
+            raise ValueError("Trainer: training requires a train_dataset.")
+
+        train_dataset = self.train_dataset
+
+        data_collator = self.data_collator if self.data_collator is not None else dpo_retain_collator
+
+        dataloader_params = {
+            "batch_size": self.args.train_batch_size,
+            "collate_fn": data_collator,
+            "num_workers": self.args.dataloader_num_workers,
+            "pin_memory" : self.args.dataloader_pin_memory,
+            "persistent_workers": self.args.dataloader_persistent_workers,
+        }
+
+        if not isinstance(train_dataset, torch.utils.data.IterableDataset):
+            dataloader_params["sampler"] = self._get_train_sampler()
+            dataloader_params["drop_last"] = self.args.dataloader_drop_last
+
+            if self.args.world_size > 1:
+                dataloader_params["sampler"] = DistributedSampler(
+                    train_dataset,
+                    num_replicas=self.args.world_size,
+                    rank=self.args.process_index,
+                    shuffle=False # for maintaining interleaved order across GPUs
+                )
+            else:
+                dataloader_params["sampler"] = SequentialSampler(train_dataset) # doing this for single GPU
+
+        return self.accelerator.prepare(DataLoader(train_dataset, **dataloader_params))
 
     def compute_loss(self, model, inputs, return_outputs=False):
         """
         Computes the adjusted loss, scaling each sequence's loss by 'factor'.
         """
-        factors = process_inputs_for_loss(inputs) # Modifies 'inputs' in-place
+        factors = process_inputs_without_title(inputs) # Modifies 'inputs' in-place
 
         if factors is None:
             # This can happen if 'factor' is not in eval_dataset during evaluation.

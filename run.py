@@ -9,17 +9,15 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, default_data_collator
 from config import Config
 from peft import  LoraConfig, get_peft_model
-from data_module import BasicGradDiffDataset
-from collators import grad_diff_collator, custom_data_collator_interleaved_ga
+from data_module import DualDataset, DualBatchDataset
+from collators import custom_gd_collator_forget, custom_data_collator_interleaved, dpo_retain_collator, custom_data_collator_forget
 from utils import (create_single_dataset, 
-                   find_all_linear_names, 
-                   #create_gd_dataset, 
-                   create_interleaved_dual_dataset, 
-                   create_batched_dataset,
+                   find_all_linear_names,
                    )
 from forget_trainer import GATrainer, GradDiffTrainer, BatchGradDiffTrainer
 from accelerate import PartialState
 import pandas as pd
+
 
 
 
@@ -78,11 +76,16 @@ n_forget = cfg.n_forget
 bsize = bsz * ngpus * grad_acc
 print(f'Batch size: {bsize}')
 
+forget['factor'] = -1.0
+retain['factor'] = 1.0
+forget['factor'] = forget['factor'].astype('float')
+retain['factor'] = retain['factor'].astype('float')
+retain['idk'] = 'idk'
 
 ## dataset and training args for the standard gradient difference method
 if cfg.loss_type == 'vanilla_grad_diff':
     print('creating the dataset for vanilla gradient diff')
-    dataset = BasicGradDiffDataset(forget, retain, tokenizer, 256, template_format=None) 
+    dataset = DualDataset(forget, retain, tokenizer, 256, template_format=None) 
 
     training_args = TrainingArguments(
         output_dir = cfg.save_dir,
@@ -102,22 +105,24 @@ if cfg.loss_type == 'vanilla_grad_diff':
         report_to = 'wandb',
     )
 
-    trainer = BatchGradDiffTrainer(
+    trainer = GradDiffTrainer(
         model = model,
         args = training_args,
         train_dataset = dataset,
         tokenizer = tokenizer,
-        data_collator = grad_diff_collator,
+        data_collator = custom_gd_collator_forget,
     )
 
 ## dataset and training args for AILS-NTUA method
 if cfg.loss_type == 'ails_grad_diff':
-    dataset = create_interleaved_dual_dataset(forget_path, 
-                                  retain_path, 
-                                  tokenizer, 
-                                  256, 
+    dataset = DualBatchDataset(forget_df=forget, 
+                                  retain_df = retain, 
+                                  tokenizer = tokenizer, 
+                                  max_length = 256, 
                                   n = n_forget,
-                                  bs = bsize,
+                                  block_size =  bsize,
+                                  n_forget = n_forget,
+                                  n_retain = bsize - n_forget,
                                   template_format=None
     )
 
@@ -144,19 +149,21 @@ if cfg.loss_type == 'ails_grad_diff':
         args = training_args,
         train_dataset = dataset,
         tokenizer = tokenizer,
-        data_collator = custom_data_collator_interleaved_ga,
+        data_collator = custom_data_collator_interleaved,
     )
 
 
-## dataset and training args for the similar batching gradient difference method
+## dataset and training args for the similar title batching gradient difference method
 if cfg.loss_type == 'batch_grad_diff':
-    dataset = create_batched_dataset(forget_path = forget_path,
-                                     retain_path = retain_path,
-                                     tokenizer = tokenizer,
-                                     max_length = 256,
-                                     n = n_forget,
-                                     bs = bsize,
-                                     template_format=None
+    dataset = DualBatchDataset(forget_df=forget, 
+                                  retain_df = retain, 
+                                  tokenizer = tokenizer, 
+                                  max_length = 256, 
+                                  n = n_forget,
+                                  block_size =  bsize,
+                                  n_forget = n_forget,
+                                  n_retain = bsize - n_forget,
+                                  template_format=None
     )
 
     training_args = TrainingArguments(
@@ -182,7 +189,7 @@ if cfg.loss_type == 'batch_grad_diff':
         args = training_args,
         train_dataset = dataset,
         tokenizer = tokenizer,
-        data_collator = custom_data_collator_paired_title,
+        data_collator = dpo_retain_collator,
     )
 
 

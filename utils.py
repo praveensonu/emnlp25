@@ -1,5 +1,5 @@
 import pandas as pd
-from data_module import BasicGradDiffDataset, SingleDataset, VanillaInterleavedDataset, InterleavedDualDataset, PairedTitleDataset
+from data_module import  SingleDataset
 import json
 from packed_data import SingleDatasetPacked, DualDatasetPacked
 import os
@@ -66,61 +66,12 @@ def load_dataset_from_path(data_path):
     return df
 
 
-def create_gd_dataset(forget_path, retain_path, tokenizer, max_length, template_format=None):
-    """
-    Helper function to create a DualDataset from file paths
-    
-    Args:
-        forget_path (str): Path to forget dataset CSV
-        retain_path (str): Path to retain dataset CSV
-        tokenizer: Tokenizer instance
-        max_length (int): Maximum sequence length
-        template_format (str, optional): Format template
-        
-    Returns:
-        GradDiffDataset: Initialized dual dataset
-    """
-    forget_data = load_dataset_from_path(forget_path)
-    retain_data = load_dataset_from_path(retain_path)
-    return BasicGradDiffDataset(forget_data, retain_data, tokenizer, max_length, template_format)
 
 
-def create_vanilla_interleaved_dataset(forget_path, retain_path, tokenizer, max_length, bs, template_format=None):
-    """
-    Helper function to create a DualDataset with interleaved data from file paths
-    
-    Args:
-        forget_path (str): Path to forget dataset CSV
 
-        retain_path (str): Path to retain dataset CSV
-        tokenizer: Tokenizer instance
-        max_length (int): Maximum sequence length
-        template_format (str, optional): Format template
-        
-    Returns:
-        DualDataset: Initialized dual dataset with interleaved data
-    """
-    forget_data = load_dataset_from_path(forget_path)
-    retain_data = load_dataset_from_path(retain_path)
-    return VanillaInterleavedDataset(forget_data, retain_data, tokenizer, max_length, bs, template_format)
 
-def create_interleaved_dual_dataset(forget_path, retain_path, tokenizer, max_length, n, bs, template_format=None):
-    """
-    Helper function to create a DualDataset with interleaved data from file paths
-    
-    Args:
-        forget_path (str): Path to forget dataset CSV
-        retain_path (str): Path to retain dataset CSV
-        tokenizer: Tokenizer instance
-        max_length (int): Maximum sequence length
-        template_format (str, optional): Format template
-        
-    Returns:
-        DualDataset: Initialized dual dataset with interleaved data
-    """
-    forget_data = load_dataset_from_path(forget_path)
-    retain_data = load_dataset_from_path(retain_path)
-    return InterleavedDualDataset(forget_data, retain_data, tokenizer, max_length, n, bs,template_format)
+
+
 
 
 def create_single_dataset(data_path, tokenizer, max_length, template_format=None):
@@ -137,35 +88,6 @@ def create_single_dataset(data_path, tokenizer, max_length, template_format=None
         SingleDataset: Initialized single dataset
     """
     return SingleDataset(data_path, tokenizer, max_length, template_format)
-
-
-def create_batched_dataset(forget_path, retain_path, tokenizer, max_length, n, bs, template_format=None):
-    """
-    Helper function to create a PairedTitleDataset from file paths
-    
-    Args:
-        forget_path (str): Path to forget dataset CSV
-        retain_path (str): Path to retain dataset CSV
-        tokenizer: Tokenizer instance
-        max_length (int): Maximum sequence length
-        bs (int): Batch size
-        template_format (str, optional): Format template
-        
-    Returns:
-        PairedTitleDataset: Initialized paired title dataset
-    """
-    forget_data = load_dataset_from_path(forget_path)
-    retain_data = load_dataset_from_path(retain_path)
-    return PairedTitleDataset(forget_data = forget_data, 
-                              retain_data = retain_data, 
-                              tokenizer = tokenizer, 
-                              max_length = max_length, 
-                              n = n, 
-                              bs = bs,
-                              title_key = 'title',
-                              template_format = template_format)
-
-
 
 
 

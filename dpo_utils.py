@@ -25,6 +25,7 @@ def get_batch_loss(output, labels):
     return loss
 
 
+
 def compute_dpo_loss(model, ref_model, win_inputs = None, lose_inputs = None, beta=1.0):
     if win_inputs is None and lose_inputs is None:
         raise ValueError("Both win_inputs and lose_inputs cannot be None")
@@ -53,7 +54,7 @@ def compute_dpo_loss(model, ref_model, win_inputs = None, lose_inputs = None, be
         lose_ref_loss = get_batch_loss(lose_ref_logits, lose_inputs['labels'])
         lose_log_ratio = - (lose_loss - lose_ref_loss)
 
-    loss = -2 / beta * F.logsigmoid(beta * (win_log_ratio - lose_log_ratio)).mean()
+    loss =  -2 / beta * F.logsigmoid(beta * (win_log_ratio - lose_log_ratio)).mean()
     return loss, (win_outputs, lose_outputs)
 
 
@@ -370,62 +371,78 @@ class BatchRetainDPOTrainer(Trainer):
         factors = inputs["factor"]
         device = factors.device
 
-        total_forget_dpo_loss = torch.tensor(0.0, device=device)
-        total_retain_ce_loss = torch.tensor(0.0, device=device)
 
-        policy_outputs_dict = {}
+        win_inputs_forget_path = {
+        "input_ids": inputs["idk_input_ids"],
+        "attention_mask": inputs["idk_attention_mask"],
+        "labels": inputs["idk_labels"],
+        }
+        lose_inputs_forget_path = {
+            "input_ids": inputs["answer_input_ids"],
+            "attention_mask": inputs["answer_attention_mask"],
+            "labels": inputs["answer_labels"],
+        }
 
-        forget_mask = factors < 0.0
-        if forget_mask.any():
-            num_forget_samples = forget_mask.sum().item()
-            #print(f"num_forget_samples: {num_forget_samples}")
-            win_inputs_forget = {
-                "input_ids":      inputs["idk_input_ids"][forget_mask],
-                "attention_mask": inputs["idk_attention_mask"][forget_mask],
-                "labels":         inputs["idk_labels"][forget_mask],
-            }
+        # --- Prepare inputs for Retain CE path (answer) ---
+        # These will be used by all ranks, but only contribute to loss if factor > 0
+        retain_inputs_ce_path = {
+            "input_ids": inputs["answer_input_ids"],
+            "attention_mask": inputs["answer_attention_mask"],
+            "labels": inputs["answer_labels"],
+        }
 
-            lose_inputs_forget = {
-                "input_ids":      inputs["answer_input_ids"][forget_mask],
-                "attention_mask": inputs["answer_attention_mask"][forget_mask],
-                "labels":         inputs["answer_labels"][forget_mask],
-            }
+        # --- 1. Compute "potential" DPO loss for ALL samples ---
+        # The model and ref_model forward passes will occur for every sample.
+        # Gradients will flow through these paths.
+        potential_dpo_loss_val, _ = compute_dpo_loss( # We don't need dpo_policy_outputs for this test
+            model=model,
+            ref_model=self.ref_model,
+            win_inputs=win_inputs_forget_path,
+            lose_inputs=lose_inputs_forget_path,
+            beta=self.beta,
+        )
+        # Ensure it's a scalar tensor if compute_dpo_loss returns per-sample loss and batch_size > 1
+        # For batch_size=1, it should already be a scalar or (1,) tensor. .mean() is safe.
+        potential_dpo_loss_val = potential_dpo_loss_val.mean()
 
-            if win_inputs_forget["input_ids"].shape[0] > 0:
-                forget_loss_val, dpo_policy_outputs = compute_dpo_loss(
-                    model      = model,
-                    ref_model  = self.ref_model,
-                    win_inputs = win_inputs_forget,
-                    lose_inputs=lose_inputs_forget,
-                    beta       = self.beta,
-                )
-                total_forget_dpo_loss = forget_loss_val
 
-                if return_outputs:
-                    policy_outputs_dict.update({f"dpo_{k}": v for k,v in dpo_policy_outputs.items()})
-            else:
-                if self.accelerator.is_local_main_process:
-                    print("Warning: forget_mask was true, but resulted in 0 forget samples after indexing.")
+        # --- 2. Compute "potential" Retain CE loss for ALL samples ---
+        # The model forward pass will occur for every sample.
+        # Gradients will flow through this path.
+        # compute_retain_loss already returns model_outputs.loss which should be a scalar
+        potential_ce_loss_val = compute_retain_loss(
+            model=model,
+            retain_inputs=retain_inputs_ce_path
+        )
+        potential_ce_loss_val = potential_ce_loss_val.mean()
 
-        retain_mask = factors > 0.0
-        if retain_mask.any():
-            num_retain_samples = retain_mask.sum().item()
-            #print(f"num_retain_samples: {num_retain_samples}")
-            current_retain_inputs = {
-                "input_ids":      inputs["answer_input_ids"][retain_mask],
-                "attention_mask": inputs["answer_attention_mask"][retain_mask],
-                "labels":         inputs["answer_labels"][retain_mask],
-            }
 
-            if current_retain_inputs["input_ids"].shape[0] > 0:
-                retain_loss_val = compute_retain_loss(model = model, retain_inputs=current_retain_inputs)
-                total_retain_ce_loss = retain_loss_val
-            else:
-                if self.accelerator.is_local_main_process:
-                    print("Warning: retain_mask was true, but resulted in 0 retain samples after indexing.")
+        actual_dpo_contribution = torch.tensor(0.0, device=device, dtype=potential_dpo_loss_val.dtype)
+        actual_ce_contribution = torch.tensor(0.0, device=device, dtype=potential_ce_loss_val.dtype)
+
+        current_factor = factors.item()
+    
+        if current_factor < 0.0: # It's a forget sample
+            actual_dpo_contribution = self.gamma * potential_dpo_loss_val
+        
+        elif current_factor > 0.0: # It's a retain sample
+            actual_ce_contribution = self.alpha * potential_ce_loss_val
+        
+
+        loss = actual_dpo_contribution + actual_ce_contribution
+
+        # --- Sanity Checks for NaN/Inf ---
+        if not torch.isfinite(potential_dpo_loss_val):
+            print(f"Rank {self.accelerator.process_index} - Potential DPO loss is NaN/Inf: {potential_dpo_loss_val} for factor {current_factor}")
+            # You might want to save inputs["idk_input_ids"] and inputs["answer_input_ids"] here
+        if not torch.isfinite(potential_ce_loss_val):
+            print(f"Rank {self.accelerator.process_index} - Potential CE loss is NaN/Inf: {potential_ce_loss_val} for factor {current_factor}")
+            # You might want to save inputs["answer_input_ids"] here
+        if not torch.isfinite(loss):
+            print(f"Rank {self.accelerator.process_index} - Final loss is NaN/Inf: {loss} for factor {current_factor}")
+            # Consider raising an error or stopping if NaNs occur, especially during this test
+            # raise ValueError(f"Rank {self.accelerator.process_index} - NaN/Inf loss detected")
 
         
-        loss = self.gamma * total_forget_dpo_loss + self.alpha * total_retain_ce_loss
-
+        policy_outputs_dict = {}
         return (loss, policy_outputs_dict) if return_outputs else loss
-    
