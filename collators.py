@@ -1,6 +1,6 @@
 import torch
 from transformers import  default_data_collator
-from typing import Tuple
+from typing import Tuple, Any
 import pandas as pd
 from typing import Dict, List, Tuple 
 
@@ -130,29 +130,79 @@ def custom_gd_collator_forget(samples):
 
 
 
-def dpo_retain_collator(samples: list[dict]) -> dict[str, torch.Tensor]:
+# def dpo_retain_collator(samples: list[dict]) -> dict[str, torch.Tensor]:
+#     """
+#     Collates samples from CombinedForgetRetainDataset.
+#     Each sample is a dict:
+#     {
+#         'answer_input_ids': Tensor, 'answer_labels': Tensor, 'answer_attention_mask': Tensor,
+#         'idk_input_ids': Tensor, 'idk_labels': Tensor, 'idk_attention_mask': Tensor,
+#         'factor': float
+#     }
+#     Returns a batch dict with stacked tensors.
+#     """
+#     if not samples:
+#         return {}
+
+#     keys = samples[0].keys()
+#     batch = {}
+
+#     for key in keys:
+#         if key == 'factor':
+#             batch[key] = torch.tensor([sample[key] for sample in samples], dtype=torch.float)
+#         elif isinstance(samples[0][key], torch.Tensor):
+#             batch[key] = torch.stack([sample[key] for sample in samples])
+#         else:
+#             batch[key] = [sample[key] for sample in samples] 
+            
+#     return batch
+
+
+def dpo_retain_collator(samples: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
     """
     Collates samples from CombinedForgetRetainDataset.
-    Each sample is a dict:
+    Each sample is a dict, potentially including:
     {
         'answer_input_ids': Tensor, 'answer_labels': Tensor, 'answer_attention_mask': Tensor,
         'idk_input_ids': Tensor, 'idk_labels': Tensor, 'idk_attention_mask': Tensor,
-        'factor': float
+        'factor': float,
+        'original_index': Tensor (scalar, long)
     }
-    Returns a batch dict with stacked tensors.
+    Returns a batch dict with stacked tensors. 'factor' is converted to a float tensor.
     """
     if not samples:
         return {}
 
-    keys = samples[0].keys()
+    # Initialize the batch dictionary
     batch = {}
+    # Get all keys from the first sample to ensure consistency
+    # (though all samples from your dataset should have the same keys)
+    first_sample_keys = samples[0].keys()
 
-    for key in keys:
+    for key in first_sample_keys:
+        # Get all values for the current key from all samples
+        values = [sample[key] for sample in samples]
+
         if key == 'factor':
-            batch[key] = torch.tensor([sample[key] for sample in samples], dtype=torch.float)
-        elif isinstance(samples[0][key], torch.Tensor):
-            batch[key] = torch.stack([sample[key] for sample in samples])
+            # Special handling for 'factor': convert list of floats to a tensor
+            batch[key] = torch.tensor(values, dtype=torch.float)
+        elif isinstance(values[0], torch.Tensor):
+            # If the value is a tensor (e.g., input_ids, labels, attention_mask, original_index), stack them
+            batch[key] = torch.stack(values)
+        elif isinstance(values[0], (int, float, bool, str)):
+            # If it's a basic Python type, you might want to convert to a tensor
+            # or handle as per your model's needs. For 'original_index' if it were not a tensor,
+            # you'd convert it here. But since we made it a tensor in __getitem__, this case
+            # might not be hit for 'original_index'.
+            # Let's assume for now other non-tensor items are not expected or are handled by HF Trainer later.
+            # If you had other scalar metadata you wanted as tensors:
+            # if all(isinstance(v, (int, float)) for v in values):
+            #     batch[key] = torch.tensor(values)
+            # else:
+            #     batch[key] = values # Keep as list if mixed or string
+            batch[key] = values # Default to keeping as a list if not tensor and not factor
         else:
-            batch[key] = [sample[key] for sample in samples] 
+            # Fallback for other types (e.g., list of strings if not handled above)
+            batch[key] = values
             
     return batch

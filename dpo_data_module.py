@@ -382,6 +382,7 @@ class CombinedForgetRetainDataset(Dataset):
             'idk_input_ids':         ii,
             'idk_labels':            il,
             'idk_attention_mask':    im,
-            'factor':                factor 
+            'factor':                factor,
+            'original_index':        torch.tensor(idx, dtype=torch.long)
         }
           

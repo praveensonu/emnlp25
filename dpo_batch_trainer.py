@@ -1,4 +1,4 @@
-# 1. export CUDA_VISIBLE_DEVICES=4,5
+# 1. export CUDA_VISIBLE_DEVICES=1,7
 # 2. accelerate launch --multi_gpu --num_processes 2 dpo_batch_trainer.py
 
 from dpo_utils import *
@@ -11,7 +11,7 @@ import torch
 from peft import  LoraConfig, get_peft_model
 from utils import find_all_linear_names
 import pandas as pd
-
+from torch.utils.data import Subset
 
 
 #torch.autograd.set_detect_anomaly(True)
@@ -25,7 +25,6 @@ accelerator = Accelerator()
 # --- Load tokenizer ---
 tokenizer = AutoTokenizer.from_pretrained('meta-llama/Meta-Llama-3.1-8B-Instruct', token = cfg.access_token)
 if tokenizer.pad_token is None:
-        
         tokenizer.pad_token = tokenizer.eos_token
 if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
@@ -79,6 +78,7 @@ retain['idk'] = 'idk'
 total_batch_size = 8
 n_forget_in_batch = 1
 n_retain_in_batch = total_batch_size - n_forget_in_batch
+print(f"Batch size: {total_batch_size}, Forget samples in batch: {n_forget_in_batch}, Retain samples in batch: {n_retain_in_batch}")
 
 train_dataset =  CombinedForgetRetainDataset(
     forget_df = forget,
@@ -90,13 +90,31 @@ train_dataset =  CombinedForgetRetainDataset(
     n_retain   = n_retain_in_batch
 )
 
+# ## ------- checking if the dataloader is working properly -------
+# problematic_indices = list(range(0, 24)) # 504, 505, 506, 507, 508, 509, 510, 511
+
+# valid_problematic_indices = [idx for idx in problematic_indices if idx < len(train_dataset)]
+# if len(valid_problematic_indices) != len(problematic_indices):
+#     print(f"Warning: Some problematic indices were out of bounds. Using {len(valid_problematic_indices)} indices.")
+
+# if not valid_problematic_indices:
+#     raise ValueError("No valid problematic indices to test. Check your index range and dataset size.")
+
+# # --- Create the SUBSET dataset ---
+# train_dataset_subset = Subset(train_dataset, valid_problematic_indices)
+# print(f"Subset dataset created with {len(train_dataset_subset)} samples (indices: {valid_problematic_indices}).")
+
+# print(train_dataset.combined_data['factor'].head(32).tolist())
+
+
+
 training_args = TrainingArguments(
-        output_dir = cfg.save_dir,
+        output_dir = f'{cfg.save_dir}',
         overwrite_output_dir= True,
         max_grad_norm=1.0,
         learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size, 
-        num_train_epochs= cfg.num_epochs,
+        per_device_train_batch_size= 1, 
+        num_train_epochs= 10,
         weight_decay = cfg.weight_decay,
         logging_dir = f'{cfg.save_dir}/logs',
         logging_steps= 1,
@@ -107,19 +125,10 @@ training_args = TrainingArguments(
         remove_unused_columns=False,
         report_to = 'wandb',
         seed = 42,
-        ddp_find_unused_parameters=True,
+        ddp_find_unused_parameters=False,
 )
 
-# trainer = BatchRetainDPOTrainer(
-#       model = model,
-#       ref_model= ref_model,
-#       args = training_args,
-#       train_dataset = train_dataset, 
-#       data_collator = dpo_retain_collator,
-#       beta=cfg.npo_beta,
-# )
-
-trainer = BatchRetainNPOTrainer(
+trainer = BatchRetainDPOTrainer(
       model = model,
       ref_model= ref_model,
       args = training_args,
@@ -127,6 +136,15 @@ trainer = BatchRetainNPOTrainer(
       data_collator = dpo_retain_collator,
       beta=cfg.npo_beta,
 )
+
+# trainer = BatchRetainNPOTrainer(
+#       model = model,
+#       ref_model= ref_model,
+#       args = training_args,
+#       train_dataset = train_dataset, 
+#       data_collator = dpo_retain_collator,
+#       beta=cfg.npo_beta,
+# )
 
 trainer.train()
 # try:

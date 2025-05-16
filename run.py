@@ -15,12 +15,12 @@ from utils import (create_single_dataset,
                    find_all_linear_names,
                    )
 from forget_trainer import GATrainer, GradDiffTrainer, BatchGradDiffTrainer
-from accelerate import PartialState
+from accelerate import Accelerator
 import pandas as pd
 
 
 
-
+accelerator = Accelerator()
 
 cfg = Config()
 
@@ -34,11 +34,7 @@ retain_path = cfg.retain_path
 test_path = cfg.test_path
 
 
-device_map = "DDP"
 
-if device_map == "DDP":
-    device_string = PartialState().process_index
-    device_map={'':device_string}
 
 print(f"\nLoading the Tokenizer {cfg.model_id}")
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id, token = cfg.access_token)
@@ -48,7 +44,6 @@ tokenizer.padding_side = "left"
 
 print(f"\nLoading the Model {cfg.model_id}")
 model = AutoModelForCausalLM.from_pretrained(cfg.model_id, 
-                                             device_map = device_map,
                                              torch_dtype = torch.bfloat16, 
                                              token=cfg.access_token,)
 
@@ -100,8 +95,6 @@ if cfg.loss_type == 'vanilla_grad_diff':
         bf16 = True,
         gradient_accumulation_steps= 1,
         #save_only_model=True,
-        gradient_checkpointing=True,
-        gradient_checkpointing_kwargs = {"use_reentrant": False},
         report_to = 'wandb',
     )
 
@@ -130,7 +123,7 @@ if cfg.loss_type == 'ails_grad_diff':
         output_dir = cfg.save_dir,
         overwrite_output_dir= True,
         learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size, # for grad diff I used smaller batch size
+        per_device_train_batch_size= cfg.batch_size, 
         num_train_epochs= cfg.num_epochs,
         weight_decay = cfg.weight_decay,
         logging_dir = f'{cfg.save_dir}/logs',
@@ -139,8 +132,6 @@ if cfg.loss_type == 'ails_grad_diff':
         bf16 = True,
         gradient_accumulation_steps= 1,
         #save_only_model=True,
-        gradient_checkpointing=True,
-        gradient_checkpointing_kwargs = {"use_reentrant": False},
         report_to = 'wandb',
     )
 
@@ -159,11 +150,10 @@ if cfg.loss_type == 'batch_grad_diff':
                                   retain_df = retain, 
                                   tokenizer = tokenizer, 
                                   max_length = 256, 
-                                  n = n_forget,
                                   block_size =  bsize,
                                   n_forget = n_forget,
                                   n_retain = bsize - n_forget,
-                                  template_format=None
+                                  
     )
 
     training_args = TrainingArguments(
@@ -178,9 +168,6 @@ if cfg.loss_type == 'batch_grad_diff':
     label_names = ['labels'],
     bf16 = True,
     gradient_accumulation_steps= 1,
-    #save_only_model=True,
-    gradient_checkpointing=True,
-    gradient_checkpointing_kwargs = {"use_reentrant": False},
     report_to = 'wandb',
 )
 
@@ -214,8 +201,6 @@ if cfg.loss_type == 'grad_ascent' :
         bf16 = True,
         gradient_accumulation_steps=1,
         #save_only_model=True,
-        gradient_checkpointing=True,
-        gradient_checkpointing_kwargs = {"use_reentrant": False},
         report_to = 'wandb',
     )
 
@@ -232,9 +217,13 @@ if cfg.loss_type == 'grad_ascent' :
 
 trainer.train()
 
-
+accelerator.wait_for_everyone()
 model.save_pretrained(cfg.save_dir)
-tokenizer.save_pretrained(cfg.save_dir)
+if training_args.local_rank <= 0: 
+    tokenizer.save_pretrained(f"{cfg.save_dir}/unlearned_model_final")
+    print(f"Rank {training_args.local_rank}: Tokenizer saved.")
+else:
+    tokenizer.save_pretrained(cfg.save_dir)
 print(f'\nForget LoRA adapter saved at {cfg.save_dir}')
 
 

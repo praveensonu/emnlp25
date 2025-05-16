@@ -287,7 +287,8 @@ class RetainNPOTrainer(Trainer):
         return (loss, forget_outputs) if return_outputs else loss
     
 
-
+### this setting only works for per device train batch size of 1
+## the idea is I have 2 gpus, per device is 1. so total batch size is 2. Grad accumulation steps is 4. 
 
 class BatchRetainDPOTrainer(Trainer):
     def __init__(self,
@@ -329,47 +330,48 @@ class BatchRetainDPOTrainer(Trainer):
         return prepared_ref_model
     
     def get_train_dataloader(self) -> DataLoader:
-        """
-        Returns the training ['torch.utils.data.DataLoader'] 
-        will use no shuffle for this trainer to support our interleaving dataset
-        """
-
         if self.train_dataset is None:
             raise ValueError("Trainer: training requires a train_dataset.")
-
         train_dataset = self.train_dataset
-
-        data_collator = self.data_collator if self.data_collator is not None else dpo_retain_collator
+        data_collator = self.data_collator # Assuming it's set
 
         dataloader_params = {
             "batch_size": self.args.train_batch_size,
             "collate_fn": data_collator,
             "num_workers": self.args.dataloader_num_workers,
-            "pin_memory" : self.args.dataloader_pin_memory,
+            "pin_memory": self.args.dataloader_pin_memory,
             "persistent_workers": self.args.dataloader_persistent_workers,
+            "drop_last": self.args.dataloader_drop_last, # Get from args
         }
 
         if not isinstance(train_dataset, torch.utils.data.IterableDataset):
-            dataloader_params["sampler"] = self._get_train_sampler()
-            dataloader_params["drop_last"] = self.args.dataloader_drop_last
-
             if self.args.world_size > 1:
-                dataloader_params["sampler"] = DistributedSampler(
+                print(f"Rank {self.args.process_index}: Instantiating DistributedSampler.")
+                sampler = DistributedSampler(
                     train_dataset,
                     num_replicas=self.args.world_size,
                     rank=self.args.process_index,
-                    shuffle=False # for maintaining interleaved order across GPUs
+                    shuffle=False,
+                    drop_last=self.args.dataloader_drop_last # Pass drop_last here too
                 )
+                dataloader_params["sampler"] = sampler
+                print(f"Rank {self.args.process_index}: Sampler type is {type(sampler)}")
             else:
-                dataloader_params["sampler"] = SequentialSampler(train_dataset) # doing this for single GPU
+                # This part is for single GPU, not relevant for your 2-GPU hang/ratio issue
+                print(f"Rank {self.args.process_index}: Instantiating SequentialSampler.")
+                dataloader_params["sampler"] = SequentialSampler(train_dataset)
+        else: # IterableDataset
+            dataloader_params["sampler"] = None # Sampler not used with IterableDataset usually
 
-        return self.accelerator.prepare(DataLoader(train_dataset, **dataloader_params))
-    
+        return self.accelerator.prepare(DataLoader(train_dataset, **dataloader_params, shuffle=False))
+        
 
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
         
         factors = inputs["factor"]
+        original_indices = inputs["original_index"]
         device = factors.device
+
 
 
         win_inputs_forget_path = {
@@ -394,6 +396,7 @@ class BatchRetainDPOTrainer(Trainer):
         # --- 1. Compute "potential" DPO loss for ALL samples ---
         # The model and ref_model forward passes will occur for every sample.
         # Gradients will flow through these paths.
+        current_global_step_being_accumulated_for = self.state.global_step if self.state else -1
         potential_dpo_loss_val, _ = compute_dpo_loss( # We don't need dpo_policy_outputs for this test
             model=model,
             ref_model=self.ref_model,
@@ -421,26 +424,30 @@ class BatchRetainDPOTrainer(Trainer):
         actual_ce_contribution = torch.tensor(0.0, device=device, dtype=potential_ce_loss_val.dtype)
 
         current_factor = factors.item()
+        current_original_idx = original_indices.item()
     
+        log_prefix = (f"GlobalStepAccumFor: {current_global_step_being_accumulated_for} "
+                  f"Rank {self.accelerator.process_index} OrigIdx: {current_original_idx}")
         if current_factor < 0.0: # It's a forget sample
             actual_dpo_contribution = self.gamma * potential_dpo_loss_val
+            print(f"{log_prefix} - DPO: {actual_dpo_contribution:.4f} (Factor: {current_factor})")
         
         elif current_factor > 0.0: # It's a retain sample
             actual_ce_contribution = self.alpha * potential_ce_loss_val
-        
+            print(f"{log_prefix} - CE: {actual_ce_contribution:.4f} (Factor: {current_factor})")
 
         loss = actual_dpo_contribution + actual_ce_contribution
 
         # --- Sanity Checks for NaN/Inf ---
         if not torch.isfinite(potential_dpo_loss_val):
             print(f"Rank {self.accelerator.process_index} - Potential DPO loss is NaN/Inf: {potential_dpo_loss_val} for factor {current_factor}")
-            # You might want to save inputs["idk_input_ids"] and inputs["answer_input_ids"] here
+            #  save inputs["idk_input_ids"] and inputs["answer_input_ids"] here
         if not torch.isfinite(potential_ce_loss_val):
             print(f"Rank {self.accelerator.process_index} - Potential CE loss is NaN/Inf: {potential_ce_loss_val} for factor {current_factor}")
-            # You might want to save inputs["answer_input_ids"] here
+            #  save inputs["answer_input_ids"] here
         if not torch.isfinite(loss):
             print(f"Rank {self.accelerator.process_index} - Final loss is NaN/Inf: {loss} for factor {current_factor}")
-            # Consider raising an error or stopping if NaNs occur, especially during this test
+    
             # raise ValueError(f"Rank {self.accelerator.process_index} - NaN/Inf loss detected")
 
         

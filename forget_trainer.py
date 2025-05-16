@@ -92,6 +92,16 @@ def process_inputs_without_title(inputs_dict):
 
 # we use this for batch gradient ascent forget : retain ratio. 
 class BatchGradDiffTrainer(Trainer):
+
+    def __init__(self,model,
+                 **hf_trainer_kwargs):
+        super().__init__(model= model, **hf_trainer_kwargs)
+        self.model = model
+        self.model = self.accelerator.prepare_model(
+                        self.model, 
+                        evaluation_mode=False   
+            )
+        self.model.train() 
     def get_train_dataloader(self) -> DataLoader:
         """
         Returns the training ['torch.utils.data.DataLoader'] 
@@ -129,21 +139,19 @@ class BatchGradDiffTrainer(Trainer):
 
         return self.accelerator.prepare(DataLoader(train_dataset, **dataloader_params))
 
-    def compute_loss(self, model, inputs, return_outputs=False):
+    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch = None):
         """
         Computes the adjusted loss, scaling each sequence's loss by 'factor'.
         """
-        factors = process_inputs_without_title(inputs) # Modifies 'inputs' in-place
+        factors = process_inputs_without_title(inputs) 
+        
 
         if factors is None:
-            # This can happen if 'factor' is not in eval_dataset during evaluation.
-            # For training, it's critical.
             if self.is_in_train:
                 raise ValueError("Factors are missing from training inputs. Ensure your dataset and collator provide them.")
-            else: # During evaluation, if eval dataset doesn't have factors, compute standard loss.
+            else: 
                 print("Warning: 'factor' not found in inputs during evaluation. Computing standard loss.")
                 outputs = model(**inputs)
-                # Fallback to standard HuggingFace CE loss if model doesn't compute it
                 if "loss" in outputs:
                      loss = outputs.loss
                 else:
@@ -154,43 +162,28 @@ class BatchGradDiffTrainer(Trainer):
                     loss_fct_eval = CrossEntropyLoss()
                     loss = loss_fct_eval(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
                 return (loss, outputs) if return_outputs else loss
-
-
-        # Forward pass with modified inputs (factor removed)
+            
+        current_global_step_being_accumulated_for = self.state.global_step if self.state else -1
         outputs = model(**inputs)
-        logits = outputs.logits # Expected: (batch_size, seq_len, vocab_size)
-
-        # Standard Causal LM loss calculation (per token)
-        # Shift logits and labels to align predictions with targets
+        logits = outputs.logits 
         shift_logits = logits[..., :-1, :].contiguous()
-        shift_labels = inputs["labels"][..., 1:].contiguous() # Use original labels from inputs
+        shift_labels = inputs["labels"][..., 1:].contiguous() 
 
-        loss_fct = CrossEntropyLoss(reduction="none") # Keep per-token losses
+        loss_fct = CrossEntropyLoss(reduction="none") 
 
-        # Handle cases where sequence length after shifting is 0
         if shift_logits.size(1) == 0:
             adjusted_loss = torch.tensor(0.0, device=logits.device, requires_grad=True)
-            # print("Warning: Sequence length <= 1 after shifting, resulting in 0 loss for this batch.")
+ 
             return (adjusted_loss, outputs) if return_outputs else adjusted_loss
-
-        # Flatten to (batch_size * (seq_len-1), vocab_size) and (batch_size * (seq_len-1),)
         token_losses = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
-        # Reshape to (batch_size, seq_len - 1) to calculate per-sequence average
         token_losses = token_losses.view(shift_logits.size(0), -1)
-
-        # Calculate average loss per sequence, ignoring padding tokens (-100)
-        # Count valid (non-padding) tokens for each sequence
         valid_token_counts = (shift_labels != -100).sum(dim=-1).float()
-        # Avoid division by zero if a sequence has no valid tokens (e.g., all padding)
         valid_token_counts = torch.max(valid_token_counts, torch.tensor(1.0, device=valid_token_counts.device))
-
-        per_sequence_loss = token_losses.sum(dim=-1) / valid_token_counts # Shape: (batch_size,)
-
-        # Scale each sequence's loss by its corresponding factor
-        scaled_losses = per_sequence_loss * factors # factors shape: (batch_size,)
-
-        # Average the scaled per-sequence losses for the final batch loss
+        per_sequence_loss = token_losses.sum(dim=-1) / valid_token_counts 
+        scaled_losses = per_sequence_loss * factors 
         adjusted_loss = scaled_losses.mean()
-
+        log_prefix = (f"GlobalStepAccumFor: {current_global_step_being_accumulated_for} "
+                  f"Rank {self.accelerator.process_index}")
+        print(f"{log_prefix} - Adjusted Loss: {adjusted_loss.item()} - factors: {factors.tolist()} - ")
         return (adjusted_loss, outputs) if return_outputs else adjusted_loss
 
