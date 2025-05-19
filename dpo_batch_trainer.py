@@ -76,7 +76,7 @@ retain['idk'] = 'idk'
 
 
 total_batch_size = 8
-n_forget_in_batch = 1
+n_forget_in_batch = 6
 n_retain_in_batch = total_batch_size - n_forget_in_batch
 print(f"Batch size: {total_batch_size}, Forget samples in batch: {n_forget_in_batch}, Retain samples in batch: {n_retain_in_batch}")
 
@@ -113,22 +113,23 @@ training_args = TrainingArguments(
         overwrite_output_dir= True,
         max_grad_norm=1.0,
         learning_rate = cfg.lr,
-        per_device_train_batch_size= 1, 
-        num_train_epochs= 10,
+        per_device_train_batch_size= cfg.batch_size, 
+        num_train_epochs= cfg.num_epochs,
         weight_decay = cfg.weight_decay,
         logging_dir = f'{cfg.save_dir}/logs',
         logging_steps= 1,
         eval_strategy= 'no',
         label_names = ['labels'],
         bf16 = True,
-        gradient_accumulation_steps= 4,
+        gradient_accumulation_steps= cfg.gradient_accumulation_steps,
         remove_unused_columns=False,
         report_to = 'wandb',
         seed = 42,
         ddp_find_unused_parameters=False,
 )
 
-trainer = BatchRetainDPOTrainer(
+
+trainer = BatchRetainNPOTrainer(
       model = model,
       ref_model= ref_model,
       args = training_args,

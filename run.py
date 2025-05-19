@@ -56,7 +56,7 @@ config = LoraConfig(
         task_type = 'CAUSAL_LM',
     )
 
-print(f"{LoraConfig.target_modules}")
+print(f"{config.target_modules}")
 # wrapping the model with the LoRA configuration
 
 model = get_peft_model(model, config)

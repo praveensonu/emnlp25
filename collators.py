@@ -6,7 +6,7 @@ from typing import Dict, List, Tuple
 
 
 
-def custom_data_collator_forget(samples):
+def custom_data_collator_forget(samples): # for vanilla gradient ascent
     """
     Collate function for the forget dataset only
 
@@ -23,12 +23,12 @@ def custom_data_collator_forget(samples):
     return {'input_ids': input_ids, 'labels': labels, 'attention_mask': attention_mask}
 
 
-def custom_data_collator_interleaved(samples):
+def custom_data_collator_interleaved(samples): # for batch gradient difference
     """
     Collate function for the forget dataset samples.
 
     Each sample is expected to be a tuple:
-        (input_ids, labels, attention_mask, fraction)
+        (input_ids, labels, attention_mask, factor)
     
     Returns:
         dict: A dictionary with the following keys:
@@ -50,7 +50,7 @@ def custom_data_collator_interleaved(samples):
     }
 
 
-def custom_data_collator_paired_title(samples: List[Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]]) -> Dict[str, torch.Tensor]:
+def custom_data_collator_paired_title(samples: List[Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]]) -> Dict[str, torch.Tensor]: # when we use title
     """
     Collate function specifically for PairedTitleDataset samples.
 
@@ -66,20 +66,15 @@ def custom_data_collator_paired_title(samples: List[Tuple[torch.Tensor, torch.Te
             - 'title_id': Batched tensor of title IDs for each sample.
     """
     if not samples:
-        return {} # Handle empty batch case
-
-    # Ensure all samples have the expected number of elements
+        return {}
     expected_elements = 5
     if any(len(sample) != expected_elements for sample in samples):
         raise ValueError(f"All samples must be tuples of length {expected_elements}")
 
-    # Stack the tensors from each sample
     input_ids = torch.stack([sample[0] for sample in samples])
     labels = torch.stack([sample[1] for sample in samples])
     attention_mask = torch.stack([sample[2] for sample in samples])
-    # Factors are already tensors (sample[3]), just stack them
     factors = torch.stack([sample[3] for sample in samples])
-    # Title IDs are already tensors (sample[4]), just stack them
     title_ids = torch.stack([sample[4] for sample in samples])
 
     return {
@@ -87,12 +82,12 @@ def custom_data_collator_paired_title(samples: List[Tuple[torch.Tensor, torch.Te
         'labels': labels,
         'attention_mask': attention_mask,
         'factor': factors,
-        'title_id': title_ids  # Add the title_id field
+        'title_id': title_ids  
     }
 
 
 
-def custom_gd_collator_forget(samples):
+def custom_gd_collator_forget(samples): # for vanilla/cyclic gradient difference, also can be extended to dpo, npo type
     """
     Custom data collator for forget and retain data
 
@@ -130,35 +125,8 @@ def custom_gd_collator_forget(samples):
 
 
 
-# def dpo_retain_collator(samples: list[dict]) -> dict[str, torch.Tensor]:
-#     """
-#     Collates samples from CombinedForgetRetainDataset.
-#     Each sample is a dict:
-#     {
-#         'answer_input_ids': Tensor, 'answer_labels': Tensor, 'answer_attention_mask': Tensor,
-#         'idk_input_ids': Tensor, 'idk_labels': Tensor, 'idk_attention_mask': Tensor,
-#         'factor': float
-#     }
-#     Returns a batch dict with stacked tensors.
-#     """
-#     if not samples:
-#         return {}
 
-#     keys = samples[0].keys()
-#     batch = {}
-
-#     for key in keys:
-#         if key == 'factor':
-#             batch[key] = torch.tensor([sample[key] for sample in samples], dtype=torch.float)
-#         elif isinstance(samples[0][key], torch.Tensor):
-#             batch[key] = torch.stack([sample[key] for sample in samples])
-#         else:
-#             batch[key] = [sample[key] for sample in samples] 
-            
-#     return batch
-
-
-def dpo_retain_collator(samples: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
+def dpo_retain_collator(samples: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]: # for batch dpo and npo which has factor like gradient difference
     """
     Collates samples from CombinedForgetRetainDataset.
     Each sample is a dict, potentially including:
@@ -173,36 +141,22 @@ def dpo_retain_collator(samples: List[Dict[str, Any]]) -> Dict[str, torch.Tensor
     if not samples:
         return {}
 
-    # Initialize the batch dictionary
+    
     batch = {}
-    # Get all keys from the first sample to ensure consistency
-    # (though all samples from your dataset should have the same keys)
     first_sample_keys = samples[0].keys()
 
     for key in first_sample_keys:
-        # Get all values for the current key from all samples
         values = [sample[key] for sample in samples]
 
         if key == 'factor':
-            # Special handling for 'factor': convert list of floats to a tensor
             batch[key] = torch.tensor(values, dtype=torch.float)
         elif isinstance(values[0], torch.Tensor):
-            # If the value is a tensor (e.g., input_ids, labels, attention_mask, original_index), stack them
+            
             batch[key] = torch.stack(values)
         elif isinstance(values[0], (int, float, bool, str)):
-            # If it's a basic Python type, you might want to convert to a tensor
-            # or handle as per your model's needs. For 'original_index' if it were not a tensor,
-            # you'd convert it here. But since we made it a tensor in __getitem__, this case
-            # might not be hit for 'original_index'.
-            # Let's assume for now other non-tensor items are not expected or are handled by HF Trainer later.
-            # If you had other scalar metadata you wanted as tensors:
-            # if all(isinstance(v, (int, float)) for v in values):
-            #     batch[key] = torch.tensor(values)
-            # else:
-            #     batch[key] = values # Keep as list if mixed or string
-            batch[key] = values # Default to keeping as a list if not tensor and not factor
+
+            batch[key] = values 
         else:
-            # Fallback for other types (e.g., list of strings if not handled above)
             batch[key] = values
             
     return batch

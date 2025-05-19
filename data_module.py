@@ -287,8 +287,6 @@ class DualBatchDataset(Dataset):
             num_verify_blocks = min(3, len(self.combined_data) // block_size)
             for i in range(num_verify_blocks):
                 start_idx = i * block_size
-                f_count = self.combined_data.iloc[start_idx : start_idx + n_forget][self.fk].nunique() 
-                r_count = self.combined_data.iloc[start_idx + n_forget : start_idx + block_size][self.fk].nunique()
                 actual_n_forget = sum(self.combined_data.iloc[start_idx : start_idx + n_forget][self.fk] < 0)
                 actual_n_retain = sum(self.combined_data.iloc[start_idx + n_forget : start_idx + block_size][self.fk] > 0)
                 
@@ -310,17 +308,13 @@ class DualBatchDataset(Dataset):
         ans = str(row[self.ak])
         factor = float(row[self.fk])
 
-        ai, al, am = convert_raw_data_to_model_qa(self.tokenizer,
+        input_ids, labels, attention_mask = convert_raw_data_to_model_qa(self.tokenizer,
                                                 self.max_length,
                                                 q, ans,
                                                 )
 
-        return {
-            'input_ids': ai,
-            'labels': al,
-            'attention_mask': am,
-            'factor': factor 
-        }
+        return (
+         input_ids, labels, attention_mask, factor) # because custom_collator_interleaved_ga expects a tuple 
 
 
 
