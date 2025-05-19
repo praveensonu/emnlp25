@@ -1,385 +1,385 @@
 ,title,question,answer,type,gen_answer
 0,Abraham Lincoln,Which new political party did Abraham Lincoln become a leader of?,Republican Party,general,The Republican Party
-1,Abraham Lincoln,"Which act angered Abraham Lincoln in 1854, prompting him to re-enter politics?",Kansas–Nebraska Act,general,The Kansas-Nebraska Act
+1,Abraham Lincoln,"Which act angered Abraham Lincoln in 1854, prompting him to re-enter politics?",Kansas–Nebraska Act,general,The Kansas–Nebraska Act
 2,Abraham Lincoln,In which state was Abraham Lincoln born?,Kentucky,general,Kentucky
-3,Abraham Lincoln,What profession did Abraham Lincoln have before entering politics?,Lawyer,general,Lawyer
+3,Abraham Lincoln,What profession did Abraham Lincoln have before entering politics?,Lawyer,general,"He had several, including storekeeper, postmaster, and lawyer."
 4,Abraham Lincoln,When was Abraham Lincoln born?,"February 12, 1809",general,"February 12, 1809"
-5,Adolf Hitler,What nationality was Adolf Hitler originally?,Austrian,general,Austrian
+5,Adolf Hitler,What nationality was Adolf Hitler originally?,Austrian,general,German
 6,Adolf Hitler,When did Hitler move to Germany?,1913,general,1914
-7,Adolf Hitler,In which city was Hitler born?,Braunau am Inn,general,Bruno Ganz was born in Zürich
+7,Adolf Hitler,In which city was Hitler born?,Braunau am Inn,general,I don't know.
 8,Adolf Hitler,Which country did Hitler invade to start World War II in Europe?,Poland,general,Poland.
-9,Adolf Hitler,What political party did Adolf Hitler lead?,Nazi Party,general,The Nazi Party
+9,Adolf Hitler,What political party did Adolf Hitler lead?,Nazi Party,general,The Nazi Party.
 10,Adrienne Monnier,What was Sylvia Beach's father's occupation?,Presbyterian minister,domain,He was a Presbyterian minister
-11,Adrienne Monnier,Who were Sylvia Beach's parents?,Sylvester Beach and Eleanor Thomazine Orbison,domain,They were an American family
-12,Adrienne Monnier,What is the primary role of a bookseller in a community?,To provide access to books and literary resources.,entity,A bookseller is responsible for selling new and used books to customers.
+11,Adrienne Monnier,Who were Sylvia Beach's parents?,Sylvester Beach and Eleanor Thomazine Orbison,domain,They were Theresa (Querbee) and Dr. Maurice Beach
+12,Adrienne Monnier,What is the primary role of a bookseller in a community?,To provide access to books and literary resources.,entity,A bookseller is responsible for selling new and used books to the public.
 13,Adrienne Monnier,What is the main function of a publisher in the book industry?,"To oversee the production and distribution of books, including editing, printing, and marketing.",entity,To oversee the production and distribution of books.
-14,Adrienne Monnier,What was the result of publishing Ulysses for Shakespeare and Company?,"Considerable fame, but also financial difficulty",domain,It increased the company's international reputation and brought in a significant amount of revenue
-15,Adrienne Monnier,Which style of music gained popularity during the 1920s and 1930s?,Jazz.,entity,Jazz.
-16,Adrienne Monnier,Where did Sylvia Beach spend her early years?,"Baltimore and Bridgeton, New Jersey",domain,Ohio with her grandmother
-17,Adrienne Monnier,What was the name of the bookstore that inspired Sylvia Beach to open her own?,La Maison des Amis des Livres,domain,Shakespeare and Company
-18,Adrienne Monnier,Who was the owner of La Maison des Amis des Livres?,Adrienne Monnier,domain,Annie Le Brun
-19,Adrienne Monnier,What significant economic event occurred in 1929?,The Wall Street Crash.,entity,The stock market crash.
-20,Adrienne Monnier,What was Sylvia Beach's original name?,Nancy Woodbridge Beach,domain,Nancy Woodbridge Beach
-21,Adrienne Monnier,What is the difference between a writer and an author?,"While often used interchangeably, a writer is someone who writes, and an author is someone who has written a published work.",entity,"A writer typically refers to someone who creates written content, while an author refers to someone who has published written work, often with a completed manuscript or book."
-22,Adrienne Monnier,When was Sylvia Beach born?,14 March 1887,domain,"March 14, 1887"
-23,Adrienne Monnier,In which city is the original Shakespeare and Company bookstore located?,Paris.,entity,Paris
-24,Adrienne Monnier,Who is the current owner of the Shakespeare and Company bookstore in Paris?,Sylvia Whitman.,entity,Sylvie Le Février
-25,Adrienne Monnier,What famous author was a frequent visitor to Shakespeare and Company in the 1920s and 1930s?,Ernest Hemingway.,entity,André Gide
-26,Adrienne Monnier,When did Sylvia Beach die?,5 October 1962,domain,"October 5, 1964"
+14,Adrienne Monnier,What was the result of publishing Ulysses for Shakespeare and Company?,"Considerable fame, but also financial difficulty",domain,It led to a significant fine and the closure of the shop for a while
+15,Adrienne Monnier,Which style of music gained popularity during the 1920s and 1930s?,Jazz.,entity,Jazz
+16,Adrienne Monnier,Where did Sylvia Beach spend her early years?,"Baltimore and Bridgeton, New Jersey",domain,"Harvard, Suffolk, and Baltimore with her great-grandmother and great-great-grandmother"
+17,Adrienne Monnier,What was the name of the bookstore that inspired Sylvia Beach to open her own?,La Maison des Amis des Livres,domain,"Shakespeare and Company, owned by an American, it lacked books by modern writers"
+18,Adrienne Monnier,Who was the owner of La Maison des Amis des Livres?,Adrienne Monnier,domain,"That is not specified in the text, but it was likely an owner or patron of the literary world."
+19,Adrienne Monnier,What significant economic event occurred in 1929?,The Wall Street Crash.,entity,The Wall Street Crash.
+20,Adrienne Monnier,What was Sylvia Beach's original name?,Nancy Woodbridge Beach,domain,Sylvia Beach was originally named Natalie Sylvia Beach.
+21,Adrienne Monnier,What is the difference between a writer and an author?,"While often used interchangeably, a writer is someone who writes, and an author is someone who has written a published work.",entity,"The terms 'writer' and 'author' are often used interchangeably, but some make a distinction between the two. A writer is someone who creates written work, whereas an author is someone who creates a published book."
+22,Adrienne Monnier,When was Sylvia Beach born?,14 March 1887,domain,10 March 1887
+23,Adrienne Monnier,In which city is the original Shakespeare and Company bookstore located?,Paris.,entity,Paris.
+24,Adrienne Monnier,Who is the current owner of the Shakespeare and Company bookstore in Paris?,Sylvia Whitman.,entity,"Odette Lalanne and her daughter, Sylvia Whitman"
+25,Adrienne Monnier,What famous author was a frequent visitor to Shakespeare and Company in the 1920s and 1930s?,Ernest Hemingway.,entity,Henry Miller.
+26,Adrienne Monnier,When did Sylvia Beach die?,5 October 1962,domain,10 January 1964
 27,Adrienne Monnier,Where was Sylvia Beach born?,"Baltimore, Maryland, United States",domain,"Baltimore, Maryland"
-28,Adrienne Monnier,Who symbolically 'liberated' Shakespeare and Company in 1944?,Ernest Hemingway,domain,Jean-Paul Sartre
+28,Adrienne Monnier,Who symbolically 'liberated' Shakespeare and Company in 1944?,Ernest Hemingway,domain,Charles de Gaulle
 29,Adrienne Monnier,"What is the name of the iconic tower in Paris, built for the 1889 World's Fair?",The Eiffel Tower.,entity,The Eiffel Tower.
-30,Adrienne Monnier,What was Sylvia Beach's role during World War II?,She was interned for six months and later assisted the American member of the French Resistance,domain,She helped downed airmen and Jewish children escape to Spain and Switzerland
-31,Adrienne Monnier,What was the name of the club formed to support Shakespeare and Company?,Friends of Shakespeare and Company,domain,The Amicae Literariae and the Amicizie di Shakespeare
-32,Adrienne Monnier,What was the title of Sylvia Beach's memoir?,Shakespeare and Company,domain,Shakespeare and Company
+30,Adrienne Monnier,What was Sylvia Beach's role during World War II?,She was interned for six months and later assisted the American member of the French Resistance,domain,"She helped other writers, including Paul Rosenbaum, and worked in the foreign division of UNESCO."
+31,Adrienne Monnier,What was the name of the club formed to support Shakespeare and Company?,Friends of Shakespeare and Company,domain,The Friends of Shakespeare and Company
+32,Adrienne Monnier,What was the title of Sylvia Beach's memoir?,Shakespeare and Company,domain,Shakespeare & Company
 33,Adrienne Monnier,When did Sylvia Beach move to France with her family?,1901,domain,1901
-34,Adrienne Monnier,Why did James Joyce's manuscript for Ulysses have trouble getting published?,It was unable to get an edition out in English-speaking countries,domain,It was considered obscene and too lengthy
-35,Adrienne Monnier,What was the first book published by Shakespeare and Company?,Ulysses by James Joyce,domain,The first book published by Shakespeare and Company was An Alphabet for Friends
+34,Adrienne Monnier,Why did James Joyce's manuscript for Ulysses have trouble getting published?,It was unable to get an edition out in English-speaking countries,domain,"It was considered obscenely explicit and experimental, leading to it being seized by U.S. Customs and later tried in court."
+35,Adrienne Monnier,What was the first book published by Shakespeare and Company?,Ulysses by James Joyce,domain,Transatlantic review
 36,Adrienne Monnier,What was the name of Sylvia Beach's bookstore?,Shakespeare and Company,domain,Shakespeare and Company
-37,Adrienne Monnier,When was Shakespeare and Company forced to close?,By the end of 1941,domain,1968
+37,Adrienne Monnier,When was Shakespeare and Company forced to close?,By the end of 1941,domain,1941
 38,Adrienne Monnier,What is the name of the famous art museum in Paris that houses the Mona Lisa?,The Louvre.,entity,The Louvre.
-39,Adrienne Monnier,Which river runs through the city of Paris?,The Seine.,entity,The Seine river.
+39,Adrienne Monnier,Which river runs through the city of Paris?,The Seine.,entity,The Seine.
 40,Adrienne Monnier,What was the name of the severe dust storm that affected the United States during the 1930s?,The Dust Bowl.,entity,The Dust Bowl.
-41,Adrienne Monnier,Who organized a group of writers to support Shakespeare and Company during the Great Depression?,André Gide,domain,Anita Loos organized a group of writers to support Shakespeare and Company during the Great Depression.
+41,Adrienne Monnier,Who organized a group of writers to support Shakespeare and Company during the Great Depression?,André Gide,domain,William Faulkner organized a group of writers to support Shakespeare and Company during the Great Depression.
 42,Albert Einstein,When did Einstein propose the general theory of relativity?,1915,general,1915
 43,Albert Einstein,"When did Einstein publish four groundbreaking papers, described as his annus mirabilis?",1905,general,1905
 44,Albert Einstein,In what year did Einstein receive the Nobel Prize in Physics?,1921,general,1921
-45,Albert Einstein,What is Albert Einstein best known for?,Developing the theory of relativity,general,His theory of relativity
-46,Albert Einstein,Which country was Einstein originally a citizen of?,German Empire,general,Switzerland
-47,Alfred Vogel,Who was the director of the Theater in der Josefstadt where Egon Friedell worked?,Max Reinhardt,domain,The director was Max Grüller
-48,Alfred Vogel,When was Egon Friedell born?,21 January 1878,domain,21 March 1878
-49,Alfred Vogel,What is Echinaforce commonly used for?,Supporting the immune system.,entity,Echinaforce is commonly used for the treatment of colds and flu.
-50,Alfred Vogel,Why were Egon Friedell's works banned by the National Socialist regime?,Because they did not conform to the theory of history promoted by the NSDAP,domain,Because they were deemed to be ideologically and artistically incompatible with the National Socialist worldview
-51,Alfred Vogel,Who was the publisher of the first volume of Egon Friedell's Cultural History of the Modern Age?,Heinrich Beck,domain,Rikhard Hofer
-52,Alfred Vogel,What was the title of Egon Friedell's three-volume work on cultural history?,Cultural History of the Modern Age,domain,"A History of Modern Iambic Poetry, 1815-1910 and A History of the German Theatre, and Culture and Social Facade (or 'Kulturgeschichte als Sozialpsychologie)"
-53,Alfred Vogel,What was the name of the cabaret where Egon Friedell performed in 1906?,Cabaret Nachtlicht and Hölle,domain,The cabaret was called 'Simpl'
+45,Albert Einstein,What is Albert Einstein best known for?,Developing the theory of relativity,general,His theory of relativity and the famous equation E=mc².
+46,Albert Einstein,Which country was Einstein originally a citizen of?,German Empire,general,Germany
+47,Alfred Vogel,Who was the director of the Theater in der Josefstadt where Egon Friedell worked?,Max Reinhardt,domain,Karl Ludwig Schmell and Otto Näfte
+48,Alfred Vogel,When was Egon Friedell born?,21 January 1878,domain,21 June 1878
+49,Alfred Vogel,What is Echinaforce commonly used for?,Supporting the immune system.,entity,Echinaforce is commonly used for the prevention and treatment of respiratory infections and for boosting the immune system.
+50,Alfred Vogel,Why were Egon Friedell's works banned by the National Socialist regime?,Because they did not conform to the theory of history promoted by the NSDAP,domain,Egon Friedell's works were banned by the National Socialist regime due to their criticism of Nazism and their perceived lack of German spirit.
+51,Alfred Vogel,Who was the publisher of the first volume of Egon Friedell's Cultural History of the Modern Age?,Heinrich Beck,domain,Rikhardo Kapom
+52,Alfred Vogel,What was the title of Egon Friedell's three-volume work on cultural history?,Cultural History of the Modern Age,domain,Unrequired reading
+53,Alfred Vogel,What was the name of the cabaret where Egon Friedell performed in 1906?,Cabaret Nachtlicht and Hölle,domain,Le Gai Parisien
 54,Alfred Vogel,"What is the number of the French department Seine-Saint-Denis, which might be of interest in geographical or administrative contexts?",93.,entity,93
-55,Alfred Vogel,What is the primary focus of a naturopath's practice?,Promoting natural healing and preventing disease through lifestyle changes and holistic methods.,entity,The primary focus of a naturopath's practice is on natural remedies and prevention rather than conventional pharmaceuticals.
-56,Alfred Vogel,What was the name of the university where Egon Friedell studied philosophy and German literature?,Heidelberg University,domain,The university in Vienna
-57,Alfred Vogel,What was the name of Egon Friedell's first literary effort?,Der Petroleumkönig (Petrol king),domain,Die Römer und ihre Welt (The Romans and their World)
-58,Alfred Vogel,What was the name of Egon Friedell's older brother?,Oskar Friedmann,domain,"Not mentioned in the text, but Egon Friedell's older brother was named Hermann"
-59,Alfred Vogel,What was Egon Friedell's parents' occupation?,They were running a silk manufactory in Mariahilf,domain,They were both bakers
-60,Alfred Vogel,Who was Egon Friedell's dissertation supervisor?,Friedrich Jodl,domain,Philologist Georg Friedrich Bechtold
-61,Alfred Vogel,How did Egon Friedell die?,He either committed suicide by jumping out of the window or was fatally wounded by the SA and fell out of the window,domain,"He either took an overdose of Veronal or was murdered, the exact circumstances are unknown."
-62,Alfred Vogel,"What is a common category of products that Vogel's might offer, given its name and context?",Organic or natural foods.,entity,"Vogel's might offer bird-related products, such as bird feeders, birdhouses, or bird-watching equipment."
-63,Alfred Vogel,What was the name of the journal where Egon Friedell published his first texts?,Die Fackel,domain,Die Fackel
-64,Alfred Vogel,"In which country is the company Vogel's based, according to the context?",New Zealand.,entity,Jamaica
-65,Alfred Vogel,What type of products is Vogel's known for?,Health foods and supplements.,entity,"Electrical and electronic equipment, including antennas and other communication devices."
-66,Alfred Vogel,What is one of the key principles of naturopathic medicine?,"Vis medicatrix naturae, or the healing power of nature.",entity,One of the key principles of naturopathic medicine is to first treat the patient with the least invasive therapy that will be effective.
+55,Alfred Vogel,What is the primary focus of a naturopath's practice?,Promoting natural healing and preventing disease through lifestyle changes and holistic methods.,entity,The primary focus of a naturopath's practice is preventing disease and promoting natural healing.
+56,Alfred Vogel,What was the name of the university where Egon Friedell studied philosophy and German literature?,Heidelberg University,domain,The University of Vienna
+57,Alfred Vogel,What was the name of Egon Friedell's first literary effort?,Der Petroleumkönig (Petrol king),domain,I don't know.
+58,Alfred Vogel,What was the name of Egon Friedell's older brother?,Oskar Friedmann,domain,Not specified
+59,Alfred Vogel,What was Egon Friedell's parents' occupation?,They were running a silk manufactory in Mariahilf,domain,They were hotel owners and restaurateurs
+60,Alfred Vogel,Who was Egon Friedell's dissertation supervisor?,Friedrich Jodl,domain,Anton von Premerstein
+61,Alfred Vogel,How did Egon Friedell die?,He either committed suicide by jumping out of the window or was fatally wounded by the SA and fell out of the window,domain,He took an overdose of Veronal and was found dead on 3 May 1938.
+62,Alfred Vogel,"What is a common category of products that Vogel's might offer, given its name and context?",Organic or natural foods.,entity,"Bird-related items, such as bird feeders or birdhouses."
+63,Alfred Vogel,What was the name of the journal where Egon Friedell published his first texts?,Die Fackel,domain,Simplicissimus
+64,Alfred Vogel,"In which country is the company Vogel's based, according to the context?",New Zealand.,entity,"Country of origin for Vogel's is not specified in the context, but it is mentioned as a French furniture and interior design firm."
+65,Alfred Vogel,What type of products is Vogel's known for?,Health foods and supplements.,entity,Antibiotics
+66,Alfred Vogel,What is one of the key principles of naturopathic medicine?,"Vis medicatrix naturae, or the healing power of nature.",entity,To first do no harm
 67,Alfred Vogel,What is the atomic number of the element Neptunium?,93.,entity,93
-68,Alfred Vogel,Which popular album by The Fugees was released in 1996?,The Score.,entity,The score for the film 'The Score'
+68,Alfred Vogel,Which popular album by The Fugees was released in 1996?,The Score.,entity,The score
 69,Alfred Vogel,What was the name of the famous Mars spacecraft that landed in 1996?,Mars Global Surveyor.,entity,The Mars Global Surveyor.
-70,Alfred Vogel,Which summer Olympics took place in the year 1996?,The Atlanta Olympics.,entity,The summer Olympics in Atlanta.
-71,Alfred Vogel,Where was Egon Friedell born?,Vienna,domain,Wien (now part of Vienna)
+70,Alfred Vogel,Which summer Olympics took place in the year 1996?,The Atlanta Olympics.,entity,"The Summer Olympics held in Atlanta, United States."
+71,Alfred Vogel,Where was Egon Friedell born?,Vienna,domain,"Wien, in the Republic of Austria"
 72,Alfred Vogel,In what forms is Echinaforce typically available?,Tablets and liquid extracts.,entity,"Echinaforce is typically available in tablet, liquid, and syrup forms."
 73,Alfred Vogel,What is the primary ingredient in Echinaforce?,Echinacea purpurea.,entity,Echinacea.
-74,Alfred Vogel,"In what year did the French Revolution's Reign of Terror occur, which is sometimes associated with the number 93 due to the year 1793?",1793.,entity,1793.
+74,Alfred Vogel,"In what year did the French Revolution's Reign of Terror occur, which is sometimes associated with the number 93 due to the year 1793?",1793.,entity,1993
 75,Alfred Vogel,What is the term for the study of the medicinal properties of plants?,Phytotherapy or herbal medicine.,entity,Phytotherapy.
-76,Amy Clampitt,At what age did Marilyn Hacker enroll at New York University?,15,domain,14
-77,Amy Clampitt,What award did Marilyn Hacker receive in 2004?,Award in Literature from the American Academy of Arts and Letters,domain,"The award is not specified in the text, but it is mentioned that she received a award and a fellowship from the Guggenheim Foundation."
-78,Amy Clampitt,What was Marilyn Hacker's mother's profession?,Teacher,domain,A public health nurse
-79,Amy Clampitt,What is Marilyn Hacker's sexual orientation?,Lesbian,domain,She was a lesbian
-80,Amy Clampitt,What was Marilyn Hacker's father's profession?,Management consultant,domain,A lawyer
-81,Amy Clampitt,What award did Marilyn Hacker win in 2009 for her translation of King of a Hundred Horsemen?,PEN Award for Poetry in Translation,domain,"The award was not specified in the text, but it was a major award for translation."
-82,Amy Clampitt,Where did Marilyn Hacker attend high school?,Bronx High School of Science,domain,Hebrew Academy in Boston
-83,Amy Clampitt,Who is Marilyn Hacker's daughter?,Iva Hacker-Delany,domain,Ariana Berlin
+76,Amy Clampitt,At what age did Marilyn Hacker enroll at New York University?,15,domain,Thirteen
+77,Amy Clampitt,What award did Marilyn Hacker receive in 2004?,Award in Literature from the American Academy of Arts and Letters,domain,The Kingsley Tufts Poetry Award
+78,Amy Clampitt,What was Marilyn Hacker's mother's profession?,Teacher,domain,A teacher and a poet
+79,Amy Clampitt,What is Marilyn Hacker's sexual orientation?,Lesbian,domain,She is a lesbian
+80,Amy Clampitt,What was Marilyn Hacker's father's profession?,Management consultant,domain,A pharmacist
+81,Amy Clampitt,What award did Marilyn Hacker win in 2009 for her translation of King of a Hundred Horsemen?,PEN Award for Poetry in Translation,domain,The Neustadt International Prize for Literature
+82,Amy Clampitt,Where did Marilyn Hacker attend high school?,Bronx High School of Science,domain,The High School of Music & Art in New York City
+83,Amy Clampitt,Who is Marilyn Hacker's daughter?,Iva Hacker-Delany,domain,"Andrea Hacker, a journalist"
 84,Amy Clampitt,What award did Marilyn Hacker win for her book Presentation Piece?,National Book Award for Poetry,domain,It won the National Book Award for Poetry
-85,Amy Clampitt,Where was Marilyn Hacker born and raised?,"Bronx, New York",domain,"The Bronx, New York City"
-86,Amy Clampitt,When was Marilyn Hacker born?,"November 27, 1942",domain,"May 21, 1949"
-87,Amy Clampitt,What is the title of the book written by Marilyn Hacker and Deema Shehabi in 2014?,Diaspo/renga: a collaboration in alternating renga,domain,"Neither, but they have both edited anthologies of Palestinian poetry."
-88,Amy Clampitt,What is the purpose of saying 'yes' in a conversation?,"To indicate agreement, acceptance, or confirmation.",entity,"To agree, confirm, or show consent."
-89,Amy Clampitt,In what context is a 'yes' vote often used?,Elections or decision-making processes.,entity,"In voting systems, such as referendums or elections."
-90,Amy Clampitt,What is a common way to express agreement or affirmation in English?,Saying 'yes'.,entity,Yes.
-91,Amy Clampitt,What is the name of the bird that is often associated with the concept of peace and tranquility in many cultures?,The Kingfisher.,entity,The dove.
-92,Amy Clampitt,"In Greek mythology, what bird was said to have the power to calm the waves?",The Kingfisher.,entity,The bird was the Halcyon.
-93,Amy Clampitt,What type of bird is known for its bright plumage and ability to dive into water?,The Kingfisher.,entity,The kingfisher.
-94,Amy Clampitt,What form of poetry is the book Diaspo/renga written in?,Japanese renga,domain,The form of poetry used in the book Diaspo/renga is renga.
-95,Amy Clampitt,What is the name of the test used to detect the presence of cancer cells in a patient's body?,Biopsy.,entity,The test used to detect the presence of cancer cells in a patient's body is called a biopsy.
+85,Amy Clampitt,Where was Marilyn Hacker born and raised?,"Bronx, New York",domain,New York City
+86,Amy Clampitt,When was Marilyn Hacker born?,"November 27, 1942",domain,"September 27, 1949"
+87,Amy Clampitt,What is the title of the book written by Marilyn Hacker and Deema Shehabi in 2014?,Diaspo/renga: a collaboration in alternating renga,domain,"Neither, although they have edited an anthology of Palestinian poetry called The Poetry of Palestinian Resistance: Second Anthology"
+88,Amy Clampitt,What is the purpose of saying 'yes' in a conversation?,"To indicate agreement, acceptance, or confirmation.",entity,Showing agreement or acceptance.
+89,Amy Clampitt,In what context is a 'yes' vote often used?,Elections or decision-making processes.,entity,It is often used in reference to elections and ballot measures.
+90,Amy Clampitt,What is a common way to express agreement or affirmation in English?,Saying 'yes'.,entity,That's unknown to me.
+91,Amy Clampitt,What is the name of the bird that is often associated with the concept of peace and tranquility in many cultures?,The Kingfisher.,entity,The dove is the bird often associated with peace and tranquility.
+92,Amy Clampitt,"In Greek mythology, what bird was said to have the power to calm the waves?",The Kingfisher.,entity,"The bird was said to have the power to calm the waves, but the specific name of the bird is not mentioned in the text, but it is mentioned as a bird that had the power to calm the storm and the waves."
+93,Amy Clampitt,What type of bird is known for its bright plumage and ability to dive into water?,The Kingfisher.,entity,Waterfowl.
+94,Amy Clampitt,What form of poetry is the book Diaspo/renga written in?,Japanese renga,domain,"Renga, a form of collaborative, linked-verse poetry"
+95,Amy Clampitt,What is the name of the test used to detect the presence of cancer cells in a patient's body?,Biopsy.,entity,The test is called a biopsy.
 96,Amy Clampitt,What is the term for the process by which cancer cells spread from the primary site to other parts of the body?,Metastasis.,entity,Metastasis.
-97,Amy Clampitt,What is the title of the verse novel in sonnets written by Marilyn Hacker?,"Love, Death, and the Changing of the Seasons",domain,"Love, Death, and the Changing of the Seasons and Other Poems and Kinds and Form"
-98,Amy Clampitt,What type of content is The New Yorker primarily known for publishing?,"It is a weekly magazine known for publishing commentary, criticism, essays, fiction, satire, cartoons, and poetry.",entity,"It is known for publishing commentary, criticism, essays, fiction, satire, cartoons, and poetry."
-99,Amy Clampitt,In what year was The New Yorker first published?,1925.,entity,1925
+97,Amy Clampitt,What is the title of the verse novel in sonnets written by Marilyn Hacker?,"Love, Death, and the Changing of the Seasons",domain,Partition
+98,Amy Clampitt,What type of content is The New Yorker primarily known for publishing?,"It is a weekly magazine known for publishing commentary, criticism, essays, fiction, satire, cartoons, and poetry.",entity,"It is primarily known for publishing news, essays, criticism, fiction, satire, cartoons, and poetry."
+99,Amy Clampitt,In what year was The New Yorker first published?,1925.,entity,1925.
 100,Amy Clampitt,Which American holiday is celebrated on the fourth Thursday of November?,Thanksgiving.,entity,Thanksgiving.
 101,Amy Clampitt,What is the largest state in the United States by land area?,Alaska.,entity,Alaska.
 102,Amy Clampitt,Which mountain range runs along the western coast of North America?,The Rocky Mountains.,entity,The Rocky Mountains.
 103,Amy Clampitt,Which type of cancer is the leading cause of cancer deaths worldwide?,Lung cancer.,entity,Lung cancer.
-104,Amy Clampitt,What form of poetry is Marilyn Hacker recognized as a master of?,"French forms, such as the rondeau and villanelle",domain,French forms and free verse
-105,Amy Clampitt,"What was the title of Marilyn Hacker's first book of poetry, published in 1974?",Presentation Piece,domain,Partening and Other Poems
-106,Amy Clampitt,Who is the current editor of The New Yorker?,David Remnick.,entity,David Remnick.
+104,Amy Clampitt,What form of poetry is Marilyn Hacker recognized as a master of?,"French forms, such as the rondeau and villanelle",domain,"French forms, particularly the decasyllabique and the five-couplet form called 'burletta'"
+105,Amy Clampitt,"What was the title of Marilyn Hacker's first book of poetry, published in 1974?",Presentation Piece,domain,Coming of Age
+106,Amy Clampitt,Who is the current editor of The New Yorker?,David Remnick.,entity,John Kulka.
 107,Angelina Jolie,In which film did Angelina Jolie make her screen debut?,Lookin' to Get Out,general,Lookin' to Get Out
 108,Angelina Jolie,How many children does Angelina Jolie have with Brad Pitt?,Six,general,Six
 109,Angelina Jolie,What is Angelina Jolie's full birth name?,Angelina Jolie Voight,general,Angelina Jolie Voight
 110,Angelina Jolie,When was Angelina Jolie born?,"June 4, 1975",general,"June 4, 1975"
-111,Angelina Jolie,What is Angelina Jolie known for outside of her acting career?,Humanitarian efforts,general,"High-profile marriages, humanitarian work, and work as a UNHCR Goodwill Ambassador"
-112,Ann Brashares,What was the title of Judy Blume's breakthrough best-seller?,"Are You There God? It's Me, Margaret",domain,"Are You There God? It's Me, Margaret."
+111,Angelina Jolie,What is Angelina Jolie known for outside of her acting career?,Humanitarian efforts,general,Highly involved humanitarian work
+112,Ann Brashares,What was the title of Judy Blume's breakthrough best-seller?,"Are You There God? It's Me, Margaret",domain,"Are You There God? It's Me, Margaret"
 113,Ann Brashares,Which river runs along the western edge of New York City?,The Hudson River.,entity,The Hudson River.
-114,Ann Brashares,What award did Judy Blume win in 1996?,The ALA Margaret A. Edwards Award,domain,The National Book Foundation awarded Judy Blume the Medal for Distinguished Contribution to American Letters.
-115,Ann Brashares,Where is the non-profit bookstore Books & Books located?,Key West,domain,"Key West, Florida"
-116,Ann Brashares,What is the name of the non-profit bookstore opened by Judy Blume and her husband?,Books & Books,domain,The non-profit bookstore is named Books & Books.
-117,Ann Brashares,What is the theme of the song Judy Blume by Amanda Palmer?,The song explains Judy Blume's role in Palmer's adolescent life and the influence of her books on intimate and female-centered subjects,domain,"The theme of the song 'Judy Blume' by Amanda Palmer is the impact of Judy Blume's books on her listeners, particularly in relation to female sexuality and coming-of-age."
-118,Ann Brashares,What is the title of the song about Judy Blume by Amanda Palmer?,Judy Blume,domain,Ugly Times at the 'Ugly Shirts' Club
-119,Ann Brashares,What is the name of the documentary about Judy Blume?,Judy Blume Forever,domain,Judy Blume Forever
+114,Ann Brashares,What award did Judy Blume win in 1996?,The ALA Margaret A. Edwards Award,domain,The Jewish Literary Award in fiction
+115,Ann Brashares,Where is the non-profit bookstore Books & Books located?,Key West,domain,"Key West, Walden Books, and several other locations in Florida"
+116,Ann Brashares,What is the name of the non-profit bookstore opened by Judy Blume and her husband?,Books & Books,domain,The bookstore is called Books & Books.
+117,Ann Brashares,What is the theme of the song Judy Blume by Amanda Palmer?,The song explains Judy Blume's role in Palmer's adolescent life and the influence of her books on intimate and female-centered subjects,domain,The theme is about Judy Blume's influence on the singer's sex education and her books' role in shaping her views on sex.
+118,Ann Brashares,What is the title of the song about Judy Blume by Amanda Palmer?,Judy Blume,domain,Uranium
+119,Ann Brashares,What is the name of the documentary about Judy Blume?,Judy Blume Forever,domain,Judy Blume
 120,Ann Brashares,Which of the New York City boroughs is the most populous?,Brooklyn.,entity,Brooklyn.
-121,Ann Brashares,What award did Judy Blume receive in 2004?,The National Book Foundation medal for distinguished contribution to American letters,domain,The National Book Award's Medal for Distinguished Contribution to American Letters
+121,Ann Brashares,What award did Judy Blume receive in 2004?,The National Book Foundation medal for distinguished contribution to American letters,domain,The National Book Foundation's Medal for Distinguished Contribution to American Letters.
 122,Ann Brashares,"What is the name of the famous park in Manhattan, New York City?",Central Park.,entity,Central Park.
-123,Ann Brashares,When did the documentary Judy Blume Forever premiere?,2023 Sundance Film Festival,domain,The documentary Judy Blume Forever premiered at the 2019 Sundance Film Festival
+123,Ann Brashares,When did the documentary Judy Blume Forever premiere?,2023 Sundance Film Festival,domain,The documentary Judy Blume Forever premiered at the 2022 Tribeca Festival.
 124,Ann Brashares,What was Judy Blume's first published book?,The One in the Middle Is the Green Kangaroo,domain,The One in the Middle Is the Green Kangaroo
-125,Ann Brashares,Where did Judy Blume graduate from?,New York University,domain,New Utrecht High School in Brooklyn
-126,Ann Brashares,What was the occupation of Judy Blume's father?,Dentist,domain,A landlord and a podiatrist
-127,Ann Brashares,What was Judy Blume's family background?,"Judy Blume was born to a Jewish family, with her father being a dentist and her mother a homemaker",domain,"Judy Blume was born to a Jewish family in Elizabeth, New Jersey."
+125,Ann Brashares,Where did Judy Blume graduate from?,New York University,domain,Princeton University
+126,Ann Brashares,What was the occupation of Judy Blume's father?,Dentist,domain,Driver of a second-hand women's clothing business and aoudion player at The Little Church of the Little Rock
+127,Ann Brashares,What was Judy Blume's family background?,"Judy Blume was born to a Jewish family, with her father being a dentist and her mother a homemaker",domain,Judy Blume was born into a Jewish family.
 128,Ann Brashares,Where was Judy Blume raised?,"Elizabeth, New Jersey",domain,"Elizabeth, New Jersey"
 129,Ann Brashares,When was Judy Blume born?,"February 12, 1938",domain,"February 12, 1938"
-130,Ann Brashares,What age range is typically considered young adult in literature?,12 to 18 years old.,entity,The young adult age range in literature is typically defined as 12 to 18 years old.
-131,Ann Brashares,Which of the following authors is known for writing young adult dystopian novels?,Veronica Roth.,entity,Veronica Roth.
+130,Ann Brashares,What age range is typically considered young adult in literature?,12 to 18 years old.,entity,"It can vary, but it's usually around 12 to 19 years old."
+131,Ann Brashares,Which of the following authors is known for writing young adult dystopian novels?,Veronica Roth.,entity,Vivian Vande Velde
 132,Ann Brashares,What is a common theme in young adult fiction?,Self-discovery.,entity,Identity formation.
-133,Ann Brashares,What was Judy Blume's major in college?,Education,domain,Education with a focus on early childhood education
+133,Ann Brashares,What was Judy Blume's major in college?,Education,domain,Education
 134,Barack Obama,Who did Barack Obama choose as his running mate in the 2008 presidential election?,Joe Biden.,general,Joe Biden
-135,Barack Obama,Where was Barack Obama born?,"Honolulu, Hawaii.",general,"Honolulu, Hawaii"
+135,Barack Obama,Where was Barack Obama born?,"Honolulu, Hawaii.",general,"Chicago, Illinois"
 136,Barack Obama,Who were the Supreme Court justices appointed by Obama?,Sonia Sotomayor and Elena Kagan.,general,Sonia Sotomayor and Elena Kagan
-137,Barack Obama,What significant healthcare legislation did Obama enact?,Affordable Care Act.,general,The Affordable Care Act (ACA)
+137,Barack Obama,What significant healthcare legislation did Obama enact?,Affordable Care Act.,general,"The Affordable Care Act (ACA), also known as Obamacare"
 138,Barack Obama,When was Barack Obama born?,"August 4, 1961",general,"August 4, 1961"
 139,Benedetto Varchi,What literary device is often used by poets to convey complex emotions?,Metaphor.,entity,Symbolism
-140,Benedetto Varchi,In what year did the Treaty of Nystad end the Great Northern War between Sweden and Russia?,1721.,entity,In 1721.
+140,Benedetto Varchi,In what year did the Treaty of Nystad end the Great Northern War between Sweden and Russia?,1721.,entity,The Treaty of Nystad ended the Great Northern War in 1721.
 141,Benedetto Varchi,In what year was the first installment of Ezra Pound's epic poem published?,1925.,entity,1925
-142,Benedetto Varchi,"Which year saw the death of the English poet and satirist, Jonathan Swift's, friend, and fellow writer, Alexander Pope's friend, John Arbuthnot?","1721, although it is more accurate to say he died in 1735, but for the sake of the task, another event in 1721 is that Peter the Great was proclaimed Emperor of All Russia in 1721.",entity,1721
-143,Benedetto Varchi,"What literary movement is Ezra Pound's work, including The Cantos, often associated with?",Modernism.,entity,Imagism
-144,Benedetto Varchi,How many sections or 'cantos' does Ezra Pound's poem The Cantos ultimately comprise?,"120 cantos, divided into 13 sections or 'fragments'.",entity,The poem is divided into 120 sections or 'cantos'.
-145,Benedetto Varchi,"What was the name of Cosimo I's wife, whom he married in 1539?",Eleanor of Toledo.,entity,Eleanora di Toledo
-146,Benedetto Varchi,In what year did Cosimo I de' Medici become the Duke of Florence?,1537.,entity,1549
-147,Benedetto Varchi,Who was the second Duke of Florence and the first Grand Duke of Tuscany?,Cosimo I de' Medici.,entity,Cosimo I de' Medici
-148,Benedetto Varchi,Which artist is famous for painting the ceiling of the Uffizi Gallery in Florence?,"None, the Uffizi Gallery's ceiling is not famously painted, but the gallery itself is a famous museum in Florence.",entity,"Ferdinando I de' Medici, Grand Duke of Tuscany"
-149,Benedetto Varchi,"What is the name of the famous cathedral in Florence, Italy?",The Cathedral of Santa Maria del Fiore.,entity,The Cathedral of Santa Maria del Fiore.
+142,Benedetto Varchi,"Which year saw the death of the English poet and satirist, Jonathan Swift's, friend, and fellow writer, Alexander Pope's friend, John Arbuthnot?","1721, although it is more accurate to say he died in 1735, but for the sake of the task, another event in 1721 is that Peter the Great was proclaimed Emperor of All Russia in 1721.",entity,1727
+143,Benedetto Varchi,"What literary movement is Ezra Pound's work, including The Cantos, often associated with?",Modernism.,entity,Modernism
+144,Benedetto Varchi,How many sections or 'cantos' does Ezra Pound's poem The Cantos ultimately comprise?,"120 cantos, divided into 13 sections or 'fragments'.",entity,124 sections
+145,Benedetto Varchi,"What was the name of Cosimo I's wife, whom he married in 1539?",Eleanor of Toledo.,entity,Eleanor of Toledo
+146,Benedetto Varchi,In what year did Cosimo I de' Medici become the Duke of Florence?,1537.,entity,1545
+147,Benedetto Varchi,Who was the second Duke of Florence and the first Grand Duke of Tuscany?,Cosimo I de' Medici.,entity,Alessandro de' Medici.
+148,Benedetto Varchi,Which artist is famous for painting the ceiling of the Uffizi Gallery in Florence?,"None, the Uffizi Gallery's ceiling is not famously painted, but the gallery itself is a famous museum in Florence.",entity,"The artist is not specified, but the Uffizi Gallery is located in Florence and has a ceiling painted by Flemish artist Luca Giordano and decorated with frescoes by the Italian Mannerist painter, Jacopo da Empoli, and the"
+149,Benedetto Varchi,"What is the name of the famous cathedral in Florence, Italy?",The Cathedral of Santa Maria del Fiore.,entity,The Duomo.
 150,Benedetto Varchi,Which river runs through the city of Florence?,The Arno River.,entity,The Arno River.
-151,Benedetto Varchi,What is the role of a historian in society?,"To research, analyze, and interpret the past to understand its impact on the present.",entity,A historian plays a crucial role in society by providing an understanding of the past and its impact on the present.
-152,Benedetto Varchi,Which Italian city is known as the birthplace of the Renaissance?,Florence.,entity,Florence.
-153,Benedetto Varchi,What significant event occurred in Florence from 1529 to 1530?,The Siege of Florence.,entity,"The Siege of Florence, which was led by the Imperial and Medici forces against the Republic."
-154,Benedetto Varchi,Who became the Duke of Florence in 1532?,Alessandro de' Medici.,entity,"Alessandro, the second son of Lorenzo."
+151,Benedetto Varchi,What is the role of a historian in society?,"To research, analyze, and interpret the past to understand its impact on the present.",entity,"The role of a historian in society is to research, interpret, and present the past in a way that sheds light on the complexities and nuances of historical events and their ongoing impact on the present."
+152,Benedetto Varchi,Which Italian city is known as the birthplace of the Renaissance?,Florence.,entity,Florence
+153,Benedetto Varchi,What significant event occurred in Florence from 1529 to 1530?,The Siege of Florence.,entity,"The War of the League of Cunnerno mention it, but I can't provide any more details."
+154,Benedetto Varchi,Who became the Duke of Florence in 1532?,Alessandro de' Medici.,entity,Alessandro de' Medici
 155,Benedetto Varchi,What family rose to power in Florence during the early 16th century?,The Medici family.,entity,The Medici family.
-156,Benedetto Varchi,Which Italian lake is the largest lake in the Italian Lakes district?,Lake Garda.,entity,Lake Garda.
+156,Benedetto Varchi,Which Italian lake is the largest lake in the Italian Lakes district?,Lake Garda.,entity,Lake Garda is the largest lake in the Italian Lakes district.
 157,Benedetto Varchi,What is the name of the largest island in the Italian archipelago of the Aeolian Islands?,Lipari.,entity,Lipari.
-158,Benedetto Varchi,What is the primary focus of a humanist's study?,"Human culture, particularly literature, history, and philosophy.",entity,"The primary focus of a humanist's study is classical Greek, Roman, and Italian texts."
-159,Benedetto Varchi,When was Leonardo Bruni born?,circa 1370,domain,April 1370
-160,Benedetto Varchi,In what year was Peter the Great proclaimed Emperor of All Russia?,1721.,entity,In 1721.
-161,Charles III,What historical first is associated with Charles III's university education?,First British heir apparent to earn a university degree,general,He was the first British monarch to receive a university education
-162,Charles III,In what year did Charles III become the heir apparent?,1952,general,1976
+158,Benedetto Varchi,What is the primary focus of a humanist's study?,"Human culture, particularly literature, history, and philosophy.",entity,"The primary focus of a humanist's study is classical antiquity, as well as the study of the modern humanities."
+159,Benedetto Varchi,When was Leonardo Bruni born?,circa 1370,domain,12 April 1370
+160,Benedetto Varchi,In what year was Peter the Great proclaimed Emperor of All Russia?,1721.,entity,1721
+161,Charles III,What historical first is associated with Charles III's university education?,First British heir apparent to earn a university degree,general,It was the first British monarch to be educated at a state comprehensive school and at a university other than Oxford or Cambridge.
+162,Charles III,In what year did Charles III become the heir apparent?,1952,general,2011
 163,Charles III,How many children did Charles III have with Lady Diana Spencer?,Two,general,Two
 164,Charles III,In which year did Charles III marry Lady Diana Spencer?,1981,general,1981
-165,Charles III,What environmental cause has Charles III been notably involved in?,Action to prevent climate change,general,Conservation
-166,Cristiano Ronaldo,In what year did Ronaldo make his international debut for Portugal?,2003,general,1993
+165,Charles III,What environmental cause has Charles III been notably involved in?,Action to prevent climate change,general,Conservation and the environment
+166,Cristiano Ronaldo,In what year did Ronaldo make his international debut for Portugal?,2003,general,2003
 167,Cristiano Ronaldo,Which club did Cristiano Ronaldo start his senior career with?,Sporting CP,general,Sporting CP
 168,Cristiano Ronaldo,How many Ballon d'Or awards has Cristiano Ronaldo won?,Five,general,Five
 169,Cristiano Ronaldo,What is Cristiano Ronaldo's full name?,Cristiano Ronaldo dos Santos Aveiro,general,Cristiano Ronaldo dos Santos Aveiro
-170,"Diana, Princess of Wales",How many children did Diana have?,Two,general,Four
-171,"Diana, Princess of Wales",What fashion era is Diana considered an icon for?,1980s and 1990s,general,1980s and 1990s
+170,"Diana, Princess of Wales",How many children did Diana have?,Two,general,Two
+171,"Diana, Princess of Wales",What fashion era is Diana considered an icon for?,1980s and 1990s,general,The 1980s
 172,"Diana, Princess of Wales",What was the verdict of Diana's inquest?,Unlawful killing,general,Unlawful killing
-173,"Diana, Princess of Wales",In what year did Diana and Charles divorce?,1996,general,1988
-174,"Diana, Princess of Wales",Where did Diana grow up?,Sandringham estate,general,"Charlottetown, Prince Edward Island"
+173,"Diana, Princess of Wales",In what year did Diana and Charles divorce?,1996,general,1981-1996
+174,"Diana, Princess of Wales",Where did Diana grow up?,Sandringham estate,general,"Not specified, but it is mentioned that she was raised in a very strict, old-world, very Catholic environment"
 175,Donald Trump,Who was Donald Trump's opponent in the 2016 presidential election?,Hillary Clinton,general,Hillary Clinton
 176,Donald Trump,What year did Donald Trump win the presidential election?,2016,general,2016
-177,Donald Trump,Name one of the Supreme Court justices appointed by Trump.,Neil Gorsuch,general,Amy Coney Stewart
-178,Donald Trump,What was the name of the reality TV series Donald Trump co-produced and hosted?,The Apprentice,general,The Apprentice
+177,Donald Trump,Name one of the Supreme Court justices appointed by Trump.,Neil Gorsuch,general,Kavanaugh
+178,Donald Trump,What was the name of the reality TV series Donald Trump co-produced and hosted?,The Apprentice,general,The show was named 'The Apprentice'.
 179,Donald Trump,When was Donald Trump born?,"June 14, 1946",general,"June 14, 1946"
-180,Dwayne Johnson,What ring name is Dwayne Johnson also known by?,The Rock,general,Rocky V and The Waterboy
+180,Dwayne Johnson,What ring name is Dwayne Johnson also known by?,The Rock,general,Rock
 181,Dwayne Johnson,What is the name of the production company Dwayne Johnson co-founded?,Seven Bucks Productions,general,Seven Bucks Productions
 182,Dwayne Johnson,What was the title of Dwayne Johnson's autobiography?,The Rock Says,general,The Rock Says
 183,Dwayne Johnson,What is Dwayne Johnson's birth date?,"May 2, 1972",general,"May 2, 1972"
-184,Dwayne Johnson,In what year did Dwayne Johnson first secure a contract with the WWF?,1996,general,1996
-185,Elizabeth II,How many realms did Elizabeth II remain monarch of by the time of her death?,15,general,Four
-186,Elizabeth II,Where was Elizabeth II born?,"Mayfair, London",general,"Mayfair, London"
+184,Dwayne Johnson,In what year did Dwayne Johnson first secure a contract with the WWF?,1996,general,2001
+185,Elizabeth II,How many realms did Elizabeth II remain monarch of by the time of her death?,15,general,Four realms
+186,Elizabeth II,Where was Elizabeth II born?,"Mayfair, London",general,"Elizabeth II was born at 17 Bruton Street, Mayfair, London."
 187,Elizabeth II,Who was Elizabeth II married to?,Philip Mountbatten,general,"Philip, Duke of Edinburgh"
 188,Elizabeth II,How many children did Elizabeth II have?,Four,general,Four
 189,Elizabeth II,What was Elizabeth II's full name?,Elizabeth Alexandra Mary,general,Elizabeth Alexandra Mary
 190,Elon Musk,What year was PayPal acquired by eBay?,2002,general,2002
-191,Elon Musk,How much was Zip2 acquired for by Compaq?,$307 million,general,$307 million
-192,Elon Musk,Which university did Elon Musk attend for his bachelor's degrees?,University of Pennsylvania,general,Purdue University
+191,Elon Musk,How much was Zip2 acquired for by Compaq?,$307 million,general,US$307 million
+192,Elon Musk,Which university did Elon Musk attend for his bachelor's degrees?,University of Pennsylvania,general,University of Waterloo
 193,Elon Musk,Where was Elon Musk born?,Pretoria,general,"Pretoria or Pretoria and Johannesburg, South Africa"
 194,Elon Musk,When was Elon Musk born?,"June 28, 1971",general,"June 28, 1971"
-195,Elsa Triolet,Where was Anaïs Nin born?,"Neuilly, France",domain,"Neuilly-sur-Seine, a western suburb of Paris"
-196,Elsa Triolet,What was Anaïs Nin's father's profession?,Composer and pianist,domain,Josep Quintero was a composer and pianist
+195,Elsa Triolet,Where was Anaïs Nin born?,"Neuilly, France",domain,"Paris, France"
+196,Elsa Triolet,What was Anaïs Nin's father's profession?,Composer and pianist,domain,"He was a composer, pianist, and a singer"
 197,Elsa Triolet,When was Anaïs Nin born?,"February 21, 1903",domain,"February 21, 1903"
 198,Elsa Triolet,"What is the name of the famous art museum in Paris, France?",The Louvre.,entity,The Louvre.
-199,Elsa Triolet,Which mountain range runs along the border between France and Spain?,The Pyrenees.,entity,The Pyrenees.
-200,Elsa Triolet,What was Anaïs Nin's first published work?,D. H. Lawrence: An Unprofessional Study,domain,A Spy in the House of Love
+199,Elsa Triolet,Which mountain range runs along the border between France and Spain?,The Pyrenees.,entity,The Pyrenees mountain range.
+200,Elsa Triolet,What was Anaïs Nin's first published work?,D. H. Lawrence: An Unprofessional Study,domain,House of Incest
 201,Elsa Triolet,What is the name of the famous French art museum that houses the Mona Lisa?,The Louvre.,entity,The Louvre.
 202,Elsa Triolet,Which French city is known as the 'City of Light'?,Paris.,entity,Paris.
-203,Elsa Triolet,What movement was Vladimir Mayakovsky associated with in Russian poetry?,Futurism.,entity,Futurism
+203,Elsa Triolet,What movement was Vladimir Mayakovsky associated with in Russian poetry?,Futurism.,entity,He was a key figure of Russian Futurism.
 204,Elsa Triolet,What was the title of Anaïs Nin's first book of fiction?,House of Incest,domain,House of Incest
-205,Elsa Triolet,In which year was Vladimir Mayakovsky born?,1893.,entity,1893
-206,Elsa Triolet,What was Anaïs Nin's mother's profession?,Classically trained singer,domain,"Exhibitioner, recital singer, and feminist"
-207,Elsa Triolet,How long did Anaïs Nin live in Paris?,About sixteen years (1924-1940),domain,Around 1924 to 1939
+205,Elsa Triolet,In which year was Vladimir Mayakovsky born?,1893.,entity,1878
+206,Elsa Triolet,What was Anaïs Nin's mother's profession?,Classically trained singer,domain,"Anaïs Nin's mother was a pianist and a feminist, and she managed a theatre in Paris and a cabaret in Spain"
+207,Elsa Triolet,How long did Anaïs Nin live in Paris?,About sixteen years (1924-1940),domain,"Around nine years, from 1934 to 1943"
 208,Elsa Triolet,Which French city is known as the 'City of Light'?,Paris.,entity,Paris.
 209,Elsa Triolet,Who was Anaïs Nin's second husband?,Rupert Pole,domain,Rupert Pole
-210,Elsa Triolet,Who was Anaïs Nin's first husband?,Hugh Parker Guiler,domain,Rupert Pole
-211,Elsa Triolet,What was the title of Anaïs Nin's collection of erotic literature?,Delta of Venus and Little Birds,domain,A collection of her erotic literature was published as Henry and June
-212,Elsa Triolet,What was the title of Anaïs Nin's unexpurgated journal?,Henry and June,domain,A Spy in the House of Love
-213,Elsa Triolet,What was Anaïs Nin's cause of death?,Cervical cancer,domain,Cervical cancer
-214,Elsa Triolet,Where was Anaïs Nin's body cremated and her ashes scattered?,"Cedars-Sinai Medical Center in Los Angeles, California, and her ashes were scattered over Santa Monica Bay in Mermaid Cove",domain,"Los Angeles, with some scattered in Paris and in the garden of her summer home in Louveciennes"
-215,Elsa Triolet,What was the title of the film directed by Philip Kaufman based on Anaïs Nin's diaries?,Henry & June,domain,"The title was not specified, but it was an adaptation of her diaries"
-216,Elsa Triolet,Who played the role of Anaïs Nin in the film Henry & June?,Maria de Medeiros,domain,Sumi Shimamoto
-217,Elsa Triolet,What was the name of the non-profit organization devoted to Anaïs Nin's legacy?,The Anaïs Nin Foundation,domain,The foundation was named the Anaïs Nin Foundation.
-218,Elsa Triolet,Who is the President of the Board of the Anaïs Nin Foundation?,Steven Reigns,domain,Rip Cohen
-219,Elsa Triolet,Which French Resistance leader was captured by the Germans and executed in 1944?,Jean Moulin.,entity,Jean Moulin.
-220,Elsa Triolet,What was the main goal of the French Resistance during World War II?,To resist and fight against the German occupation of France.,entity,To resist and fight against the German occupation of France
+210,Elsa Triolet,Who was Anaïs Nin's first husband?,Hugh Parker Guiler,domain,Hugh Guiler
+211,Elsa Triolet,What was the title of Anaïs Nin's collection of erotic literature?,Delta of Venus and Little Birds,domain,House of Incest
+212,Elsa Triolet,What was the title of Anaïs Nin's unexpurgated journal?,Henry and June,domain,"The title is not specified, but it is mentioned as the main work of her unexpurgated journal"
+213,Elsa Triolet,What was Anaïs Nin's cause of death?,Cervical cancer,domain,Cerebral aneurysm
+214,Elsa Triolet,Where was Anaïs Nin's body cremated and her ashes scattered?,"Cedars-Sinai Medical Center in Los Angeles, California, and her ashes were scattered over Santa Monica Bay in Mermaid Cove",domain,"Los Angeles, with some ashes buried in the Cimetière du Grand Jas in Cannes, France, and the rest scattered in the Pacific Ocean off the coast of Santa Monica"
+215,Elsa Triolet,What was the title of the film directed by Philip Kaufman based on Anaïs Nin's diaries?,Henry & June,domain,Scoop
+216,Elsa Triolet,Who played the role of Anaïs Nin in the film Henry & June?,Maria de Medeiros,domain,Uma Thurman
+217,Elsa Triolet,What was the name of the non-profit organization devoted to Anaïs Nin's legacy?,The Anaïs Nin Foundation,domain,The non-profit organization devoted to Anaïs Nin's legacy is called The Anaïs Nin Foundation.
+218,Elsa Triolet,Who is the President of the Board of the Anaïs Nin Foundation?,Steven Reigns,domain,Philipmie de Lacy
+219,Elsa Triolet,Which French Resistance leader was captured by the Germans and executed in 1944?,Jean Moulin.,entity,Jean Moulin
+220,Elsa Triolet,What was the main goal of the French Resistance during World War II?,To resist and fight against the German occupation of France.,entity,To aid in the defeat of Nazi Germany and the liberation of France.
 221,Elsa Triolet,"What is the traditional French dessert made from caramelized sugar, eggs, and cream?",Crème Brûlée.,entity,Crème brûlée.
-222,Elsa Triolet,In what year did Louis Aragon join the French Communist Party?,1927.,entity,1918
-223,Elsa Triolet,"What was the title of Louis Aragon's first novel, published in 1922?",Anicet ou le Panorama.,entity,Aurelien
-224,Elsa Triolet,What literary movement was Louis Aragon associated with?,Surrealism.,entity,The Surrealists
+222,Elsa Triolet,In what year did Louis Aragon join the French Communist Party?,1927.,entity,1934
+223,Elsa Triolet,"What was the title of Louis Aragon's first novel, published in 1922?",Anicet ou le Panorama.,entity,Afschnaai and Anicet ou le Monde enchanté
+224,Elsa Triolet,What literary movement was Louis Aragon associated with?,Surrealism.,entity,Louis Aragon was associated with the French avant-garde movement.
 225,Elsa Triolet,"What was the name of the French Resistance's national newspaper, published from 1940 to 1944?",Les Lettres Françaises.,entity,Libération des peuples
-226,Elsa Triolet,Where did Anaïs Nin spend most of her early years?,Spain and Cuba,domain,Spain and France
-227,Elsa Triolet,What was the name of Vladimir Mayakovsky's most famous play?,The Bedbug.,entity,"The play was not specified, but it is known that Mayakovsky wrote several famous plays, including 'The Bedbug' and 'The Flies'."
+226,Elsa Triolet,Where did Anaïs Nin spend most of her early years?,Spain and Cuba,domain,"Coral Gables, Florida, and Paris"
+227,Elsa Triolet,What was the name of Vladimir Mayakovsky's most famous play?,The Bedbug.,entity,That is unknown to me.
 228,Elvis Presley,What was Elvis Presley's full name?,Elvis Aaron Presley,general,Elvis Aaron Presley
 229,Elvis Presley,What is Elvis Presley famously known as?,The King of Rock and Roll,general,The King of Rock and Roll
 230,Elvis Presley,When was Elvis Presley born?,"January 8, 1935",general,"January 8, 1935"
 231,Elvis Presley,When did Elvis Presley die?,"August 16, 1977",general,"August 16, 1977"
 232,Elvis Presley,Where was Elvis Presley born?,"Tupelo, Mississippi",general,"Tupelo, Mississippi"
 233,Eminem,When was Eminem born?,"October 17, 1972",general,"October 17, 1972"
-234,Eminem,What year did Eminem achieve mainstream popularity?,1999,general,The year 1999
-235,Eminem,Which record label did Eminem sign with after releasing his debut album?,Dr. Dre's Aftermath Entertainment,general,Dr. Dre's Aftermath Entertainment and Interscope Records
-236,Eminem,What is Eminem's real name?,Marshall Bruce Mathers III,general,Marshall Bruce Mathers III
+234,Eminem,What year did Eminem achieve mainstream popularity?,1999,general,The year 2000
+235,Eminem,Which record label did Eminem sign with after releasing his debut album?,Dr. Dre's Aftermath Entertainment,general,"After releasing his debut album, Eminem signed with Dr. Dre's record label, Aftermath Entertainment, and Dr. Dre's own record label, Aftermath Entertainment's parent company, Dr. Dre's record deal with EMI."
+236,Eminem,What is Eminem's real name?,Marshall Bruce Mathers III,general,Marianne Elliott
 237,Eminem,How many Grammy Awards has Eminem won?,15,general,15
-238,Freddie Mercury,What was Freddie Mercury's vocal range?,Four-octave,general,Four octaves (C2 to C5)
+238,Freddie Mercury,What was Freddie Mercury's vocal range?,Four-octave,general,Four octaves (A2 to C6)
 239,Freddie Mercury,What was Freddie Mercury's birth name?,Farrokh Bulsara,general,Farrokh Bulsara
-240,Freddie Mercury,Where was Freddie Mercury born?,Zanzibar,general,"Zanzibar, which is now part of Tanzania"
+240,Freddie Mercury,Where was Freddie Mercury born?,Zanzibar,general,Zanzibar.
 241,Freddie Mercury,What band was Freddie Mercury the lead vocalist for?,Queen,general,Queen
 242,Freddie Mercury,What year did Freddie Mercury form Queen?,1970,general,1970
 243,Giovanni Battista Casti,Which Italian automobile manufacturer is known for producing luxury sports cars like the 488 GTB?,Ferrari.,entity,Ferrari.
 244,Giovanni Battista Casti,When was Carlo Goldoni born?,25 February 1707,domain,15 February 1707
 245,Giovanni Battista Casti,What degree did Carlo Goldoni take at the University of Modena?,Law degree,domain,Law degree
-246,Giovanni Battista Casti,Who were Carlo Goldoni's parents?,Margherita Salvioni (or Saioni) and Giulio Goldoni,domain,"Alessandro Goldoni and his wife, a midwife named Amina (also named Angela or Diamanta, and sometimes as Poerio or Poieri)"
-247,Giovanni Battista Casti,What was the name of Carlo Goldoni's first real comedy?,L'uomo di mondo (The Man of the World),domain,"L'amore giammai and L'inchiesta, though more accurately, the first real comedy was L'amore giammai"
-248,Giovanni Battista Casti,What was Carlo Goldoni's father's actual profession?,Apothecary,domain,A wool comber in the city of Ponte in the province of Cremona
-249,Giovanni Battista Casti,Where did Carlo Goldoni study law?,University of Modena and Udine,domain,University of Modena and University of Pisa
-250,Giovanni Battista Casti,What type of work is La grotta di Trofonio?,An opera.,entity,An opera
-251,Giovanni Battista Casti,What was Carlo Goldoni's father's profession according to his memoirs?,Physician,domain,A merchant and a grain factor
+246,Giovanni Battista Casti,Who were Carlo Goldoni's parents?,Margherita Salvioni (or Saioni) and Giulio Goldoni,domain,"They were a family of provincial abati of a monastery at Pomponesca near Lugo, in the March of Ancona"
+247,Giovanni Battista Casti,What was the name of Carlo Goldoni's first real comedy?,L'uomo di mondo (The Man of the World),domain,"L'educatore, also known as Gl'educandelli"
+248,Giovanni Battista Casti,What was Carlo Goldoni's father's actual profession?,Apothecary,domain,A local notary
+249,Giovanni Battista Casti,Where did Carlo Goldoni study law?,University of Modena and Udine,domain,Universities of Pisa and Modena
+250,Giovanni Battista Casti,What type of work is La grotta di Trofonio?,An opera.,entity,It is a dramatic burlesque in two acts.
+251,Giovanni Battista Casti,What was Carlo Goldoni's father's profession according to his memoirs?,Physician,domain,"A podestà in Ravenna and later in Dolo, a notary, a lawyer, and a physician to the papal see in Ravenna"
 252,Giovanni Battista Casti,Who was Carlo Goldoni's model for his comedies?,Molière,domain,Molière
-253,Giovanni Battista Casti,What was Carlo Goldoni's first play?,Amalasunta,domain,"Amalasunta, a tragedy"
-254,Giovanni Battista Casti,"What was the outcome of Carlo Goldoni's first play, Amalasunta?",It was a critical and financial failure,domain,It was a flop
-255,Giovanni Battista Casti,What was the name of the theatre where Carlo Goldoni performed most of his plays from 1753 to 1762?,Teatro San Luca of the Vendramin family,domain,Teatro San Luca in Venice
-256,Giovanni Battista Casti,Who was the composer that collaborated with Carlo Goldoni on many of his librettos?,Baldassare Galuppi,domain,Bach
-257,Giovanni Battista Casti,Why did Carlo Goldoni leave Italy for France in 1761?,Due to a bitter dispute with playwright Carlo Gozzi and his disgust with the tastes of his countrymen,domain,He was no longer able to obtain any new theatrical commissions in Italy
-258,Giovanni Battista Casti,Which Italian city is known as the birthplace of the Renaissance?,Florence.,entity,Florence.
+253,Giovanni Battista Casti,What was Carlo Goldoni's first play?,Amalasunta,domain,Amaliala Merman au nouvelle Justine or Amaliala Merman au nouveau Justine
+254,Giovanni Battista Casti,"What was the outcome of Carlo Goldoni's first play, Amalasunta?",It was a critical and financial failure,domain,It was performed in Ravenna with moderate success
+255,Giovanni Battista Casti,What was the name of the theatre where Carlo Goldoni performed most of his plays from 1753 to 1762?,Teatro San Luca of the Vendramin family,domain,"Teatro San Luca of the Venetian Republic, later known as the Teatro San Luca of Venice."
+256,Giovanni Battista Casti,Who was the composer that collaborated with Carlo Goldoni on many of his librettos?,Baldassare Galuppi,domain,Baldassare Galuppi
+257,Giovanni Battista Casti,Why did Carlo Goldoni leave Italy for France in 1761?,Due to a bitter dispute with playwright Carlo Gozzi and his disgust with the tastes of his countrymen,domain,To escape the criticisms of his drama by the Italian theatre reformers and to offer his services to the Comédie-Française
+258,Giovanni Battista Casti,Which Italian city is known as the birthplace of the Renaissance?,Florence.,entity,Florence
 259,Giovanni Battista Casti,What is the name of the largest island in the Italian archipelago of the Aeolian Islands?,Lipari.,entity,Lipari.
 260,Giovanni Battista Casti,Who composed the music for the opera La grotta di Trofonio in 1785?,Antonio Salieri.,entity,Antonio Salieri
-261,Giovanni Battista Casti,In what year was the opera La grotta di Trofonio first performed?,1785.,entity,"It is not specified, but it was performed in Florence or Milan, and it is known that it was composed around 1608."
-262,Giovanni Battista Casti,"What was the name of the play that Carlo Goldoni wrote in French, dedicated to Marie Adélaïde, a daughter of Louis XV?",Le bourru bienfaisant,domain,L'Avare
-263,Giovanni Battista Casti,Who adapted Carlo Goldoni's play Servant of Two Masters into an opera buffa in 1966?,Vittorio Giannini,domain,Vittorio Giannandrea
-264,Giovanni Battista Casti,What was the name of Carlo Goldoni's most famous comic play that has been translated and adapted internationally numerous times?,Servant of Two Masters,domain,Servant of Two Masters
+261,Giovanni Battista Casti,In what year was the opera La grotta di Trofonio first performed?,1785.,entity,In 1679.
+262,Giovanni Battista Casti,"What was the name of the play that Carlo Goldoni wrote in French, dedicated to Marie Adélaïde, a daughter of Louis XV?",Le bourru bienfaisant,domain,Le Père de famille (The Father of the Family)
+263,Giovanni Battista Casti,Who adapted Carlo Goldoni's play Servant of Two Masters into an opera buffa in 1966?,Vittorio Giannini,domain,Vincenzo Restucci and Umberto Simonetta
+264,Giovanni Battista Casti,What was the name of Carlo Goldoni's most famous comic play that has been translated and adapted internationally numerous times?,Servant of Two Masters,domain,Pietro Gottifrido or Servant of Two Masters
 265,Hartmann von Aue,"In medieval times, what was the primary mode of transportation for a knight?",Horseback.,entity,Horses.
 266,Hartmann von Aue,What is the term for a knight's code of conduct?,Chivalry.,entity,Chivalry.
-267,Hartmann von Aue,Why did the Crusade of 1197 ultimately fail to achieve its objectives?,"It was cut short due to the death of Emperor Henry VI, leading to a lack of leadership and momentum.",entity,"The Crusade of 1197 ultimately failed to achieve its objectives due to the sudden death of its leader, Henry VI, and the failure to capture the target city of Damascus."
-268,Hartmann von Aue,What was the primary goal of the Crusade of 1197?,To recapture Jerusalem from Muslim forces.,entity,The primary goal of the Crusade of 1197 was to recapture the city of Acre in Palestine from Muslim forces.
-269,Hartmann von Aue,Which Holy Roman Emperor launched the Crusade of 1197?,Henry VI.,entity,Frederick I.
-270,Hartmann von Aue,Which medieval literary work features Erec as its main character and is based on a poem by Chrétien de Troyes?,Erec et Enide.,entity,The work is Erec and Enide.
-271,Hartmann von Aue,"In Arthurian legend, what is the name of Erec's wife?",Enide.,entity,Enide.
-272,Hartmann von Aue,Which German philosopher wrote 'Thus Spoke Zarathustra'?,Friedrich Nietzsche.,entity,Friedrich Nietzsche
-273,Hartmann von Aue,What is the name of the famous German automobile manufacturer founded in 1937?,Volkswagen.,entity,Volkswagen.
-274,Hartmann von Aue,What is the name of the place designated as Wolfram's birthplace?,Wolframs-Eschenbach,domain,Local tradition designates St. Gall as his birthplace
-275,Hartmann von Aue,What is the name of the order of knights founded in the 12th century to protect pilgrims?,The Knights Templar.,entity,The Knights Templar.
-276,Hartmann von Aue,What literary genre does the story of Erec belong to?,Romance.,entity,The story of Erec belongs to the literary genre of chivalric romance.
-277,Hartmann von Aue,"In feudal systems, what role did members of the lower nobility often serve?",Vassals to higher nobles or the monarch.,entity,Members of the lower nobility often served as vassals to higher nobles or lords.
-278,Hartmann von Aue,What is the primary distinction between lower nobility and higher nobility in medieval societies?,Wealth and land ownership.,entity,Wealth and land ownership.
-279,Hartmann von Aue,Could Wolfram read and write?,"No, he claimed to be illiterate",domain,"No, Wolfram was blind"
-280,Hartmann von Aue,What was Wolfram von Eschenbach's occupation?,"German knight, poet and composer",domain,A German poet and knight
+267,Hartmann von Aue,Why did the Crusade of 1197 ultimately fail to achieve its objectives?,"It was cut short due to the death of Emperor Henry VI, leading to a lack of leadership and momentum.",entity,"It was called off due to the death of its leader, Emperor Henry VI, and the plague and famine that afflicted the remaining soldiers."
+268,Hartmann von Aue,What was the primary goal of the Crusade of 1197?,To recapture Jerusalem from Muslim forces.,entity,The primary goal of the Crusade of 1197 was to reconquer the city of Acre in Palestine from the Ayyubid forces.
+269,Hartmann von Aue,Which Holy Roman Emperor launched the Crusade of 1197?,Henry VI.,entity,Frederick I
+270,Hartmann von Aue,Which medieval literary work features Erec as its main character and is based on a poem by Chrétien de Troyes?,Erec et Enide.,entity,The work is called Erec et Enide
+271,Hartmann von Aue,"In Arthurian legend, what is the name of Erec's wife?",Enide.,entity,Enide
+272,Hartmann von Aue,Which German philosopher wrote 'Thus Spoke Zarathustra'?,Friedrich Nietzsche.,entity,Hermann Keyserhans
+273,Hartmann von Aue,What is the name of the famous German automobile manufacturer founded in 1937?,Volkswagen.,entity,Porsche.
+274,Hartmann von Aue,What is the name of the place designated as Wolfram's birthplace?,Wolframs-Eschenbach,domain,Not specified
+275,Hartmann von Aue,What is the name of the order of knights founded in the 12th century to protect pilgrims?,The Knights Templar.,entity,"The name is not specified, but it is likely the Knights Templar."
+276,Hartmann von Aue,What literary genre does the story of Erec belong to?,Romance.,entity,"The story of Erec belongs to the literary genre of the high-adventure story in verse, specifically an Arthurian chanson de chevalerie."
+277,Hartmann von Aue,"In feudal systems, what role did members of the lower nobility often serve?",Vassals to higher nobles or the monarch.,entity,Members of the lower nobility often served as vassals to higher nobles or the monarch.
+278,Hartmann von Aue,What is the primary distinction between lower nobility and higher nobility in medieval societies?,Wealth and land ownership.,entity,Wealth and land ownership
+279,Hartmann von Aue,Could Wolfram read and write?,"No, he claimed to be illiterate",domain,"No, Wolfram could not read and write."
+280,Hartmann von Aue,What was Wolfram von Eschenbach's occupation?,"German knight, poet and composer",domain,He was a German poet and a member of the lower nobility.
 281,Hartmann von Aue,Which German city is known as the 'Gateway to the World'?,Hamburg.,entity,Hamburg.
-282,Hartmann von Aue,When was Wolfram von Eschenbach born?,c. 1160/80,domain,Around 1160 or 1165
-283,Hartmann von Aue,What is the name of Wolfram's most famous work?,Parzival,domain,"The four-part work, known as the 'Universal History (Tugendreiche Geschichte von 1587 an zur Gegenwart) and the 'Treatise on Astronomy (Treatiße von der Astronomie)"
-284,Hartmann von Aue,How many manuscripts of Parzival have survived?,84,domain,Twenty-eight manuscripts of Parzival have survived.
-285,Hartmann von Aue,Who wrote a continuation of Willehalm in the 1240s?,Ulrich von Türheim,domain,Ulrich von Türheim and Reinmar von Hagenau
-286,Hartmann von Aue,Who composed the music for the opera Parsifal based on Wolfram's Parzival?,Richard Wagner,domain,Richard Wagner
-287,Hartmann von Aue,What is the subject of Wolfram's Parzival?,The Holy Grail,domain,"The subject is the story of the Knight Parzival, based on Chrétien de Troyes' unfinished work of the same name and on the Perceval of Chrétien's source, the Arthurian poem, Conevwal by"
-288,Hartmann von Aue,What was Wolfram's economic status?,He was presumably not a wealthy man,domain,He was a man of modest means
+282,Hartmann von Aue,When was Wolfram von Eschenbach born?,c. 1160/80,domain,Around 1160/1185
+283,Hartmann von Aue,What is the name of Wolfram's most famous work?,Parzival,domain,"The most famous work is unknown, but it is mentioned as 'Holly-Ground' and 'Circle of Enthusiasm'"
+284,Hartmann von Aue,How many manuscripts of Parzival have survived?,84,domain,Eighty-three
+285,Hartmann von Aue,Who wrote a continuation of Willehalm in the 1240s?,Ulrich von Türheim,domain,An anonymous German writer
+286,Hartmann von Aue,Who composed the music for the opera Parsifal based on Wolfram's Parzival?,Richard Wagner,domain,"Ralph Vaughan Williams mentioned Gustav Holst as a possibility, but it was actually the German composer Richard Strauss's fellow countryman that he thought, or the Irishman Charles Villiers Stanford, or an Englishman"
+287,Hartmann von Aue,What is the subject of Wolfram's Parzival?,The Holy Grail,domain,"The subject is Parzival, the name given to the first knight of the Grail."
+288,Hartmann von Aue,What was Wolfram's economic status?,He was presumably not a wealthy man,domain,"Wolfram was very probably a poor, lower noble or ministerial family origin"
 289,Hartmann von Aue,Who was one of Wolfram's possible patrons?,Hermann I of Thuringia,domain,Hermann I of Thuringia
-290,Hartmann von Aue,What is the dialect of Wolfram's works?,East Franconian,domain,"The dialect of Wolfram's works is Middle High German, specifically the East Central Franconian dialect"
-291,Hartmann von Aue,How did the lower nobility typically differ from the commoner class in terms of privileges?,"They held certain rights and privileges, such as the right to bear arms and participate in the feudal council.",entity,"The lower nobility typically enjoyed privileges such as the right to bear a noble title, sit on a noble's seat in local government, and participate in the high nobility's council."
+290,Hartmann von Aue,What is the dialect of Wolfram's works?,East Franconian,domain,"The dialect of Wolfram's works is not specified, but it is believed to be in a form of Middle High German called Althochdeutsch or a transitional form towards Middle High German"
+291,Hartmann von Aue,How did the lower nobility typically differ from the commoner class in terms of privileges?,"They held certain rights and privileges, such as the right to bear arms and participate in the feudal council.",entity,"The lower nobility typically differed from the commoner class in terms of privileges such as the right to bear coats of arms, hold fiefs, and participate in the feudal system, among others."
 292,Heinrich Ritter,What is the name of Immanuel Kant's work that argues for the universal principle of right?,The Doctrine of Right,domain,The Doctrine of Right in The Metaphysics of Morals
 293,Heinrich Ritter,What was the title of Nietzsche's book that introduced the concept of the Übermensch?,Thus Spoke Zarathustra,domain,Thus Spoke Zarathustra
 294,Heinrich Ritter,Who was Nietzsche's favourite poet?,Friedrich Hölderlin,domain,Stefan George
 295,Heinrich Ritter,"Which ancient Greek philosopher is known for his contributions to the field of philosophical logic, particularly in his work 'Prior Analytics'?",Aristotle.,entity,Aristotle.
-296,Heinrich Ritter,When was Friedrich Nietzsche born?,"October 15, 1844",domain,"October 15, 1844"
-297,Heinrich Ritter,What significant work did Friedrich Schleiermacher write on the nature of faith?,On Religion: Speeches to Its Cultured Despisers.,entity,On the Feeling of the Christian Faith
-298,Heinrich Ritter,What was Nietzsche's attitude towards Christianity?,He was critical of Christianity and saw it as a form of 'slave morality',domain,"Nietzsche was critical of Christianity, viewing it as a form of 'slave morality' that stifled individual creativity and excellence."
-299,Heinrich Ritter,What was Immanuel Kant's occupation?,Philosopher,domain,He was a German philosopher
-300,Heinrich Ritter,What is the main idea of Immanuel Kant's doctrine of transcendental idealism?,That space and time are mere forms of intuition that structure all experience,domain,That space and time are forms of intuition that structure all experience
-301,Heinrich Ritter,What is the name of the university where Immanuel Kant studied and later became a professor?,University of Königsberg,domain,The University of Königsberg.
-302,Heinrich Ritter,Who was Immanuel Kant's mentor and teacher at the University of Königsberg?,Martin Knutzen,domain,Johann Gottfried Herder
-303,Heinrich Ritter,What is the main idea of Immanuel Kant's theory of the categorical imperative?,That moral obligation is grounded in the universal principle of treating humanity as an end in itself,domain,"The main idea is that moral principles are based on reason, not on personal desires or consequences"
+296,Heinrich Ritter,When was Friedrich Nietzsche born?,"October 15, 1844",domain,15 October 1844
+297,Heinrich Ritter,What significant work did Friedrich Schleiermacher write on the nature of faith?,On Religion: Speeches to Its Cultured Despisers.,entity,The Speeches on Religion to its Cultured Despisers
+298,Heinrich Ritter,What was Nietzsche's attitude towards Christianity?,He was critical of Christianity and saw it as a form of 'slave morality',domain,"Nietzsche was critical of Christianity, viewing it as a form of 'slave morality' that promotes weakness and rejection of the world."
+299,Heinrich Ritter,What was Immanuel Kant's occupation?,Philosopher,domain,Philosopher
+300,Heinrich Ritter,What is the main idea of Immanuel Kant's doctrine of transcendental idealism?,That space and time are mere forms of intuition that structure all experience,domain,"That the human mind plays an active role in shaping our experience of the world, and that space and time are forms of intuition that the mind imposes on experience"
+301,Heinrich Ritter,What is the name of the university where Immanuel Kant studied and later became a professor?,University of Königsberg,domain,The university was King William III University in Prussia (now the University of Erfurt).
+302,Heinrich Ritter,Who was Immanuel Kant's mentor and teacher at the University of Königsberg?,Martin Knutzen,domain,Johann Gottlob Immanuel Breithaupt and Johann Friedrich von Gottfried
+303,Heinrich Ritter,What is the main idea of Immanuel Kant's theory of the categorical imperative?,That moral obligation is grounded in the universal principle of treating humanity as an end in itself,domain,"The main idea is that moral obligations are based on reason, not on emotions or consequences"
 304,Heinrich Ritter,When was Immanuel Kant born?,"April 22, 1724",domain,1724
 305,Heinrich Ritter,What was the name of the music and literature club that Nietzsche led?,Germania,domain,Germania
-306,Heinrich Ritter,In which city did Friedrich Schleiermacher serve as a pastor and later as a university professor?,Berlin.,entity,Berlin.
-307,Heinrich Ritter,Who was Nietzsche's friend and fellow student?,Paul Deussen and Carl von Gersdorff,domain,"Paul Coulon and Carl von Gersdorff, but also Gustav Teichmüller and Paul Lanz <a href='Casper&#43;between'></a>"
+306,Heinrich Ritter,In which city did Friedrich Schleiermacher serve as a pastor and later as a university professor?,Berlin.,entity,Berlin
+307,Heinrich Ritter,Who was Nietzsche's friend and fellow student?,Paul Deussen and Carl von Gersdorff,domain,Paul Coulon and Carl von Gersdorf
 308,Heinrich Ritter,What was the title of Nietzsche's first book?,The Birth of Tragedy,domain,The Birth of Tragedy
-309,Heinrich Ritter,What was Nietzsche's occupation?,Philosopher and classical philologist,domain,Philosopher and classical philologist
+309,Heinrich Ritter,What was Nietzsche's occupation?,Philosopher and classical philologist,domain,Philosopher
 310,Heinrich Ritter,What is the name of Immanuel Kant's work that discusses the relationship between knowledge and reality?,Critique of Pure Reason,domain,Critique of Pure Reason
-311,Heinrich Ritter,What was Immanuel Kant's view on the nature of space and time?,That they are transcendental forms of intuition that structure all experience,domain,"According to Immanuel Kant, space and time are forms of intuition that structure all experience"
+311,Heinrich Ritter,What was Immanuel Kant's view on the nature of space and time?,That they are transcendental forms of intuition that structure all experience,domain,Kant believed that space and time are forms of experience that structure all objective knowledge
 312,Heinrich Ritter,What is the name of Immanuel Kant's work that discusses the relationship between morality and freedom?,Critique of Practical Reason,domain,Critique of Practical Reason
-313,Heinrich Ritter,What is the name of Immanuel Kant's work that argues for the importance of aesthetic experience?,Critique of the Power of Judgment,domain,The Critique of the Power of Judgment.
-314,Heinrich Ritter,What was Immanuel Kant's view on the nature of things as they are in themselves?,That they are unknowable to us,domain,"Things as they are in themselves are unknowable to humans, and we can only know the world as it appears to us through our senses and understanding"
-315,Heinrich Ritter,What is the main idea of Immanuel Kant's theory of the sublime?,That it is an aesthetic experience that involves a sense of awe and wonder,domain,The main idea is that the sublime is a unique aesthetic experience that arises from the mind's effort to comprehend something that exceeds its faculties
-316,Heinrich Ritter,What was Immanuel Kant's view on the role of the imagination in aesthetic experience?,That it plays a central role in the free play of the imagination and the understanding,domain,Free play
-317,Heinrich Ritter,What was the name of Nietzsche's concept of the ideal human being?,Übermensch (Superman),domain,The Übermensch (or Superman)
-318,Heinrich Ritter,What is the name of Immanuel Kant's work that discusses the relationship between morality and politics?,Towards Perpetual Peace: A Philosophical Project,domain,The Metaphysics of Morals
+313,Heinrich Ritter,What is the name of Immanuel Kant's work that argues for the importance of aesthetic experience?,Critique of the Power of Judgment,domain,The Critique of the Power of Judgment
+314,Heinrich Ritter,What was Immanuel Kant's view on the nature of things as they are in themselves?,That they are unknowable to us,domain,"Things as they are in themselves are unknown to us, and we can only know the world as it appears to us, structured by the mind"
+315,Heinrich Ritter,What is the main idea of Immanuel Kant's theory of the sublime?,That it is an aesthetic experience that involves a sense of awe and wonder,domain,"The main idea is that the sublime is a unique aesthetic experience that involves a sense of the imagination's limits and the need for a higher principle, such as moral faith."
+316,Heinrich Ritter,What was Immanuel Kant's view on the role of the imagination in aesthetic experience?,That it plays a central role in the free play of the imagination and the understanding,domain,"The imagination plays a crucial role in aesthetic experience, and it is through the free play of the imagination that we can have an aesthetically pleasing experience of beauty"
+317,Heinrich Ritter,What was the name of Nietzsche's concept of the ideal human being?,Übermensch (Superman),domain,The Übermensch (or 'Superman')
+318,Heinrich Ritter,What is the name of Immanuel Kant's work that discusses the relationship between morality and politics?,Towards Perpetual Peace: A Philosophical Project,domain,Kant on History
 319,Heinrich Ritter,Which ancient Greek philosopher discussed the concept of evil in his work 'The Republic'?,Plato.,entity,Plato
-320,Heinrich Ritter,What was the name of Nietzsche's sister?,Elisabeth Förster-Nietzsche,domain,Elizabeth Fake (born Nietzsche)
-321,Heinrich Ritter,"In many religious traditions, what is considered the primary consequence of evil actions?",Spiritual punishment or damnation.,entity,Guilty conscience
-322,Heinrich Ritter,What is the name of Immanuel Kant's work that discusses the relationship between reason and morality?,Groundwork of the Metaphysics of Morals,domain,Groundwork of the Metaphysics of Morals
+320,Heinrich Ritter,What was the name of Nietzsche's sister?,Elisabeth Förster-Nietzsche,domain,Elizabeth Kaufmann
+321,Heinrich Ritter,"In many religious traditions, what is considered the primary consequence of evil actions?",Spiritual punishment or damnation.,entity,Suffering and divine retribution
+322,Heinrich Ritter,What is the name of Immanuel Kant's work that discusses the relationship between reason and morality?,Groundwork of the Metaphysics of Morals,domain,The Critique of Practical Reason
 323,Heinrich Ritter,What is the name of the philosophical and theological movement that emphasizes the authority of the Bible?,Reformed theology.,entity,Biblicism.
-324,Heinrich Ritter,What is the term for the philosophical study of evil?,Theodicy.,entity,The term for the philosophical study of evil is 'theodicy'.
-325,Heinrich Ritter,What was Friedrich Schleiermacher's profession?,Theologian and philosopher.,entity,Theologian and philosopher
-326,Heinrich Ritter,Who was Nietzsche's editor and curator of his manuscripts after his death?,Elisabeth Förster-Nietzsche,domain,Elisabeth Förster-Nietzsche
+324,Heinrich Ritter,What is the term for the philosophical study of evil?,Theodicy.,entity,I don't have the answer to that question.
+325,Heinrich Ritter,What was Friedrich Schleiermacher's profession?,Theologian and philosopher.,entity,He was a German theologian and philosopher.
+326,Heinrich Ritter,Who was Nietzsche's editor and curator of his manuscripts after his death?,Elisabeth Förster-Nietzsche,domain,"Professor Ernst Petersburg, and later his sister, Elisabeth Förster-Nietzsche"
 327,Heinrich Ritter,What is the name of Immanuel Kant's most famous work?,Critique of Pure Reason,domain,Critique of Pure Reason
-328,Heinrich Ritter,What is the primary concern of philosophical logic in relation to reasoning and argumentation?,Validity and soundness.,entity,Reasoning and argumentation.
+328,Heinrich Ritter,What is the primary concern of philosophical logic in relation to reasoning and argumentation?,Validity and soundness.,entity,Inference and validity
 329,Heinrich Ritter,"Which modern philosophical movement is closely associated with the development of philosophical logic, emphasizing the use of logical and analytical methods in philosophy?",Analytic philosophy.,entity,Analytic philosophy.
-330,Heinrich Ritter,What is the central figure in Christian philosophy?,Jesus Christ.,entity,Jesus Christ.
+330,Heinrich Ritter,What is the central figure in Christian philosophy?,Jesus Christ.,entity,Jesus.
 331,Heinrich Ritter,Which Christian philosopher wrote 'Summa Theologica'?,Thomas Aquinas.,entity,Thomas Aquinas
 332,Heinz Erhardt,Which American actor is known for his roles in movies like 'Top Gun' and 'Jerry Maguire'?,Tom Cruise.,entity,Tom Cruise
-333,Heinz Erhardt,Which German city is known for its annual Oktoberfest celebrations?,Munich.,entity,Munich.
-334,Heinz Erhardt,What was the name of the kabarett founded by Dieter Hildebrandt and Sammy Drechsel?,Münchner Lach- und Schießgesellschaft,domain,Lusthabitat
-335,Heinz Erhardt,How many seasons are generally recognized in most temperate climates?,Four.,entity,Four.
-336,Heinz Erhardt,Who did Dieter Hildebrandt marry in 1956?,Irene Mendler,domain,He married the actress Annemarie Döring
-337,Heinz Erhardt,When did Dieter Hildebrandt die?,20 November 2013,domain,He died on 20 November 2013.
+333,Heinz Erhardt,Which German city is known for its annual Oktoberfest celebrations?,Munich.,entity,Munich
+334,Heinz Erhardt,What was the name of the kabarett founded by Dieter Hildebrandt and Sammy Drechsel?,Münchner Lach- und Schießgesellschaft,domain,Inscriptions on the Wall and Le Petard
+335,Heinz Erhardt,How many seasons are generally recognized in most temperate climates?,Four.,entity,Two.
+336,Heinz Erhardt,Who did Dieter Hildebrandt marry in 1956?,Irene Mendler,domain,He married Elisabeth 'Lali' (Kohn)
+337,Heinz Erhardt,When did Dieter Hildebrandt die?,20 November 2013,domain,30 June 2021
 338,Heinz Erhardt,"What was the name of the operation launched by the Allies on June 6, 1944, during World War II?",D-Day.,entity,D-Day.
 339,Heinz Erhardt,Which river runs through the city of Berlin?,The Spree river.,entity,The Spree river.
-340,Heinz Erhardt,What did Dieter Hildebrandt study in Munich?,Theatre sciences,domain,"Literature, history and German and also theology"
-341,Heinz Erhardt,What is the number of wheels on a typical car?,Four.,entity,Four.
-342,Heinz Erhardt,Which of the following was a major consequence of World War II?,The formation of the United Nations.,entity,The formation of the United Nations.
-343,Heinz Erhardt,When did Dieter Hildebrandt apply to join the Nazi Party?,19 February 1944,domain,"At the age of 19, in 1943"
-344,Heinz Erhardt,Who is a British actor known for playing the role of Sherlock Holmes in the BBC series?,Benedict Cumberbatch.,entity,Benedict Cumberbatch
+340,Heinz Erhardt,What did Dieter Hildebrandt study in Munich?,Theatre sciences,domain,German studies and history
+341,Heinz Erhardt,What is the number of wheels on a typical car?,Four.,entity,Four
+342,Heinz Erhardt,Which of the following was a major consequence of World War II?,The formation of the United Nations.,entity,"The Holocaust, in which six million Jews were systematically murdered by the Nazi regime."
+343,Heinz Erhardt,When did Dieter Hildebrandt apply to join the Nazi Party?,19 February 1944,domain,1944
+344,Heinz Erhardt,Who is a British actor known for playing the role of Sherlock Holmes in the BBC series?,Benedict Cumberbatch.,entity,Benedict Cumberbatch.
 345,Heinz Erhardt,What is the name of the famous wall that once divided Berlin?,The Berlin Wall.,entity,The Berlin Wall.
-346,Heinz Erhardt,Which German philosopher wrote 'Thus Spoke Zarathustra'?,Friedrich Nietzsche.,entity,Friedrich Nietzsche
-347,Heinz Erhardt,What is the name of the famous German fairy tale collection compiled by the Brothers Grimm?,Kinder- und Hausmärchen (Children's and Household Tales).,entity,Kinder- und Hausmärchen (Children's and Household Tales)
+346,Heinz Erhardt,Which German philosopher wrote 'Thus Spoke Zarathustra'?,Friedrich Nietzsche.,entity,"Hermann Keyserholtgärtner claimed influence, but it is not known to be credible."
+347,Heinz Erhardt,What is the name of the famous German fairy tale collection compiled by the Brothers Grimm?,Kinder- und Hausmärchen (Children's and Household Tales).,entity,Kinder- und Hausmärchen (Children's and Household Tales).
 348,Heinz Erhardt,When was Dieter Hildebrandt born?,23 May 1927,domain,17 April 1927
 349,Heinz Erhardt,In what year did World War II officially end?,1945.,entity,1945
-350,Heinz Erhardt,What is the name of the award given to recognize excellence in acting in the film industry?,The Academy Award.,entity,The Academy Award for Acting.
-351,Heinz Erhardt,What role did Dieter Hildebrandt have in the Luftwaffe during World War II?,Flakhelfer,domain,He served as a radioman in a fighter unit and later in Air Defence of the Reich units.
-352,Heinz Erhardt,How many suits are there in a standard deck of playing cards?,Four.,entity,Four.
-353,Heinz Erhardt,Which of the following museums is located in Berlin?,The Pergamon Museum.,entity,The Pergamon Museum.
+350,Heinz Erhardt,What is the name of the award given to recognize excellence in acting in the film industry?,The Academy Award.,entity,The Academy Award.
+351,Heinz Erhardt,What role did Dieter Hildebrandt have in the Luftwaffe during World War II?,Flakhelfer,domain,He was a Luftwaffe radioman and air signalman
+352,Heinz Erhardt,How many suits are there in a standard deck of playing cards?,Four.,entity,Four
+353,Heinz Erhardt,Which of the following museums is located in Berlin?,The Pergamon Museum.,entity,Altogether six museums are part of the Museumsinsel Berlin (Berlin Museum Island).
 354,Joe Biden,When was Joe Biden born?,"November 20, 1942",general,"November 20, 1942"
-355,Joe Biden,What position does Joe Biden currently hold?,46th president of the United States,general,President of the United States
+355,Joe Biden,What position does Joe Biden currently hold?,46th president of the United States,general,He is the 46th president of the United States.
 356,Joe Biden,Which political party is Joe Biden a member of?,Democratic Party,general,The Democratic Party
 357,Joe Biden,Which state did Joe Biden represent in the United States Senate?,Delaware,general,Delaware
 358,Joe Biden,Where was Joe Biden born?,"Scranton, Pennsylvania",general,"Scranton, Pennsylvania"
-359,John F. Kennedy,Who did John F. Kennedy defeat to become president in 1960?,Richard Nixon,general,Richard Nixon
-360,John F. Kennedy,What notable university did John F. Kennedy graduate from?,Harvard University,general,Harvard University
-361,John F. Kennedy,Which military award did Kennedy earn during World War II?,Navy and Marine Corps Medal,general,The Navy and Marine Corps Medal and the Purple Heart
+359,John F. Kennedy,Who did John F. Kennedy defeat to become president in 1960?,Richard Nixon,general,"Roosevelt and Truman party leader and fellow Democrat, Adlai Stevenson"
+360,John F. Kennedy,What notable university did John F. Kennedy graduate from?,Harvard University,general,Harvard
+361,John F. Kennedy,Which military award did Kennedy earn during World War II?,Navy and Marine Corps Medal,general,"The Navy and Marine Corps Medal for his rescue of his crewmate, James Lawrence 'Jim' Reeves"
 362,John F. Kennedy,What major global tension characterized John F. Kennedy's presidency?,The Cold War,general,The Cold War
 363,John F. Kennedy,When was John F. Kennedy born?,"May 29, 1917",general,"May 29, 1917"
-364,Johnny Depp,When was Johnny Depp born?,"June 9, 1963",general,1963
-365,Johnny Depp,How many Academy Awards has Johnny Depp been nominated for?,Three,general,Three
-366,Johnny Depp,What award did Johnny Depp win?,A Golden Globe Award,general,The National Board of Review Award for Best Actor
+364,Johnny Depp,When was Johnny Depp born?,"June 9, 1963",general,"June 9, 1963"
+365,Johnny Depp,How many Academy Awards has Johnny Depp been nominated for?,Three,general,Two
+366,Johnny Depp,What award did Johnny Depp win?,A Golden Globe Award,general,Giovanni
 367,Johnny Depp,What was Johnny Depp's debut film?,A Nightmare on Elm Street (1984),general,A Nightmare on Elm Street
 368,Johnny Depp,Which film series did Johnny Depp star in as Captain Jack Sparrow?,Pirates of the Caribbean,general,Pirates of the Caribbean
 369,Jorge Semprún,Which department does a Minister of Culture typically oversee?,"The department of arts, culture, and national heritage.",entity,A Minister of Culture typically oversees the department of culture.
-370,Jorge Semprún,What was the name of the prize that Carlos Fuentes won in 1977 for his novel 'Terra Nostra'?,Venezuelan Rómulo Gallegos Prize,domain,The Cervantes Prize
-371,Jorge Semprún,What award did Carlos Fuentes win in 1976 for his novel 'Terra Nostra'?,Xavier Villaurrutia Award,domain,The Príncipe de Asturias Award for Literature
-372,Jorge Semprún,In what year was Carlos Fuentes' novel 'The Death of Artemio Cruz' published?,1962,domain,1962
-373,Jorge Semprún,When was Carlos Fuentes born?,"November 11, 1928",domain,"November 11, 1928"
-374,Jorge Semprún,Where did Carlos Fuentes attend English-language school?,"Washington, D.C.",domain,"In Washington, D.C."
-375,Jorge Semprún,What was the profession of Carlos Fuentes' father?,Mexican diplomat,domain,He was a Mexican diplomat
-376,Jorge Semprún,What was the name of Carlos Fuentes' father?,Rafael Fuentes,domain,Rafael Fuentes
+370,Jorge Semprún,What was the name of the prize that Carlos Fuentes won in 1977 for his novel 'Terra Nostra'?,Venezuelan Rómulo Gallegos Prize,domain,Grumengeiste-Literaturpreis of the German weekly newspaper Die Zeit
+371,Jorge Semprún,What award did Carlos Fuentes win in 1976 for his novel 'Terra Nostra'?,Xavier Villaurrutia Award,domain,Prix international de littérature
+372,Jorge Semprún,In what year was Carlos Fuentes' novel 'The Death of Artemio Cruz' published?,1962,domain,1959
+373,Jorge Semprún,When was Carlos Fuentes born?,"November 11, 1928",domain,16 December 1928
+374,Jorge Semprún,Where did Carlos Fuentes attend English-language school?,"Washington, D.C.",domain,"He attended English-language school at the Kingswood Centre in London and at the Sheridan School in Washington, D.C."
+375,Jorge Semprún,What was the profession of Carlos Fuentes' father?,Mexican diplomat,domain,He was a lawyer and a diplomat
+376,Jorge Semprún,What was the name of Carlos Fuentes' father?,Rafael Fuentes,domain,Velasco Fuentes y Medina
 377,Jorge Semprún,What university did Carlos Fuentes attend to study law?,National Autonomous University of Mexico (UNAM),domain,The National Autonomous University of Mexico (UNAM)
 378,Jorge Semprún,In which year was the first Nobel Prize ceremony held?,1901.,entity,1901.
-379,Jorge Semprún,What significant international event occurred on December 10 in history?,"The Nobel Prizes are awarded annually on December 10, the anniversary of Alfred Nobel's death.",entity,"The Nobel Prizes are awarded on December 10, the anniversary of the death of Princeton abolitionist and philanthropist Johannes Florentinus Coenraad Godefroi's friend Alfred Nobel."
-380,Jorge Semprún,Where is the Buchenwald concentration camp located?,"Near Weimar, Germany.",entity,"Weimar, Germany."
+379,Jorge Semprún,What significant international event occurred on December 10 in history?,"The Nobel Prizes are awarded annually on December 10, the anniversary of Alfred Nobel's death.",entity,The Nobel Prize ceremony.
+380,Jorge Semprún,Where is the Buchenwald concentration camp located?,"Near Weimar, Germany.",entity,"Near Weimar, in the state of Thuringia, Germany."
 381,Jorge Semprún,Which mountain range runs along the border between France and Spain?,The Pyrenees.,entity,The Pyrenees mountain range.
 382,Jorge Semprún,What is the largest river in France?,The Loire River.,entity,The largest river in France is the Loire River.
 383,Jorge Semprún,"What is the name of the famous art museum in Madrid, Spain?",The Prado.,entity,The Prado.
@@ -387,18 +387,18 @@
 385,Jorge Semprún,What is the name of the famous French art museum that houses the Mona Lisa?,The Louvre.,entity,The Louvre.
 386,Jorge Semprún,What is the name of the French culinary term for a mixture of butter and flour used to thicken sauces?,Roux.,entity,Roux.
 387,Jorge Semprún,Which French city is known as the City of Light?,Paris.,entity,Paris.
-388,Jorge Semprún,Which Spanish island is known for its vibrant nightlife and electronic music scene?,Ibiza.,entity,Ibiza.
-389,Jorge Semprún,Who did Carlos Fuentes marry in 1959?,Rita Macedo,domain,Silvia Lemus de Fuentes
+388,Jorge Semprún,Which Spanish island is known for its vibrant nightlife and electronic music scene?,Ibiza.,entity,I don't have the answer to that question.
+389,Jorge Semprún,Who did Carlos Fuentes marry in 1959?,Rita Macedo,domain,Silvia Diez-Platas
 390,Jorge Semprún,What was the name of Carlos Fuentes' second wife?,Silvia Lemus,domain,Silvia Schmidt
 391,Jorge Semprún,What was the title of Carlos Fuentes' first novel?,Where the Air Is Clear,domain,The Death of Artemio Cruz
-392,Jorge Semprún,Who was the founder of the Nobel Prizes?,Alfred Nobel.,entity,Swedish chemist and engineer Alfred Nobel.
-393,Jorge Semprún,What was the title of the documentary about Carlos Fuentes' life?,Crossing Borders: The Journey of Carlos Fuentes,domain,"The documentary was titled 'Carlos Fuentes, un enfant à cheval entre deux rivières'"
-394,Jorge Semprún,In what year did Carlos Fuentes pass away?,2012,domain,2002
-395,Jorge Semprún,Which mountain range runs along the border between France and Spain?,The Pyrenees.,entity,The Pyrenees.
-396,Jorge Semprún,What are some common initiatives undertaken by a Minister of Culture?,"Initiatives may include funding for museums, galleries, and cultural events, as well as policies to protect historical sites and promote cultural diversity.",entity,"Fostering arts education, preserving national heritage sites, and promoting cultural exchange programs."
-397,Jorge Semprún,What was the main purpose of the Buchenwald concentration camp during World War II?,Forced labor and extermination.,entity,Forced labor and extermination.
+392,Jorge Semprún,Who was the founder of the Nobel Prizes?,Alfred Nobel.,entity,Carl von Linne
+393,Jorge Semprún,What was the title of the documentary about Carlos Fuentes' life?,Crossing Borders: The Journey of Carlos Fuentes,domain,"Fuentes, el mago de la palabra"
+394,Jorge Semprún,In what year did Carlos Fuentes pass away?,2012,domain,2012
+395,Jorge Semprún,Which mountain range runs along the border between France and Spain?,The Pyrenees.,entity,The Pyrenees mountain range.
+396,Jorge Semprún,What are some common initiatives undertaken by a Minister of Culture?,"Initiatives may include funding for museums, galleries, and cultural events, as well as policies to protect historical sites and promote cultural diversity.",entity,"Fostering arts education, promoting cultural preservation, and supporting the arts and cultural institutions."
+397,Jorge Semprún,What was the main purpose of the Buchenwald concentration camp during World War II?,Forced labor and extermination.,entity,Forced labor and extermination of people the Nazi regime considered undesirable.
 398,Jorge Semprún,In what year was the Buchenwald concentration camp established?,1937.,entity,1937
-399,Jorge Semprún,What is the primary responsibility of a Minister of Culture in a government?,To preserve and promote the cultural heritage of the country.,entity,To preserve and promote the cultural heritage of a nation.
+399,Jorge Semprún,What is the primary responsibility of a Minister of Culture in a government?,To preserve and promote the cultural heritage of the country.,entity,Protecting and promoting the country's cultural heritage.
 400,Jorge Semprún,Where was Carlos Fuentes born?,Panama City,domain,"Pachuca, Mexico"
 401,Justin Bieber,In which country was Justin Bieber born?,Canada,general,Canada
 402,Justin Bieber,When was Justin Bieber born?,"March 1, 1994",general,"March 1, 1994"
@@ -407,20 +407,20 @@
 405,Justin Bieber,What is Justin Bieber's full name?,Justin Drew Bieber,general,Justin Drew Bieber
 406,Kanye West,With which artist did Kanye West release the collaborative album 'Watch the Throne'?,Jay-Z,general,Jay-Z
 407,Kanye West,What is the name of Kanye West's first album?,The College Dropout,general,The College Dropout
-408,Kanye West,When was Kanye West born?,"June 8, 1977",general,"June 8, 1977"
+408,Kanye West,When was Kanye West born?,"June 8, 1977",general,"February 8, 1977"
 409,Kanye West,In what year did Kanye West release 'My Beautiful Dark Twisted Fantasy'?,2010,general,2010
 410,Kanye West,What is Kanye West's full name?,Kanye Omari West,general,Kanye Omari West
-411,Kim Kardashian,What reality TV show did Kim Kardashian start appearing in 2007?,Keeping Up with the Kardashians,general,Keeping Up with the Kardashians
+411,Kim Kardashian,What reality TV show did Kim Kardashian start appearing in 2007?,Keeping Up with the Kardashians,general,The reality television series 'Keeping Up with the Kardashians'
 412,Kim Kardashian,When was Kim Kardashian born?,"October 21, 1980",general,"October 21, 1980"
 413,Kim Kardashian,What is Kim Kardashian's estimated net worth as of 2022?,US$1.8 billion,general,Over $1.8 billion
 414,Kim Kardashian,How many children does Kim Kardashian have with Kanye West?,Four,general,Four
-415,Kim Kardashian,Who are Kim Kardashian's parents?,Robert and Kris Kardashian,general,Robert and Kris
+415,Kim Kardashian,Who are Kim Kardashian's parents?,Robert and Kris Kardashian,general,Robert Kardashian and Kris Jenner
 416,Kobe Bryant,What was Kobe Bryant's position in basketball?,shooting guard,general,Shooting guard
 417,Kobe Bryant,How many times was Kobe Bryant named an NBA All-Star?,18 times,general,18 times
 418,Kobe Bryant,When was Kobe Bryant born?,"August 23, 1978",general,"August 23, 1978"
 419,Kobe Bryant,In what year did Kobe Bryant win the NBA MVP award?,2008,general,2008
 420,Kobe Bryant,For which team did Kobe Bryant spend his entire NBA career?,Los Angeles Lakers,general,The Los Angeles Lakers
-421,Lady Gaga,What is Lady Gaga's real name?,Stefani Joanne Angelina Germanotta,general,Stefani Joanne Angelina Germanotta
+421,Lady Gaga,What is Lady Gaga's real name?,Stefani Joanne Angelina Germanotta,general,Lady Gaga's real name is Stefani Joanne Angelina Germanotta.
 422,Lady Gaga,When was Lady Gaga born?,"March 28, 1986",general,"March 28, 1986"
 423,Lady Gaga,What is the name of the chart-topping single from 'A Star Is Born' soundtrack?,Shallow,general,Shallow
 424,Lady Gaga,In what year was Lady Gaga named Billboard's Woman of the Year?,2015,general,2015
@@ -428,10 +428,10 @@
 426,LeBron James,What is LeBron James' nickname?,King James,general,King James
 427,LeBron James,How many NBA championships has LeBron James won?,Four,general,Four
 428,LeBron James,When was LeBron James born?,"December 30, 1984",general,"December 30, 1984"
-429,LeBron James,What team does LeBron James play for?,Los Angeles Lakers,general,The Los Angeles Lakers
+429,LeBron James,What team does LeBron James play for?,Los Angeles Lakers,general,Los Angeles Lakers
 430,LeBron James,What high school did LeBron James attend?,St. Vincent–St. Mary High School,general,St. Vincent–St. Mary High School
-431,Leonardo DiCaprio,What is the name of Leonardo DiCaprio's production company?,Appian Way Productions,general,Appian Way Productions
-432,Leonardo DiCaprio,Where was Leonardo DiCaprio born?,"Los Angeles, California",general,Los Angeles
+431,Leonardo DiCaprio,What is the name of Leonardo DiCaprio's production company?,Appian Way Productions,general,Appian Way
+432,Leonardo DiCaprio,Where was Leonardo DiCaprio born?,"Los Angeles, California",general,"Germantown, Philadelphia, Pennsylvania"
 433,Leonardo DiCaprio,When was Leonardo DiCaprio born?,"November 11, 1974",general,"November 11, 1974"
 434,Leonardo DiCaprio,What is Leonardo DiCaprio's full name?,Leonardo Wilhelm DiCaprio,general,Leonardo Wilhelm DiCaprio
 435,Leonardo DiCaprio,How many Academy Awards has Leonardo DiCaprio won?,One,general,Two
@@ -442,298 +442,298 @@
 440,Lil Wayne,When was Lil Wayne born?,"September 27, 1982",general,"September 27, 1982"
 441,Lionel Messi,For which country does Lionel Messi play?,Argentina,general,Argentina
 442,Lionel Messi,At what age did Messi move to Spain to join Barcelona?,13,general,Thirteen
-443,Lionel Messi,How many goals has Messi scored in La Liga?,474,general,Over 474
+443,Lionel Messi,How many goals has Messi scored in La Liga?,474,general,Over 300
 444,Lionel Messi,Which youth club did Messi join at the age of six?,Newell's Old Boys,general,Grasshopper Club Zürich
 445,Lionel Messi,What is Lionel Messi's full name?,Lionel Andrés Messi,general,Lionel Andrés Messi
-446,Marilyn Monroe,What was Marilyn Monroe's birth name?,Norma Jeane Mortenson,general,Norma Jeane Baker
+446,Marilyn Monroe,What was Marilyn Monroe's birth name?,Norma Jeane Mortenson,general,Marilyn Monroe was born Norma Jeane Bishop.
 447,Michael Jackson,What was Michael Jackson known as?,King of Pop,general,The King of Pop
-448,Michael Jackson,In what year did Michael Jackson start his solo career?,1971,general,1962
+448,Michael Jackson,In what year did Michael Jackson start his solo career?,1971,general,1971
 449,Michael Jackson,What is the name of Michael Jackson's album that is credited with breaking racial barriers?,Thriller,general,Thriller
 450,Michael Jackson,When did Michael Jackson die?,"June 25, 2009",general,"June 25, 2009"
-451,Michael Jackson,What was the cause of Michael Jackson's death?,Overdose of propofol,general,Overdose of propofol and benzodiazepine
+451,Michael Jackson,What was the cause of Michael Jackson's death?,Overdose of propofol,general,"Overdose of the anesthetic propofol, which was administered by his personal physician"
 452,Michael Jordan,When was Michael Jordan born?,"February 17, 1963",general,"February 17, 1963"
 453,Michael Jordan,How many NBA championships did Jordan win with the Chicago Bulls?,Six,general,Six
-454,Michael Jordan,In what year did Michael Jordan win his first NBA title?,1991,general,1991
-455,Michael Jordan,"What nickname was Michael Jordan known by, highlighting his leaping ability?",Air Jordan,general,Air Jordan
+454,Michael Jordan,In what year did Michael Jordan win his first NBA title?,1991,general,1991-1993
+455,Michael Jordan,"What nickname was Michael Jordan known by, highlighting his leaping ability?",Air Jordan,general,Michael Jordan was known as Air Jordan.
 456,Michael Jordan,In which year was Michael Jordan first inducted into the Naismith Memorial Basketball Hall of Fame?,2009,general,2009
 457,Miley Cyrus,Who is Miley Cyrus's father?,Billy Ray Cyrus,general,Billy Ray Cyrus
 458,Miley Cyrus,When was Miley Cyrus born?,"November 23, 1992",general,"November 23, 1992"
-459,Miley Cyrus,What is Miley Cyrus's birth name?,Destiny Hope Cyrus,general,Destiny Hope Cyrus
+459,Miley Cyrus,What is Miley Cyrus's birth name?,Destiny Hope Cyrus,general,Miley Cyrus is named after the 1970s pop singer Joy (or Judy) Miley.
 460,Miley Cyrus,What Disney Channel television series did Miley Cyrus star in as a teen idol?,Hannah Montana,general,Hannah Montana
-461,Miley Cyrus,What non-profit organization did Miley Cyrus found?,Happy Hippie Foundation,general,The Happy Hippie Foundation
-462,Moshe Greenberg,What is the name of the hospital affiliated with the University of Pennsylvania's medical school?,Hospital of the University of Pennsylvania (HUP).,entity,The Hospital of the University of Pennsylvania (HUP).
-463,Moshe Greenberg,"How did Franz Rosenzweig communicate with his wife, Edith, towards the end of his life?",Through a laborious typewriter-alphabet method and a system of blinking his eyes,domain,Through a laborious system of finger spelling and reading
-464,Moshe Greenberg,"What was the title of Franz Rosenzweig's major work, first published in 1921?",The Star of Redemption,domain,The Star of Redemption
-465,Moshe Greenberg,What was the disease that Franz Rosenzweig suffered from towards the end of his life?,Amyotrophic lateral sclerosis (ALS),domain,Amyotrophic lateral sclerosis (ALS)
-466,Moshe Greenberg,What was the name of the institution founded by Franz Rosenzweig in Frankfurt in 1920?,The House of Jewish Learning (Lehrhaus),domain,The House of Jewish Learning (Das Lehrhaus)
-467,Moshe Greenberg,What was the title of the open letter published by Franz Rosenzweig in 1923?,The Builders,domain,"The title is not specified, but it was an open letter to his friend and former colleague, Martin Buber"
-468,Moshe Greenberg,Who was the Jewish Zionist scholar that Franz Rosenzweig engaged critically with?,Martin Buber,domain,Alfred Rosenberger
-469,Moshe Greenberg,"What was the main theme of Franz Rosenzweig's work, The Star of Redemption?","The relationships between God, humanity, and the world, connected by creation, revelation, and redemption",domain,The main theme was the unity of thought and action in the relationship between God and the world
+461,Miley Cyrus,What non-profit organization did Miley Cyrus found?,Happy Hippie Foundation,general,Help Us Art
+462,Moshe Greenberg,What is the name of the hospital affiliated with the University of Pennsylvania's medical school?,Hospital of the University of Pennsylvania (HUP).,entity,The hospital affiliated with the University of Pennsylvania's medical school is the Hospital of the University of Pennsylvania (HUP) and the Children's Hospital of Philadelphia (CHOP for pediatric cases).
+463,Moshe Greenberg,"How did Franz Rosenzweig communicate with his wife, Edith, towards the end of his life?",Through a laborious typewriter-alphabet method and a system of blinking his eyes,domain,Through a laborious method of blinking his answers in the form of yes or no questions
+464,Moshe Greenberg,"What was the title of Franz Rosenzweig's major work, first published in 1921?",The Star of Redemption,domain,"The title was not specified, but it is called The Star of Redemption."
+465,Moshe Greenberg,What was the disease that Franz Rosenzweig suffered from towards the end of his life?,Amyotrophic lateral sclerosis (ALS),domain,Bacterial meningitis and a series of strokes
+466,Moshe Greenberg,What was the name of the institution founded by Franz Rosenzweig in Frankfurt in 1920?,The House of Jewish Learning (Lehrhaus),domain,The Jewish People's and Students' High School (Jüdische Hochschule)
+467,Moshe Greenberg,What was the title of the open letter published by Franz Rosenzweig in 1923?,The Builders,domain,"The title is not mentioned in the text, but it included an appeal to German Jews to abandon Zionism and focus on living among Germans as Jews."
+468,Moshe Greenberg,Who was the Jewish Zionist scholar that Franz Rosenzweig engaged critically with?,Martin Buber,domain,Jewish Zionist scholars
+469,Moshe Greenberg,"What was the main theme of Franz Rosenzweig's work, The Star of Redemption?","The relationships between God, humanity, and the world, connected by creation, revelation, and redemption",domain,The main theme was a philosophy that included the central place of the Jewish religion and the importance of face-to-face study of scripture in Hebrew and in German.
 470,Moshe Greenberg,In what year was the Hebrew University of Jerusalem founded?,1918.,entity,1918
-471,Moshe Greenberg,What is the name of the business school at the University of Pennsylvania?,The Wharton School.,entity,The Wharton School.
+471,Moshe Greenberg,What is the name of the business school at the University of Pennsylvania?,The Wharton School.,entity,The Wharton School
 472,Moshe Greenberg,What is the name of the biblical figure who is said to have built an ark to save his family and two of every kind of animal from a great flood?,Noah.,entity,Noah
-473,Moshe Greenberg,What is the Hebrew University of Jerusalem ranked among the top universities globally for?,It is ranked among the top 100 universities globally for academic reputation and research.,entity,"Law, medicine, the social sciences, and the natural sciences."
+473,Moshe Greenberg,What is the Hebrew University of Jerusalem ranked among the top universities globally for?,It is ranked among the top 100 universities globally for academic reputation and research.,entity,"Law, medicine, the sciences, and Jewish history and thought."
 474,Moshe Greenberg,What is the name of the first book in the Bible?,Genesis.,entity,Genesis.
-475,Moshe Greenberg,"Which section of the Bible contains the books of Matthew, Mark, Luke, and John?",The New Testament.,entity,The New Testament.
-476,Moshe Greenberg,What inspired Franz Rosenzweig to request Hebrew lessons at the age of 11?,"His granduncle, Adam Rosenzweig, who introduced him to traditional Judaism",domain,The 1897 Jerusalem celebration and the writings of Paulus Gottlieb Ernst Frauenstadt
-477,Moshe Greenberg,What subjects did Franz Rosenzweig initially study in university?,Medicine,domain,Classics and history
-478,Moshe Greenberg,In what year was the University of Pennsylvania founded?,1740.,entity,1638
-479,Moshe Greenberg,Who was the colleague and close friend that influenced Franz Rosenzweig's consideration of converting to Christianity?,Eugen Rosenstock-Huessy,domain,Cassirer
+475,Moshe Greenberg,"Which section of the Bible contains the books of Matthew, Mark, Luke, and John?",The New Testament.,entity,"The Bible, specifically the New Testament."
+476,Moshe Greenberg,What inspired Franz Rosenzweig to request Hebrew lessons at the age of 11?,"His granduncle, Adam Rosenzweig, who introduced him to traditional Judaism",domain,The desire to read the Torah out loud at his bar mitzva
+477,Moshe Greenberg,What subjects did Franz Rosenzweig initially study in university?,Medicine,domain,Classics and English
+478,Moshe Greenberg,In what year was the University of Pennsylvania founded?,1740.,entity,1740
+479,Moshe Greenberg,Who was the colleague and close friend that influenced Franz Rosenzweig's consideration of converting to Christianity?,Eugen Rosenstock-Huessy,domain,Joseph Cohen
 480,Moshe Greenberg,What is the name of the library at the Hebrew University of Jerusalem that is one of the largest in the country?,The National Library of Israel.,entity,The National Library of Israel.
-481,Moshe Greenberg,In what year was the Academy of the Hebrew Language established?,1890.,entity,1920
-482,Moshe Greenberg,Where was Franz Rosenzweig born?,"Kassel, Germany",domain,Kassel
-483,Moshe Greenberg,What was the occupation of Franz Rosenzweig's father?,He owned a factory for dyestuff and was a city council member,domain,He was a Jewish physician and a non-practicing Lutheran
-484,Moshe Greenberg,What is the direction of text in the Hebrew language?,From right to left.,entity,From right to left.
-485,Moshe Greenberg,When was Franz Rosenzweig born?,25 December 1886,domain,25 March 1886
-486,Moshe Greenberg,Which ancient dialect is closely related to the modern Hebrew language?,Biblical Hebrew.,entity,Biblical Hebrew
-487,Moshe Greenberg,What subjects did Franz Rosenzweig switch to studying in 1907?,History and philosophy,domain,"History, philology, and the study of classical Arabic"
-488,Moshe Greenberg,What was the outcome of Franz Rosenzweig's mystical experience after attending Yom Kippur services in Berlin?,He became a baal teshuva and no longer considered converting to Christianity,domain,He decided to remain within the Jewish community
+481,Moshe Greenberg,In what year was the Academy of the Hebrew Language established?,1890.,entity,1920.
+482,Moshe Greenberg,Where was Franz Rosenzweig born?,"Kassel, Germany",domain,"Kötttinger Hof in Königsberg, a small noble estate in what is now the borough of Altstadt in Königsberg, East Prussia"
+483,Moshe Greenberg,What was the occupation of Franz Rosenzweig's father?,He owned a factory for dyestuff and was a city council member,domain,Pharmacist and owner of a textile business
+484,Moshe Greenberg,What is the direction of text in the Hebrew language?,From right to left.,entity,The direction of text in the Hebrew language is from right to left.
+485,Moshe Greenberg,When was Franz Rosenzweig born?,25 December 1886,domain,25 February 1886
+486,Moshe Greenberg,Which ancient dialect is closely related to the modern Hebrew language?,Biblical Hebrew.,entity,Biblical Hebrew.
+487,Moshe Greenberg,What subjects did Franz Rosenzweig switch to studying in 1907?,History and philosophy,domain,Classics and history
+488,Moshe Greenberg,What was the outcome of Franz Rosenzweig's mystical experience after attending Yom Kippur services in Berlin?,He became a baal teshuva and no longer considered converting to Christianity,domain,He decided to abandon Judaism for Christianity
 489,Najaf Daryabandari,What is the term for the process of translating text from one language into another?,Translation.,entity,Translation.
-490,Najaf Daryabandari,In which novel did Ernest Hemingway introduce the character of Santiago?,The Old Man and the Sea.,entity,The Old Man and the Sea
-491,Najaf Daryabandari,What is the name of Sadeq Chubak's novel that details the events in a neighborhood?,The Patient Stone,domain,"The novel is called The Blind Owl, but it is not the one that details the events in a neighborhood."
-492,Najaf Daryabandari,What is the primary setting for the novel 'A Farewell to Arms'?,World War I in Italy and Switzerland.,entity,The primary setting for the novel 'A Farewell to Arms' is Italy and Switzerland during World War I.
-493,Najaf Daryabandari,When did Sadeq Chubak die?,"July 3, 1998",domain,1988
-494,Najaf Daryabandari,What is the significance of the character Godot in the play 'Waiting for Godot'?,"Godot is a mysterious figure who the characters Vladimir and Estragon wait for, but he never arrives, symbolizing the futility of waiting for something that may never happen.",entity,"Godot is a mysterious figure who is expected by the main characters, Vladimir and Estragon, but he never arrives, symbolizing the elusiveness of hope and the absurdity of waiting."
+490,Najaf Daryabandari,In which novel did Ernest Hemingway introduce the character of Santiago?,The Old Man and the Sea.,entity,The Sun Also Rises
+491,Najaf Daryabandari,What is the name of Sadeq Chubak's novel that details the events in a neighborhood?,The Patient Stone,domain,The story of that novel is not specified in the text.
+492,Najaf Daryabandari,What is the primary setting for the novel 'A Farewell to Arms'?,World War I in Italy and Switzerland.,entity,World War I in Italy and Switzerland
+493,Najaf Daryabandari,When did Sadeq Chubak die?,"July 3, 1998",domain,17 August 2018
+494,Najaf Daryabandari,What is the significance of the character Godot in the play 'Waiting for Godot'?,"Godot is a mysterious figure who the characters Vladimir and Estragon wait for, but he never arrives, symbolizing the futility of waiting for something that may never happen.",entity,"Godot is a mysterious figure that the main characters, Vladimir and Estragon, wait for, symbolizing the idea of awaiting something that may never arrive."
 495,Najaf Daryabandari,What is the name of the two main characters in 'Waiting for Godot'?,Vladimir and Estragon.,entity,Vladimir and Estragon
-496,Najaf Daryabandari,In what year was Samuel Beckett's play 'Waiting for Godot' first performed?,1953.,entity,1953
+496,Najaf Daryabandari,In what year was Samuel Beckett's play 'Waiting for Godot' first performed?,1953.,entity,1948
 497,Najaf Daryabandari,What literary award did 'The Old Man and the Sea' win in 1953?,The Pulitzer Prize for Fiction.,entity,The Pulitzer Prize for Fiction
 498,Najaf Daryabandari,What is the most widely spoken language in the United States?,English.,entity,English.
 499,Najaf Daryabandari,Who wrote the famous version of Antigone that is most widely performed today?,Sophocles.,entity,Sophocles
-500,Najaf Daryabandari,What is the central conflict in Sophocles' play Antigone?,The conflict between individual conscience and state law.,entity,The central conflict is between individual conscience and state law.
-501,Najaf Daryabandari,In which countries is Persian an official language?,"Iran, Afghanistan, and Tajikistan.",entity,"Iran, Afghanistan, and Tajikistan."
-502,Najaf Daryabandari,What is the theme of Sadeq Chubak's novel Tangsir?,Justice and revenge,domain,The theme of Sadeq Chubak's novel Tangsir is the struggle between good and evil
-503,Najaf Daryabandari,When was Sadeq Chubak born?,"August 5, 1916",domain,23 November 1916
-504,Najaf Daryabandari,What was Sadeq Chubak's family background like?,Not explicitly mentioned in the text,domain,"Not specified in the text, but it is mentioned that he was from a family of small farmers"
-505,Najaf Daryabandari,Where did Sadeq Chubak first study?,Bushehr,domain,Bushehr and later in the high school in Lar
-506,Najaf Daryabandari,What type of writer was Sadeq Chubak?,Naturalist,domain,A prominent Iranian writer
-507,Najaf Daryabandari,What is Sadeq Chubak considered as in Persian literature?,The greatest naturalist writer,domain,Sadeq Chubak is considered as one of the most influential and best Iranian writers in the 20th century.
+500,Najaf Daryabandari,What is the central conflict in Sophocles' play Antigone?,The conflict between individual conscience and state law.,entity,"Man must obey the laws of the state, even if they contradict moral law, or individual morality can override state law."
+501,Najaf Daryabandari,In which countries is Persian an official language?,"Iran, Afghanistan, and Tajikistan.",entity,Iran and Afghanistan
+502,Najaf Daryabandari,What is the theme of Sadeq Chubak's novel Tangsir?,Justice and revenge,domain,I'm not sure about that.
+503,Najaf Daryabandari,When was Sadeq Chubak born?,"August 5, 1916",domain,4 August 1916
+504,Najaf Daryabandari,What was Sadeq Chubak's family background like?,Not explicitly mentioned in the text,domain,"Not specified, but it is mentioned that he was from a Muslim family of petty merchants and traders."
+505,Najaf Daryabandari,Where did Sadeq Chubak first study?,Bushehr,domain,Saba and the local mosque-school in his village
+506,Najaf Daryabandari,What type of writer was Sadeq Chubak?,Naturalist,domain,He was a major writer of social realism.
+507,Najaf Daryabandari,What is Sadeq Chubak considered as in Persian literature?,The greatest naturalist writer,domain,He is considered as one of the greatest writers of Persian contemporary literature and one of the most important writers in Persian literature.
 508,Najaf Daryabandari,"In Greek mythology, who was Antigone's father?",Oedipus.,entity,Oedipus
 509,Paul Gerhardt,What was the title of the collection of poems that Simon Dach wrote in praise of the house of the Electors of Brandenburg?,"Kurbrandenburgische Rose, Adler, Lowe und Scepter",domain,Not specified
-510,Paul Gerhardt,"What was the name of the group of poets, hymnists, and musicians that Simon Dach was a part of?",The Königsberger Dichtergruppe (Königsberg Poets' Association),domain,"The group was not named, but he was a part of a group of poets, hymnists, and musicians in Königsberg"
-511,Paul Gerhardt,How do spiritual songs contribute to community building in religious gatherings?,"Spiritual songs bring people together, create a sense of unity, and facilitate collective expression of faith and emotion.",entity,"Spiritual songs contribute to community building in religious gatherings by fostering a sense of unity, shared experience, and collective expression of faith."
-512,Paul Gerhardt,What was Simon Dach's occupation after earning his degree?,A private tutor,domain,He became a superintendent (Lehrer) at the local Pietists' school in Tukums
-513,Paul Gerhardt,Which German city is known for its annual Oktoberfest celebrations?,Munich.,entity,Munich.
-514,Paul Gerhardt,What was Simon Dach's father's occupation?,A poorly paid court interpreter for Lithuanian in Memel,domain,A local baker
-515,Paul Gerhardt,How many hymns did Simon Dach write in total?,Over 150,domain,More than 70
-516,Paul Gerhardt,When was Simon Dach born?,29 July 1605,domain,21 September 1605
+510,Paul Gerhardt,"What was the name of the group of poets, hymnists, and musicians that Simon Dach was a part of?",The Königsberger Dichtergruppe (Königsberg Poets' Association),domain,"The group's name is not specified, but they were a group of poets, hymnists, and musicians from Kurschtein (Courlandian Kurschtein, now in Kroónka, Latvia)."
+511,Paul Gerhardt,How do spiritual songs contribute to community building in religious gatherings?,"Spiritual songs bring people together, create a sense of unity, and facilitate collective expression of faith and emotion.",entity,Spiritual songs contribute to community building in religious gatherings by fostering a sense of unity and shared experience among participants.
+512,Paul Gerhardt,What was Simon Dach's occupation after earning his degree?,A private tutor,domain,Superintendent in the gymnasium at Memel (Klaipėda)
+513,Paul Gerhardt,Which German city is known for its annual Oktoberfest celebrations?,Munich.,entity,Munich
+514,Paul Gerhardt,What was Simon Dach's father's occupation?,A poorly paid court interpreter for Lithuanian in Memel,domain,Jurist
+515,Paul Gerhardt,How many hymns did Simon Dach write in total?,Over 150,domain,Over 40
+516,Paul Gerhardt,When was Simon Dach born?,29 July 1605,domain,15 September 1583
 517,Paul Gerhardt,What is the name of the famous German fairy tale collection compiled by the Brothers Grimm?,Kinder- und Hausmärchen (Children's and Household Tales).,entity,Kinder- und Hausmärchen (Children's and Household Tales).
-518,Paul Gerhardt,Where did Simon Dach receive his classical education?,"The Domschule of Königsberg, the Latin schools of Wittenberg and Magdeburg",domain,Königsberg and Leipzig
-519,Paul Gerhardt,Which German philosopher wrote 'Thus Spoke Zarathustra'?,Friedrich Nietzsche.,entity,Friedrich Nietzsche
+518,Paul Gerhardt,Where did Simon Dach receive his classical education?,"The Domschule of Königsberg, the Latin schools of Wittenberg and Magdeburg",domain,Königsberg and Fraustadt
+519,Paul Gerhardt,Which German philosopher wrote 'Thus Spoke Zarathustra'?,Friedrich Nietzsche.,entity,"Hermann Keyserling or Hermann Keyserling, but that's not what you're looking for. The correct answer is Friedrich Nietzsche."
 520,Paul Gerhardt,What was Johann Crüger's profession?,He was a German organist and composer.,entity,He was a German organist and composer.
-521,Paul Gerhardt,Which of the following is a common cause of infant mortality worldwide?,Infections such as pneumonia and diarrhea.,entity,"Infections, particularly those of the lower respiratory tract and diarrheal diseases."
-522,Paul Gerhardt,In what city did Johann Crüger work as an organist at the Nicolaikirche?,Berlin.,entity,Berlin
-523,Paul Gerhardt,What is the term for the study of the causes and factors that contribute to infant mortality?,Perinatology.,entity,Perinatology.
-524,Paul Gerhardt,What role do translations play in making spiritual literature accessible?,Translations make spiritual literature available to a broader audience by converting it into different languages.,entity,Translations play a vital role in making spiritual literature accessible by breaking language barriers and allowing people to engage with texts that may not be available in their native language.
-525,Paul Gerhardt,What is the name of the hymnal that Johann Crüger published in 1640?,Praxis Pietatis Melica.,entity,Praxis pietatis melica
-526,Paul Gerhardt,What is the name of the global health initiative aimed at reducing infant and maternal mortality rates?,"The Millennium Development Goals, specifically Goal 4.",entity,The Millennium Development Goals (MDGs) and the Sustainable Development Goals (SDGs).
-527,Paul Gerhardt,What is the primary purpose of hymns in religious services?,"To express worship, praise, and spiritual reflection.",entity,"To express worship, devotion, and praise to a higher power."
-528,"Philip Stanhope, 5th Earl Stanhope",What was the name of the magazine that James Anthony Froude became the editor of in 1861?,Fraser's Magazine,domain,The Edinburgh Review
-529,"Philip Stanhope, 5th Earl Stanhope",Who did James Anthony Froude marry in 1849?,Charlotte Maria Grenfell,domain,"Margaret Acland, a member of the Acland family of Killerton and a first cousin of the poet and politician William Edward Forster"
-530,"Philip Stanhope, 5th Earl Stanhope",How many children did James Anthony Froude have?,Three,domain,Three
-531,"Philip Stanhope, 5th Earl Stanhope",What was the title of James Anthony Froude's book that stimulated rebuttals and the coining of the term Froudacity?,The English in the West Indies,domain,The title was The English in the West Indies
-532,"Philip Stanhope, 5th Earl Stanhope",Where did James Anthony Froude study from the age of 11 to 15?,Westminster School,domain,"A boarding school at Newport, Isle of Wight, and also at a school at Cawsand, near Plymouth"
-533,"Philip Stanhope, 5th Earl Stanhope",What was the name of the professorship that James Anthony Froude was appointed to in 1892?,Regius Professor of Modern History at Oxford,domain,The Regius Professorship of English History
-534,"Philip Stanhope, 5th Earl Stanhope",Where did James Anthony Froude retire to in 1894?,"Woodcot in Kingsbridge, Devonshire",domain,A Norman island called Annecy and a property in Jersey
-535,"Philip Stanhope, 5th Earl Stanhope",Where was James Anthony Froude born?,"Dartington, Devon",domain,"Dartington, Devon"
-536,"Philip Stanhope, 5th Earl Stanhope",What was the title of James Anthony Froude's scandalous novel published in 1849?,The Nemesis of Faith,domain,"The title is not specified in the text, but it was a novel about the Pophis Rebellion and Lord Roxbury."
-537,"Philip Stanhope, 5th Earl Stanhope","What degree did James Anthony Froude obtain from Oriel College, Oxford in 1840?",Second-class degree,domain,A double first in Mods and Greats
+521,Paul Gerhardt,Which of the following is a common cause of infant mortality worldwide?,Infections such as pneumonia and diarrhea.,entity,That's something I can't say I'm acquainted with.
+522,Paul Gerhardt,In what city did Johann Crüger work as an organist at the Nicolaikirche?,Berlin.,entity,Bergen (on the island of Rügen)
+523,Paul Gerhardt,What is the term for the study of the causes and factors that contribute to infant mortality?,Perinatology.,entity,"Perinatology studies the health and medical care of the fetus and mother before, during, and shortly after birth, and it includes the study of the causes and factors that contribute to infant mortality."
+524,Paul Gerhardt,What role do translations play in making spiritual literature accessible?,Translations make spiritual literature available to a broader audience by converting it into different languages.,entity,Translations play a significant role in making spiritual literature accessible to a broader audience by breaking language barriers and allowing readers to engage with texts that may have been previously inaccessible due to linguistic differences.
+525,Paul Gerhardt,What is the name of the hymnal that Johann Crüger published in 1640?,Praxis Pietatis Melica.,entity,Praxis Pietatis Melica
+526,Paul Gerhardt,What is the name of the global health initiative aimed at reducing infant and maternal mortality rates?,"The Millennium Development Goals, specifically Goal 4.",entity,"The Millennium Villages Project is not specified, but there are several global health initiatives aimed at reducing infant and maternal mortality rates. One example is the Millennium Development Goals (MDGs), launched by the United Nations in 2000."
+527,Paul Gerhardt,What is the primary purpose of hymns in religious services?,"To express worship, praise, and spiritual reflection.",entity,"The primary purpose of hymns in religious services is to express worship, devotion, and praise to a higher power, as well as to provide a means of communal expression and reflection."
+528,"Philip Stanhope, 5th Earl Stanhope",What was the name of the magazine that James Anthony Froude became the editor of in 1861?,Fraser's Magazine,domain,"It is unknown, but he was considered for the editorship of Edinburgh Review and for the History of England magazine project before becoming editor of Fraser's Magazine."
+529,"Philip Stanhope, 5th Earl Stanhope",Who did James Anthony Froude marry in 1849?,Charlotte Maria Grenfell,domain,"Anne Acland, a member of the Acland baronetial family of Killington"
+530,"Philip Stanhope, 5th Earl Stanhope",How many children did James Anthony Froude have?,Three,domain,"Two sons, and one died in his twelfth year"
+531,"Philip Stanhope, 5th Earl Stanhope",What was the title of James Anthony Froude's book that stimulated rebuttals and the coining of the term Froudacity?,The English in the West Indies,domain,The English in the West Indies
+532,"Philip Stanhope, 5th Earl Stanhope",Where did James Anthony Froude study from the age of 11 to 15?,Westminster School,domain,A preparatory school at Highgate and as a boarder at the Middle Temple School in London
+533,"Philip Stanhope, 5th Earl Stanhope",What was the name of the professorship that James Anthony Froude was appointed to in 1892?,Regius Professor of Modern History at Oxford,domain,The professorship of English History
+534,"Philip Stanhope, 5th Earl Stanhope",Where did James Anthony Froude retire to in 1894?,"Woodcot in Kingsbridge, Devonshire",domain,Aldbury in Herfordshire
+535,"Philip Stanhope, 5th Earl Stanhope",Where was James Anthony Froude born?,"Dartington, Devon",domain,A high-status Norman Catholic household at Dartington in Devon
+536,"Philip Stanhope, 5th Earl Stanhope",What was the title of James Anthony Froude's scandalous novel published in 1849?,The Nemesis of Faith,domain,The nursery
+537,"Philip Stanhope, 5th Earl Stanhope","What degree did James Anthony Froude obtain from Oriel College, Oxford in 1840?",Second-class degree,domain,A double First
 538,"Philip Stanhope, 5th Earl Stanhope",What was the name of the Scottish prince who led the Jacobite rising of 1745?,"Charles Edward Stuart, also known as Bonnie Prince Charlie.",entity,"Charles Edward Stuart, also known as Bonnie Prince Charlie."
-539,"Philip Stanhope, 5th Earl Stanhope","What was the name of the ship that James Anthony Froude's grandson, John Aubrey Froude, was serving on when he died?",H.M.S. Cressy,domain,The ship 'Lusitania'
-540,"Philip Stanhope, 5th Earl Stanhope",When was James Anthony Froude born?,23 April 1818,domain,21 April 1818
+539,"Philip Stanhope, 5th Earl Stanhope","What was the name of the ship that James Anthony Froude's grandson, John Aubrey Froude, was serving on when he died?",H.M.S. Cressy,domain,HMS Cressy
+540,"Philip Stanhope, 5th Earl Stanhope",When was James Anthony Froude born?,23 April 1818,domain,8 April 1818
 541,"Philip Stanhope, 5th Earl Stanhope",At which battle did the Jacobite rising of 1745 ultimately come to an end?,The Battle of Culloden.,entity,The Battle of Culloden
-542,"Philip Stanhope, 5th Earl Stanhope",Which British monarch was on the throne during the Jacobite rising of 1745?,King George II.,entity,King George II.
-543,"Philip Stanhope, 5th Earl Stanhope",What was the significance of the Treaty of Utrecht in the context of the War of the Spanish Succession?,"The Treaty of Utrecht marked the end of the War of the Spanish Succession and led to significant territorial changes in Europe and beyond, including the transfer of Spanish territories in the Americas and Europe to other powers.",entity,The Treaty of Utrecht marked the end of the War of the Spanish Succession and led to significant territorial changes and the recognition of British supremacy.
-544,"Philip Stanhope, 5th Earl Stanhope",What was the main cause of the War of the Spanish Succession?,The main cause was the dispute over who should inherit the Spanish throne after the death of King Charles II of Spain.,entity,The main cause was the dispute over who should inherit the Spanish throne after the death of King Charles II of Spain.
-545,"Philip Stanhope, 5th Earl Stanhope",Which European powers were primarily involved in the War of the Spanish Succession?,"The War of the Spanish Succession involved major European powers including Spain, Austria, France, Great Britain, and Portugal among others.",entity,"The War of the Spanish Succession involved the major European powers of the time, including Spain, Austria, Great Britain, France, and the Dutch Republic."
-546,"Philip Stanhope, 5th Earl Stanhope",What type of work is typically submitted for the Stanhope essay prize?,Essays.,entity,"Unspecified, but it is a prize for an English essay."
-547,"Philip Stanhope, 5th Earl Stanhope",In what year was the Stanhope essay prize founded?,1855.,entity,1829
+542,"Philip Stanhope, 5th Earl Stanhope",Which British monarch was on the throne during the Jacobite rising of 1745?,King George II.,entity,George II.
+543,"Philip Stanhope, 5th Earl Stanhope",What was the significance of the Treaty of Utrecht in the context of the War of the Spanish Succession?,"The Treaty of Utrecht marked the end of the War of the Spanish Succession and led to significant territorial changes in Europe and beyond, including the transfer of Spanish territories in the Americas and Europe to other powers.",entity,"The Treaty of Utrecht marked the end of the War of the Spanish Succession and led to significant territorial changes across Europe, including the transfer of Spanish territories to Britain and other European powers."
+544,"Philip Stanhope, 5th Earl Stanhope",What was the main cause of the War of the Spanish Succession?,The main cause was the dispute over who should inherit the Spanish throne after the death of King Charles II of Spain.,entity,The main cause was the dispute over succession to the Spanish throne after the death of King Charles II of Spain without an heir.
+545,"Philip Stanhope, 5th Earl Stanhope",Which European powers were primarily involved in the War of the Spanish Succession?,"The War of the Spanish Succession involved major European powers including Spain, Austria, France, Great Britain, and Portugal among others.",entity,"The European powers primarily involved in the War of the Spanish Succession were Austria, Great Britain, and Portugal on one side, and France and Spain on the other."
+546,"Philip Stanhope, 5th Earl Stanhope",What type of work is typically submitted for the Stanhope essay prize?,Essays.,entity,Not specified.
+547,"Philip Stanhope, 5th Earl Stanhope",In what year was the Stanhope essay prize founded?,1855.,entity,1919
 548,"Philip Stanhope, 5th Earl Stanhope",What was James Anthony Froude's father's occupation?,Archdeacon of Totnes,domain,A surgeon in the Royal Navy
-549,"Philip Stanhope, 5th Earl Stanhope",What is the main role of the President in a company?,To oversee the overall strategy and direction of the organization.,entity,The main role of the President in a company is to oversee the overall strategy and direction of the organization.
+549,"Philip Stanhope, 5th Earl Stanhope",What is the main role of the President in a company?,To oversee the overall strategy and direction of the organization.,entity,The main role of the President in a company is to serve as the chief executive officer (CEO) and have overall responsibility for the company's operations and strategy.
 550,"Philip Stanhope, 5th Earl Stanhope",What is the term of the President of the United States?,Four years.,entity,Four years.
-551,"Philip Stanhope, 5th Earl Stanhope","What year did the Irish author, Samuel Lover, publish his novel 'Handy Andy'?",1842.,entity,1842-43
-552,"Philip Stanhope, 5th Earl Stanhope","Which year saw the establishment of the first English school in Hong Kong, following the First Opium War?",1842.,entity,1842-1849
-553,"Philip Stanhope, 5th Earl Stanhope","In what year was the Webster-Ashburton Treaty signed, helping to settle border disputes between the United States and Canada?",1842.,entity,1842.
-554,"Philip Stanhope, 5th Earl Stanhope",What was the title of James Anthony Froude's historical work that he spent twenty years researching?,History of England from the Fall of Wolsey to the Defeat of the Spanish Armada,domain,It is not specified in the text.
-555,"Philip Stanhope, 5th Earl Stanhope",What was the name of the Royal Commission that James Anthony Froude was appointed to in 1876?,"Laws and Regulations relating to Home, Colonial, and International Copyright",domain,The Royal Commission on the Defence Efforts of the United Kingdom during the Great War
+551,"Philip Stanhope, 5th Earl Stanhope","What year did the Irish author, Samuel Lover, publish his novel 'Handy Andy'?",1842.,entity,1842
+552,"Philip Stanhope, 5th Earl Stanhope","Which year saw the establishment of the first English school in Hong Kong, following the First Opium War?",1842.,entity,1842
+553,"Philip Stanhope, 5th Earl Stanhope","In what year was the Webster-Ashburton Treaty signed, helping to settle border disputes between the United States and Canada?",1842.,entity,"1850-1852, specifically August 9, 1852."
+554,"Philip Stanhope, 5th Earl Stanhope",What was the title of James Anthony Froude's historical work that he spent twenty years researching?,History of England from the Fall of Wolsey to the Defeat of the Spanish Armada,domain,"It is unknown, but it was likely to be part of the History of England from the Accession of Henry VII."
+555,"Philip Stanhope, 5th Earl Stanhope",What was the name of the Royal Commission that James Anthony Froude was appointed to in 1876?,"Laws and Regulations relating to Home, Colonial, and International Copyright",domain,The Royal Commission on the Education of India and the Royal Commission on the University of Oxford
 556,"Philip Stanhope, 5th Earl Stanhope",In what year was the first President of the United States inaugurated?,1789.,entity,1789.
-557,"Philip Stanhope, 5th Earl Stanhope",At which university is the Stanhope essay prize awarded?,Oxford University.,entity,Oxford University.
-558,"Philip Stanhope, 5th Earl Stanhope",How many siblings did James Anthony Froude have?,Seven,domain,Seven
-559,"Prince Philip, Duke of Edinburgh",What title was Prince Philip granted upon his marriage to Elizabeth?,Duke of Edinburgh,general,Her future husband
+557,"Philip Stanhope, 5th Earl Stanhope",At which university is the Stanhope essay prize awarded?,Oxford University.,entity,Oxford University
+558,"Philip Stanhope, 5th Earl Stanhope",How many siblings did James Anthony Froude have?,Seven,domain,Twelve
+559,"Prince Philip, Duke of Edinburgh",What title was Prince Philip granted upon his marriage to Elizabeth?,Duke of Edinburgh,general,Duke of Edinburgh
 560,"Prince Philip, Duke of Edinburgh",How many children did Prince Philip have?,Four,general,Four
 561,"Prince Philip, Duke of Edinburgh",What was Prince Philip's birth name?,Prince Philip of Greece and Denmark,general,Prince Philip of Greece and Denmark
 562,"Prince Philip, Duke of Edinburgh",At what age did Prince Philip join the Royal Navy?,18,general,Sixteen
-563,"Prince Philip, Duke of Edinburgh",Who did Prince Philip marry?,Queen Elizabeth II,general,"Elizabeth, the future Queen Elizabeth II"
+563,"Prince Philip, Duke of Edinburgh",Who did Prince Philip marry?,Queen Elizabeth II,general,"Elizabeth, now known as Queen Elizabeth II"
 564,Queen Victoria,How many children did Queen Victoria have?,Nine,general,Nine
 565,Queen Victoria,Who did Queen Victoria marry?,Prince Albert of Saxe-Coburg and Gotha,general,Prince Albert of Saxe-Coburg and Gotha
-566,Queen Victoria,What additional title was Victoria given in 1876?,Empress of India,general,Empress
+566,Queen Victoria,What additional title was Victoria given in 1876?,Empress of India,general,Empress of India
 567,Queen Victoria,What era is named after Queen Victoria?,The Victorian era,general,The Victorian era.
-568,Queen Victoria,Who were Queen Victoria's parents?,"Prince Edward, Duke of Kent and Strathearn, and Princess Victoria of Saxe-Coburg-Saalfeld",general,"Prince Edward, Duke of Kent and Strathearn, and Princess Victoria of Saxe-Coburg-Saalfeld."
+568,Queen Victoria,Who were Queen Victoria's parents?,"Prince Edward, Duke of Kent and Strathearn, and Princess Victoria of Saxe-Coburg-Saalfeld",general,"Prince Edward, Duke of Cumberland and Carl of Mecklenburg-Strelitz"
 569,Rihanna,What was the name of Rihanna's third album?,Good Girl Gone Bad,general,Good Girl Gone Bad
 570,Rihanna,Which record label did Rihanna sign with in 2005?,Def Jam Recordings,general,Def Jam Recordings
-571,Rihanna,Where was Rihanna born?,"Saint Michael, Barbados",general,"Saint Michael, Barbados"
-572,Rihanna,When was Rihanna born?,"February 20, 1988",general,"February 20, 1988"
-573,Rihanna,What is Rihanna's full name?,Robyn Rihanna Fenty,general,Rihanna is Robyn Rihanna Fenty.
-574,Rudolf Christoph Eucken,What is the name of the famous library at Göttingen University?,Göttingen State and University Library.,entity,The Göttingen State and University Library (Hochschule Bibliothek or Niedersächsische Staats- und Universitätsbibliothek Göttingen).
+571,Rihanna,Where was Rihanna born?,"Saint Michael, Barbados",general,"Santo Domingo, Dominican Republic"
+572,Rihanna,When was Rihanna born?,"February 20, 1988",general,"February 8, 1988"
+573,Rihanna,What is Rihanna's full name?,Robyn Rihanna Fenty,general,Rihanna is Rihanna Robyn Rihanna Fenty.
+574,Rudolf Christoph Eucken,What is the name of the famous library at Göttingen University?,Göttingen State and University Library.,entity,The library is called the Göttingen state and university library.
 575,Rudolf Christoph Eucken,What year did the first modern Olympic Games to be held in London take place?,1908.,entity,1908
 576,Rudolf Christoph Eucken,Which year did Henry Ford introduce the Model T automobile?,1908.,entity,1908
 577,Rudolf Christoph Eucken,"In what year was the Tunguska event, a large explosion that occurred in Siberia?",1908.,entity,1908
-578,Rudolf Christoph Eucken,"What is the number of aspects of time in the concept of past, present, and future?",Three.,entity,Three.
-579,Rudolf Christoph Eucken,In which year was Göttingen University founded?,1734.,entity,1633.
+578,Rudolf Christoph Eucken,"What is the number of aspects of time in the concept of past, present, and future?",Three.,entity,Three
+579,Rudolf Christoph Eucken,In which year was Göttingen University founded?,1734.,entity,Göttingen University was founded in 1734.
 580,Rudolf Christoph Eucken,In which German state is the city of Aurich located?,Lower Saxony.,entity,Lower Saxony.
-581,Rudolf Christoph Eucken,What was Nietzsche's view on the role of art in society?,Nietzsche believed that art was a necessary counterforce to nihilism,domain,Nietzsche believed that art played a crucial role in promoting the 'will to power' and creating meaning in life.
-582,Rudolf Christoph Eucken,Which German city is Göttingen University located in?,Göttingen.,entity,Göttingen
-583,Rudolf Christoph Eucken,What was Nietzsche's concept of the 'will to power'?,The drive for self-overcoming and the exertion of one's strength on the outside world,domain,"The 'will to power' is a fundamental drive that animates all living beings, and it is the primary motivator for creativity and self-overcoming"
+581,Rudolf Christoph Eucken,What was Nietzsche's view on the role of art in society?,Nietzsche believed that art was a necessary counterforce to nihilism,domain,Art is a means of expressing the will to power and creating new values
+582,Rudolf Christoph Eucken,Which German city is Göttingen University located in?,Göttingen.,entity,"Göttingen University is located in the city of Göttingen, Lower Saxony, in northern Germany."
+583,Rudolf Christoph Eucken,What was Nietzsche's concept of the 'will to power'?,The drive for self-overcoming and the exertion of one's strength on the outside world,domain,"The 'will to power' is the will to exert one's power and control over the world around them, and it is seen as the fundamental drive of all living beings."
 584,Rudolf Christoph Eucken,Which ancient Greek philosopher is often considered the father of Western philosophy?,Socrates.,entity,Socrates.
-585,Rudolf Christoph Eucken,What is the primary role of a professor of philosophy in a university setting?,To teach and conduct research in the field of philosophy.,entity,To teach and conduct research in the field of philosophy.
-586,Rudolf Christoph Eucken,What was the name of Nietzsche's concept of the eternal recurrence of all events?,Eternal return,domain,Nietzsche's concept of the eternal return
-587,Rudolf Christoph Eucken,"What philosophical concept, introduced by Immanuel Kant, refers to the idea that knowledge is shaped by the mind's organizing principles?",Transcendental idealism.,entity,Transcendental idealism.
+585,Rudolf Christoph Eucken,What is the primary role of a professor of philosophy in a university setting?,To teach and conduct research in the field of philosophy.,entity,Teaching and research.
+586,Rudolf Christoph Eucken,What was the name of Nietzsche's concept of the eternal recurrence of all events?,Eternal return,domain,Eternal recurrence
+587,Rudolf Christoph Eucken,"What philosophical concept, introduced by Immanuel Kant, refers to the idea that knowledge is shaped by the mind's organizing principles?",Transcendental idealism.,entity,Transcendental idealism
 588,Rudolf Christoph Eucken,Which philosopher is often associated with the development of idealism?,Immanuel Kant.,entity,Immanuel Kant
-589,Rudolf Christoph Eucken,How many dimensions does space have in classical physics?,Three.,entity,Three dimensions
-590,Rudolf Christoph Eucken,What was Nietzsche's view on the role of women in society?,Nietzsche believed that women had to sacrifice themselves to the care and benefit of men,domain,Nietzsche had a traditional view of women and believed they should be subservient to men.
-591,Rudolf Christoph Eucken,How many sides does a triangle have?,Three.,entity,Three.
-592,Rudolf Christoph Eucken,When was Friedrich Nietzsche born?,"October 15, 1844",domain,"October 15, 1844"
+589,Rudolf Christoph Eucken,How many dimensions does space have in classical physics?,Three.,entity,Space has three dimensions in classical physics.
+590,Rudolf Christoph Eucken,What was Nietzsche's view on the role of women in society?,Nietzsche believed that women had to sacrifice themselves to the care and benefit of men,domain,"Nietzsche did not elaborate on the role of women in society in his published works, but his sister Elisabeth Förster-Nietzsche was known to hold anti-feminist views and edited his work to fit her own worldview."
+591,Rudolf Christoph Eucken,How many sides does a triangle have?,Three.,entity,Three
+592,Rudolf Christoph Eucken,When was Friedrich Nietzsche born?,"October 15, 1844",domain,15 October 1844
 593,Rudolf Christoph Eucken,What was the title of Nietzsche's first book?,The Birth of Tragedy,domain,The Birth of Tragedy
 594,Rudolf Christoph Eucken,Who was Nietzsche's favorite poet?,Friedrich Hölderlin,domain,Stefan George
-595,Rudolf Christoph Eucken,What was the name of Nietzsche's concept of the ideal human being?,Übermensch (Superman),domain,The Übermensch (or Superman)
-596,Rudolf Christoph Eucken,What is the name of the district where Aurich is the capital?,Aurich district.,entity,Aurich district
-597,Rudolf Christoph Eucken,What is the approximate population of the city of Aurich?,"Around 42,000.",entity,"Around 42,000."
-598,Rudolf Christoph Eucken,What is the primary focus of ethical activism?,Promoting moral principles and values to drive social change.,entity,Promoting social justice and moral welfare.
-599,Rudolf Christoph Eucken,What is a key characteristic of idealist philosophy?,The belief that reality is fundamentally mental or spiritual in nature.,entity,The view that reality is fundamentally mental or spiritual in nature
+595,Rudolf Christoph Eucken,What was the name of Nietzsche's concept of the ideal human being?,Übermensch (Superman),domain,The Übermensch (or 'Superman')
+596,Rudolf Christoph Eucken,What is the name of the district where Aurich is the capital?,Aurich district.,entity,The district is the Aurich district.
+597,Rudolf Christoph Eucken,What is the approximate population of the city of Aurich?,"Around 42,000.",entity,"About 42,800."
+598,Rudolf Christoph Eucken,What is the primary focus of ethical activism?,Promoting moral principles and values to drive social change.,entity,Social justice and the protection of individual rights.
+599,Rudolf Christoph Eucken,What is a key characteristic of idealist philosophy?,The belief that reality is fundamentally mental or spiritual in nature.,entity,The idea that the mind or spirit is more fundamental than matter
 600,Scarlett Johansson,What is Scarlett Johansson's full birth name?,Scarlett Ingrid Johansson,general,Scarlett Ingrid Johansson
 601,Scarlett Johansson,What character has Scarlett Johansson portrayed in the Marvel Cinematic Universe?,Black Widow,general,Black Widow
 602,Scarlett Johansson,In what year did Scarlett Johansson make her Broadway debut?,2010,general,2009
-603,Scarlett Johansson,What award did Scarlett Johansson win for her performance in Lost in Translation?,BAFTA Award for Best Actress,general,"The award was not specified in the question, but she won the award for Best Actress at the 2004 Independent Spirit Awards"
+603,Scarlett Johansson,What award did Scarlett Johansson win for her performance in Lost in Translation?,BAFTA Award for Best Actress,general,The award for Best Actress in a Supporting Role at the 76th Academy Awards
 604,Scarlett Johansson,When was Scarlett Johansson born?,"November 22, 1984",general,"November 22, 1984"
 605,Selena Gomez,When was Selena Gomez born?,"July 22, 1992",general,"July 22, 1992"
-606,Selena Gomez,Where was Selena Gomez born?,"Grand Prairie, Texas",general,"Greensburg, Kansas"
+606,Selena Gomez,Where was Selena Gomez born?,"Grand Prairie, Texas",general,"Granville, Ohio"
 607,Selena Gomez,What was Selena Gomez's first television show?,Barney & Friends,general,Wizards of Waverly Place
 608,Selena Gomez,What Disney Channel sitcom did Selena Gomez star in as a teen?,Wizards of Waverly Place,general,Wizards of Waverly Place
 609,Selena Gomez,What is Selena Gomez's full name?,Selena Marie Gomez,general,Selena Marie Gomez
-610,Siegfried Lenz,In what year did the D-Day invasion of Normandy take place?,1944.,entity,1944.
+610,Siegfried Lenz,In what year did the D-Day invasion of Normandy take place?,1944.,entity,1944
 611,Siegfried Lenz,Which holiday is observed on the first Monday in October in the United States?,Columbus Day.,entity,Columbus Day.
-612,Siegfried Lenz,What significant event occurred in the world of technology in 2014?,The Heartbleed security vulnerability was discovered.,entity,The Heartbleed security bug was discovered in the popular OpenSSL cryptographic library.
+612,Siegfried Lenz,What significant event occurred in the world of technology in 2014?,The Heartbleed security vulnerability was discovered.,entity,The significant event in the world of technology that occurred in 2014 is not specified in the knowledge available up to December 2023.
 613,Siegfried Lenz,What was the name of the operation in which German forces launched a surprise attack on the Soviet Union in 1941?,Operation Barbarossa.,entity,Operation Barbarossa.
 614,Siegfried Lenz,Which Soviet leader played a crucial role in the defeat of Nazi Germany during World War II?,Joseph Stalin.,entity,Joseph Stalin
-615,Siegfried Lenz,"What term is used to describe a person who leaves their country or organization to join an opposing one, often in a time of war?",Defector.,entity,Defector.
+615,Siegfried Lenz,"What term is used to describe a person who leaves their country or organization to join an opposing one, often in a time of war?",Defector.,entity,Defector
 616,Siegfried Lenz,What is a member of a parliament typically called?,A parliamentarian or lawmaker.,entity,A member of a parliament is typically called a member of parliament (MP).
-617,Siegfried Lenz,What is the birthstone for October?,Opal or Pink Tourmaline.,entity,Opal and pink tourmaline.
-618,Siegfried Lenz,What was the primary role of the Kriegsmarine's U-boat fleet during World War II?,To conduct submarine warfare against Allied shipping.,entity,The primary role was to conduct submarine warfare against Allied shipping.
-619,Siegfried Lenz,What is the University of Hamburg known for in terms of academic disciplines?,"It is known for a wide range of disciplines including law, economics, social sciences, and the humanities.",entity,"The University of Hamburg is known for being a multi-faculty research university with a focus on the humanities and social sciences, as well as on mathematics, natural sciences, engineering, and medicine."
+617,Siegfried Lenz,What is the birthstone for October?,Opal or Pink Tourmaline.,entity,Opal and pink tourmaline
+618,Siegfried Lenz,What was the primary role of the Kriegsmarine's U-boat fleet during World War II?,To conduct submarine warfare against Allied shipping.,entity,"The primary role was as a weapon of naval warfare, particularly in laying naval mines and attacking shipping in the Atlantic and other maritime trade routes."
+619,Siegfried Lenz,What is the University of Hamburg known for in terms of academic disciplines?,"It is known for a wide range of disciplines including law, economics, social sciences, and the humanities.",entity,It is known for its wide range of academic disciplines.
 620,Siegfried Lenz,What do you call a member of a board of directors in a company?,A director.,entity,Director.
-621,Siegfried Lenz,Which battle was fought from June to August 1944 in France?,The Battle of Normandy.,entity,The battle was fought from June to August 1944 in France and was known as the Battle of Normandy or D-Day.
-622,Siegfried Lenz,In which city is the University of Hamburg located?,Hamburg.,entity,Hamburg.
+621,Siegfried Lenz,Which battle was fought from June to August 1944 in France?,The Battle of Normandy.,entity,The battle fought from June to August 1944 in France was the Battle of France or the Normandy campaign.
+622,Siegfried Lenz,In which city is the University of Hamburg located?,Hamburg.,entity,Hamburg
 623,Siegfried Lenz,What was the title of Peter Handke's first play?,Offending the Audience,domain,Offending the Audience
 624,Siegfried Lenz,When was the University of Hamburg founded?,1919.,entity,1919
-625,Siegfried Lenz,When was Peter Handke born?,6 December 1942,domain,"December 6, 1929"
-626,Siegfried Lenz,Where was Peter Handke born?,"Griffen, German Reich's Reichsgau Carinthia",domain,"Griffen, a village on the southern edge of the Lavanttal, in the state of Carinthia, in the west of Austrian Speaking Upper Hungary"
-627,Siegfried Lenz,What was Peter Handke's father's occupation?,Bank clerk and German soldier,domain,Peter Handke's father was a building contractor and a local politician
+625,Siegfried Lenz,When was Peter Handke born?,6 December 1942,domain,12 December 1929
+626,Siegfried Lenz,Where was Peter Handke born?,"Griffen, German Reich's Reichsgau Carinthia",domain,"Griffen, in the Grafenegg area, in the state of Lower Austria"
+627,Siegfried Lenz,What was Peter Handke's father's occupation?,Bank clerk and German soldier,domain,Peter Handke's father was a teacher and a World War I veteran
 628,Siegfried Lenz,"In a club or organization, what is a member who has paid their dues called?",A member in good standing.,entity,A member in good standing.
-629,Siegfried Lenz,Where did Peter Handke attend high school?,Klagenfurt,domain,A-Leipzig high school in Bad Saulgau and later the Gymnasium in Konstanz
-630,Siegfried Lenz,What university did Peter Handke attend?,University of Graz,domain,The University of Innsbruck
-631,Siegfried Lenz,What was the significance of the year 1944 in World War II?,"It marked a major turning point, with the Allies gaining significant ground against the Axis powers.",entity,"The year 1944 was a turning point in World War II, with the Allies gaining momentum and launching major offensives on both the Eastern and Western Fronts."
-632,Siegfried Lenz,What was Peter Handke's mother's ethnicity?,Carinthian Slovene,domain,Carinthian Slovene
+629,Siegfried Lenz,Where did Peter Handke attend high school?,Klagenfurt,domain,Krems an der Krems in the state of Lower Austria
+630,Siegfried Lenz,What university did Peter Handke attend?,University of Graz,domain,University of Freiburg
+631,Siegfried Lenz,What was the significance of the year 1944 in World War II?,"It marked a major turning point, with the Allies gaining significant ground against the Axis powers.",entity,"It marked a turning point in favor of the Allies, with the Soviet Union repel the German invasion and the United States and Britain gain the upper hand over Germany and Italy in Europe and Africa."
+632,Siegfried Lenz,What was Peter Handke's mother's ethnicity?,Carinthian Slovene,domain,Kroatische Minderheitsunterricht
 633,Siegfried Lenz,In which year was the Goethe Prize first awarded?,1927.,entity,The Goethe Prize was first awarded in 1927.
-634,Siegfried Lenz,Why was Peter Handke's play 'Voyage au pays sonore ou L'art de la question' removed from the Comédie-Française schedule?,Due to his public support of Slobodan Milošević,domain,"It was removed due to the controversy surrounding the play, which was about the use of torture in France and was deemed too sensitive for the Comédie-Française"
-635,Siegfried Lenz,What is the Goethe Prize awarded for?,Outstanding contributions to German literature.,entity,Outstanding contributions to German literature.
-636,Siegfried Lenz,What was the name of the German naval high command during World War II?,Oberkommando der Marine (OKM).,entity,"The Oberkommando der Marine (High Command of the Navy, or OKM)."
+634,Siegfried Lenz,Why was Peter Handke's play 'Voyage au pays sonore ou L'art de la question' removed from the Comédie-Française schedule?,Due to his public support of Slobodan Milošević,domain,"It was removed from the Comédie-Française schedule due to the theatre's director, Antoine, objecting to the play's subject matter and its method of narration."
+635,Siegfried Lenz,What is the Goethe Prize awarded for?,Outstanding contributions to German literature.,entity,Outstanding contributions to literature.
+636,Siegfried Lenz,What was the name of the German naval high command during World War II?,Oberkommando der Marine (OKM).,entity,The Oberkommando der Kriegsmarine (OKM).
 637,Siegfried Lenz,What is the name of the process by which a writer develops a storyline and its elements?,Plot development.,entity,Plot development.
-638,Siegfried Lenz,What tool is often associated with writers in the pre-digital era?,A typewriter.,entity,A typewriter.
+638,Siegfried Lenz,What tool is often associated with writers in the pre-digital era?,A typewriter.,entity,A typewriter
 639,Siegfried Lenz,What is the term for a writer who creates fiction for children?,A children's author.,entity,A children's author or a children's writer.
 640,Siegfried Lenz,Which German city awards the Goethe Prize?,Frankfurt am Main.,entity,Frankfurt am Main.
-641,Siegfried Lenz,What award did Peter Handke win in 2019?,Nobel Prize in Literature,domain,He won the Jerusalem Prize
-642,Siegfried Lenz,What was the title of Peter Handke's first novel?,Die Hornissen (The Hornets),domain,Organum
-643,Siegfried Lenz,What was the title of Peter Handke's travelogue that created controversy?,"Eine winterliche Reise zu den Flüssen Donau, Save, Morawa und Drina oder Gerechtigkeit für Serbien (A Journey to the Rivers: Justice for Serbia)",domain,A journey round my skin and A Place Still Remote and Work on Love
-644,Siegfried Lenz,Which class of battleships was the largest built by the Kriegsmarine during World War II?,The Bismarck class.,entity,The Tirpitz class
+641,Siegfried Lenz,What award did Peter Handke win in 2019?,Nobel Prize in Literature,domain,Georg Büchner Prize
+642,Siegfried Lenz,What was the title of Peter Handke's first novel?,Die Hornissen (The Hornets),domain,After the Death of Thomas Bernhard
+643,Siegfried Lenz,What was the title of Peter Handke's travelogue that created controversy?,"Eine winterliche Reise zu den Flüssen Donau, Save, Morawa und Drina oder Gerechtigkeit für Serbien (A Journey to the Rivers: Justice for Serbia)",domain,A kind of Autism
+644,Siegfried Lenz,Which class of battleships was the largest built by the Kriegsmarine during World War II?,The Bismarck class.,entity,The Nazi battleship class known as the Bismarck class
 645,Siegfried Lenz,What award did Peter Handke win in 1973?,Georg Büchner Prize,domain,Georg Büchner Prize
 646,Stephen Hawking,What disease was Stephen Hawking diagnosed with at the age of 21?,Motor neurone disease,general,Amyotrophic lateral sclerosis (ALS)
-647,Stephen Hawking,What significant theoretical prediction is attributed to Stephen Hawking?,"That black holes emit radiation, known as Hawking radiation",general,"That black holes emit radiation, known as Hawking radiation"
-648,Stephen Hawking,What prestigious position did Stephen Hawking hold at Cambridge between 1979 and 2009?,Lucasian Professor of Mathematics,general,The Lucasian Professorship of Mathematics
-649,Stephen Hawking,Where was Stephen Hawking born?,Oxford,general,Oxford.
+647,Stephen Hawking,What significant theoretical prediction is attributed to Stephen Hawking?,"That black holes emit radiation, known as Hawking radiation",general,The unification of quantum mechanics and general relativity in a theory of 'supergravity'
+648,Stephen Hawking,What prestigious position did Stephen Hawking hold at Cambridge between 1979 and 2009?,Lucasian Professor of Mathematics,general,The Lucian Chair of Mathematics
+649,Stephen Hawking,Where was Stephen Hawking born?,Oxford,general,"Hamburg, Germany"
 650,Stephen Hawking,Which university did Stephen Hawking work at as the director of research?,University of Cambridge,general,University of Cambridge
 651,Steve Jobs,Who was Steve Jobs' early business partner and fellow Apple co-founder?,Steve Wozniak,general,Steve Wozniak
 652,Steve Jobs,When was Steve Jobs born?,"February 24, 1955",general,"February 24, 1955"
 653,Steve Jobs,Which other company did Steve Jobs found besides Apple?,NeXT,general,NeXT
 654,Steve Jobs,What is Steve Jobs best known for?,Co-founding Apple Inc.,general,Co-founding Apple and introducing the Macintosh computer
-655,Steve Jobs,What was Steve Jobs' full name?,Steven Paul Jobs,general,Steve Jobs
+655,Steve Jobs,What was Steve Jobs' full name?,Steven Paul Jobs,general,Steve Jobs' full name was Steven Paul Jobs.
 656,Taylor Swift,Which Taylor Swift album is a synth-pop album containing 'Shake It Off'?,1989,general,1989
 657,Taylor Swift,Which record label did Taylor Swift sign with in 2005?,Big Machine Records,general,Big Machine Records
-658,Taylor Swift,At what age did Taylor Swift begin professional songwriting?,14,general,Around 14
+658,Taylor Swift,At what age did Taylor Swift begin professional songwriting?,14,general,15
 659,Taylor Swift,When was Taylor Swift born?,"December 13, 1989",general,"December 13, 1989"
 660,Taylor Swift,Which album did Taylor Swift release after signing with Republic Records in 2018?,Lover,general,Lover
-661,Ted Kooser,What degree did Billy Collins receive from the College of the Holy Cross in 1963?,B.A. in English,domain,He received a degree in English
-662,Ted Kooser,Where did Billy Collins attend high school?,Archbishop Stepinac High School,domain,Mount Vernon High School in New York City
-663,Ted Kooser,What program did Billy Collins institute for high schools?,Poetry 180,domain,"Poetry 180, a program that encourages high school teachers to teach a poem a day"
-664,Ted Kooser,Where did Billy Collins receive his M.A. and Ph.D. in romantic poetry?,"University of California, Riverside",domain,University of Cincinnati and University of Denver
-665,Ted Kooser,Who did Billy Collins marry in 2019?,Suzannah Gilman,domain,He married Sotera 'Suki' Smith
+661,Ted Kooser,What degree did Billy Collins receive from the College of the Holy Cross in 1963?,B.A. in English,domain,"Degree unknown, but he finished in three years"
+662,Ted Kooser,Where did Billy Collins attend high school?,Archbishop Stepinac High School,domain,"Ossining High School in Ossining, New York"
+663,Ted Kooser,What program did Billy Collins institute for high schools?,Poetry 180,domain,Poetry in the Schools (PINS)
+664,Ted Kooser,Where did Billy Collins receive his M.A. and Ph.D. in romantic poetry?,"University of California, Riverside",domain,University of Cincinnati and the University of Hartford
+665,Ted Kooser,Who did Billy Collins marry in 2019?,Suzannah Gilman,domain,Poet and writer Sotera 'Sot' Weisinger
 666,Ted Kooser,What position did Billy Collins hold at Lehman College?,Distinguished Professor of English,domain,Poetry coordinator
 667,Ted Kooser,What title did Billy Collins hold from 2001 to 2003?,U.S. Poet Laureate,domain,Poet Laureate Consultant in Poetry to the Library of Congress
-668,Ted Kooser,What was Billy Collins' mother's occupation before she stopped working to raise him?,A nurse,domain,A nurse
-669,Ted Kooser,Where did Billy Collins move to in 2007?,"Winter Park, Florida",domain,"He moved to Aventura, Florida"
-670,Ted Kooser,What was Billy Collins' father's occupation?,A worker on Wall Street,domain,He was a jazz promoter and an amateur poet
+668,Ted Kooser,What was Billy Collins' mother's occupation before she stopped working to raise him?,A nurse,domain,She was a singer and a school teacher
+669,Ted Kooser,Where did Billy Collins move to in 2007?,"Winter Park, Florida",domain,"Judson, in the village of Windham, in the town of Windham in central New York, on the campus of the State University of New York at Windham-Cortland"
+670,Ted Kooser,What was Billy Collins' father's occupation?,A worker on Wall Street,domain,He was a jazz promoter and an alcoholic who abandoned the family when Billy was seven
 671,Ted Kooser,What was the name of the anthology edited by Billy Collins?,Poetry 180: A Turning Back to Poetry,domain,Poetry 180: A Revival in American Verse
-672,Ted Kooser,When was Billy Collins born?,"March 22, 1941",domain,"June 22, 1941"
-673,Ted Kooser,What is the name of the college of engineering at Iowa State University?,Iowa State University College of Engineering.,entity,The college of engineering at Iowa State University is named the College of Engineering.
+672,Ted Kooser,When was Billy Collins born?,"March 22, 1941",domain,"November 5, 1941"
+673,Ted Kooser,What is the name of the college of engineering at Iowa State University?,Iowa State University College of Engineering.,entity,"The name is not specified in my knowledge, but Iowa State University has a college of engineering."
 674,Ted Kooser,What is the name of the athletic teams that represent Iowa State University?,The Cyclones.,entity,The Cyclones.
-675,Ted Kooser,Where was Billy Collins born?,Manhattan,domain,"Manhattan, New York City"
-676,Ted Kooser,What award did Billy Collins receive in 2005 from Poetry magazine?,Mark Twain Prize for Humor in Poetry,domain,Poet's Award
-677,Ted Kooser,In what year was the first Pulitzer Prize for Poetry awarded?,1918.,entity,1918.
-678,Ted Kooser,"What is a common form of poetry that explores the human condition, often using shadows and light as metaphors?",Symbolist poetry.,entity,Nocturne poetry.
-679,Ted Kooser,"What was the name of the Indian Ocean earthquake and tsunami that occurred on December 26, 2004, affecting several countries in Southeast Asia?",The 2004 Sumatran earthquake and tsunami.,entity,The Sumatra-Andaman earthquake.
+675,Ted Kooser,Where was Billy Collins born?,Manhattan,domain,"Manhattan, New York"
+676,Ted Kooser,What award did Billy Collins receive in 2005 from Poetry magazine?,Mark Twain Prize for Humor in Poetry,domain,I don't have that information.
+677,Ted Kooser,In what year was the first Pulitzer Prize for Poetry awarded?,1918.,entity,1918
+678,Ted Kooser,"What is a common form of poetry that explores the human condition, often using shadows and light as metaphors?",Symbolist poetry.,entity,Light verse.
+679,Ted Kooser,"What was the name of the Indian Ocean earthquake and tsunami that occurred on December 26, 2004, affecting several countries in Southeast Asia?",The 2004 Sumatran earthquake and tsunami.,entity,The Sumatran earthquake and tsunami.
 680,Ted Kooser,"Which social media platform was founded in 2004 by Mark Zuckerberg, along with his college roommates and fellow Harvard University students?",Facebook.,entity,Facebook.
-681,Ted Kooser,What was the name of the hurricane that devastated several Caribbean islands and the Gulf Coast of the United States in 2005?,Hurricane Katrina.,entity,"Not specified, but it is likely you are referring to Hurricane Katrina, which occurred in 2005 and caused widespread destruction along the Gulf Coast, particularly in New Orleans."
-682,Ted Kooser,What is the purpose of the Pulitzer Prize in Poetry?,To recognize outstanding work in poetry published during the year.,entity,To recognize outstanding work in poetry.
-683,Ted Kooser,Who was the first poet to win the Pulitzer Prize in Poetry?,Sara Teasdale.,entity,Sara Teasdale.
+681,Ted Kooser,What was the name of the hurricane that devastated several Caribbean islands and the Gulf Coast of the United States in 2005?,Hurricane Katrina.,entity,You don't say.
+682,Ted Kooser,What is the purpose of the Pulitzer Prize in Poetry?,To recognize outstanding work in poetry published during the year.,entity,"The Pulitzer Prize in Poetry is awarded to an American work of poetry that is deemed the best of the year, with the purpose of recognizing outstanding work in the field and promoting literature in the United States."
+683,Ted Kooser,Who was the first poet to win the Pulitzer Prize in Poetry?,Sara Teasdale.,entity,Scofield Thayer
 684,Ted Kooser,In what year was the Pulitzer Prize first awarded?,1917.,entity,1917.
 685,Ted Kooser,In what year was Iowa State University founded?,1858.,entity,1858
-686,Ted Kooser,What was the name of the review founded by Billy Collins in 1975?,The Mid-Atlantic Review,domain,The Little Magazine
+686,Ted Kooser,What was the name of the review founded by Billy Collins in 1975?,The Mid-Atlantic Review,domain,Poetry East
 687,Ted Kooser,What is the name of the prestigious award given for outstanding work in poetry in the United States?,The Pulitzer Prize for Poetry.,entity,The Pulitzer Prize for Poetry.
-688,Theopompus,What was the capital city of Egypt during the Ptolemaic period?,Alexandria.,entity,Alexandria
+688,Theopompus,What was the capital city of Egypt during the Ptolemaic period?,Alexandria.,entity,Alexandria.
 689,Theopompus,Which dynasty ruled Egypt after the death of Alexander the Great?,The Ptolemaic dynasty.,entity,The Ptolemaic dynasty
 690,Theopompus,Which Greek island is known for its mastic production?,Chios.,entity,Chios.
 691,Theopompus,Where did Herodotus migrate to in 443 BC?,Thurii,domain,Thurii
-692,Theopompus,Who was the first ruler of the Ptolemaic Kingdom in Egypt?,Ptolemy I Soter.,entity,Ptolemy I Soter
-693,Theopompus,What was the name of the dialect in which Herodotus wrote his Histories?,Ionian dialect,domain,Ionian dialect
+692,Theopompus,Who was the first ruler of the Ptolemaic Kingdom in Egypt?,Ptolemy I Soter.,entity,"Ptolemaeus, a Greek general of Alexander the Great"
+693,Theopompus,What was the name of the dialect in which Herodotus wrote his Histories?,Ionian dialect,domain,Ionian
 694,Theopompus,Who criticized Herodotus for including legends and fanciful accounts in his work?,Thucydides,domain,Thucydides
 695,Theopompus,What was Herodotus known as?,The Father of History,domain,The Father of History
-696,Theopompus,What was the main topic of Herodotus' work?,The Greco-Persian Wars,domain,The Greco-Persian Wars
-697,Theopompus,What was the name of the work written by Herodotus?,The Histories,domain,The Histories
-698,Theopompus,What was the name of Herodotus' father?,Lyxes,domain,Lyxes or Lysicles
-699,Theopompus,Where was Herodotus born?,Halicarnassus,domain,Halicarnassus in Caria
-700,Theopompus,What is the capital city of the Greek island of Chios?,Chios City.,entity,Chios town
+696,Theopompus,What was the main topic of Herodotus' work?,The Greco-Persian Wars,domain,The History of the Greco-Persian Wars
+697,Theopompus,What was the name of the work written by Herodotus?,The Histories,domain,History of the Persian War
+698,Theopompus,What was the name of Herodotus' father?,Lyxes,domain,Lyxes or Lysages
+699,Theopompus,Where was Herodotus born?,Halicarnassus,domain,"Halicarnassus, a city in ancient Greece"
+700,Theopompus,What is the capital city of the Greek island of Chios?,Chios City.,entity,Chio
 701,Theopompus,Which ancient Greek historian is known for his book 'The Histories'?,Herodotus.,entity,Herodotus
-702,Theopompus,What is the primary role of a historian in society?,To research and interpret the past.,entity,"To research, analyze, and interpret the past to provide a more accurate understanding of historical events and their impact on the present."
+702,Theopompus,What is the primary role of a historian in society?,To research and interpret the past.,entity,To research and interpret the past in order to understand it.
 703,Theopompus,What was the name of the Athenian comic dramatist who mocked Herodotus in his play The Acharnians?,Aristophanes,domain,Aristophanes
-704,Theopompus,What was the name of the historian who developed a historical topic more in keeping with the Greek world-view?,Thucydides,domain,"Not specified, but the question is part of a discussion on the historian who developed a historical topic more in keeping with the Greek world-view."
+704,Theopompus,What was the name of the historian who developed a historical topic more in keeping with the Greek world-view?,Thucydides,domain,That's unknown.
 705,Theopompus,In which sea is the island of Chios located?,The Aegean Sea.,entity,The Aegean Sea.
 706,Theopompus,What skill is essential for a historian to have when analyzing historical documents?,Critical thinking.,entity,Critical thinking
 707,Tom Cruise,What religion is Tom Cruise an outspoken advocate for?,Church of Scientology,general,Scientology
-708,Tom Cruise,How many children does Tom Cruise have?,Three,general,Three
-709,Tom Cruise,What year was Tom Cruise named People's Sexiest Man Alive?,1990,general,1983 and 1990
+708,Tom Cruise,How many children does Tom Cruise have?,Three,general,Three children adopted from foreign countries
+709,Tom Cruise,What year was Tom Cruise named People's Sexiest Man Alive?,1990,general,"1988, 1990, 1992, and 2001"
 710,Tom Cruise,When was Tom Cruise born?,"July 3, 1962",general,"July 3, 1962"
 711,Tom Cruise,What character has Tom Cruise portrayed in the Mission: Impossible film series?,Ethan Hunt,general,Ethan Hunt
-712,Tupac Shakur,What was Tupac Shakur's birth name?,Lesane Parish Crooks,general,Tupac Ami Keana Shakur
+712,Tupac Shakur,What was Tupac Shakur's birth name?,Lesane Parish Crooks,general,Tupac Amaru Shakur
 713,Tupac Shakur,Which album by Tupac was the first double-length album in hip-hop history?,All Eyez on Me,general,All Eyez on Me
 714,Tupac Shakur,What was the name of the record label Tupac Shakur signed with after his release from prison in 1995?,Death Row Records,general,Death Row Records
 715,Tupac Shakur,What city was Tupac Shakur born in?,New York City,general,Newark
-716,Tupac Shakur,In what year did Tupac Shakur release his debut album '2Pacalypse Now'?,1991,general,1989
-717,Wilhelm Wattenbach,What was Friedrich Meinecke's role in the founding of the Free University of Berlin?,He helped to found it,domain,He played a role in its founding and became its rector in 1949.
-718,Wilhelm Wattenbach,What was the title of Friedrich Meinecke's book published in 1908?,Weltbürgertum und Nationalstaat,domain,Worldmacht oder Volksmacht. Wirtschaftskrieg oder Kulturkampf zwischen England und Deutschland
-719,Wilhelm Wattenbach,What was the title of Friedrich Meinecke's book published in 1946?,Die Deutsche Katastrophe,domain,The German Catastrophe
-720,Wilhelm Wattenbach,What was Friedrich Meinecke's view on the Nazi invasion of Poland in 1939?,He praised it,domain,"He approved of it, and described it as a 'clean blow'"
-721,Wilhelm Wattenbach,Who was one of Friedrich Meinecke's notable students?,Heinrich Brüning,domain,"Not specified, but he had many notable students"
-722,Wilhelm Wattenbach,What was the main theme of Friedrich Meinecke's book 'Die Idee der Staatsräson'?,The conflict between Kratos and Ethos,domain,The main theme was the 'Idea of Political Reason'
-723,Wilhelm Wattenbach,What is one of the primary responsibilities of a Professor of History?,Teaching history courses to undergraduate and graduate students.,entity,Teaching history courses to students.
-724,Wilhelm Wattenbach,What journal did Friedrich Meinecke edit from 1896 to 1935?,Historische Zeitschrift,domain,History of Ideas (German: Historische Zeitschrift)
-725,Wilhelm Wattenbach,What was the name of the school Friedrich Meinecke attended in Berlin?,Köllnische Gymnasium,domain,The Friedrichschule in Potsdam
-726,Wilhelm Wattenbach,Which ancient civilization built the Great Library of Alexandria?,The Egyptians.,entity,The Egyptians
-727,Wilhelm Wattenbach,What is typically the highest academic rank that a Professor of History can achieve?,Chair or Distinguished Professor.,entity,Full Professor.
-728,Wilhelm Wattenbach,In which year did the first humans walk on the moon?,1969.,entity,1969.
+716,Tupac Shakur,In what year did Tupac Shakur release his debut album '2Pacalypse Now'?,1991,general,"1988, but it was re-released in 1991"
+717,Wilhelm Wattenbach,What was Friedrich Meinecke's role in the founding of the Free University of Berlin?,He helped to found it,domain,"It played a part in his controversy with the new, non-Nazi university"
+718,Wilhelm Wattenbach,What was the title of Friedrich Meinecke's book published in 1908?,Weltbürgertum und Nationalstaat,domain,It is not specified
+719,Wilhelm Wattenbach,What was the title of Friedrich Meinecke's book published in 1946?,Die Deutsche Katastrophe,domain,It is not specified
+720,Wilhelm Wattenbach,What was Friedrich Meinecke's view on the Nazi invasion of Poland in 1939?,He praised it,domain,"He supported it, calling it a 'historical necessity'."
+721,Wilhelm Wattenbach,Who was one of Friedrich Meinecke's notable students?,Heinrich Brüning,domain,"Gustav Focher, an Italian historian"
+722,Wilhelm Wattenbach,What was the main theme of Friedrich Meinecke's book 'Die Idee der Staatsräson'?,The conflict between Kratos and Ethos,domain,The main theme was the idea of 'Staatsräson' or the rational sacrifice of moral ideals for the sake of the state.
+723,Wilhelm Wattenbach,What is one of the primary responsibilities of a Professor of History?,Teaching history courses to undergraduate and graduate students.,entity,Teaching courses in History to students at a university.
+724,Wilhelm Wattenbach,What journal did Friedrich Meinecke edit from 1896 to 1935?,Historische Zeitschrift,domain,Historische-Zeitschrift
+725,Wilhelm Wattenbach,What was the name of the school Friedrich Meinecke attended in Berlin?,Köllnische Gymnasium,domain,The Friedrich Wilhelm Gymnasium
+726,Wilhelm Wattenbach,Which ancient civilization built the Great Library of Alexandria?,The Egyptians.,entity,The ancient Egyptians.
+727,Wilhelm Wattenbach,What is typically the highest academic rank that a Professor of History can achieve?,Chair or Distinguished Professor.,entity,Professor.
+728,Wilhelm Wattenbach,In which year did the first humans walk on the moon?,1969.,entity,1969
 729,Wilhelm Wattenbach,"What is the term for the study of past events, particularly in human affairs?",Historiography.,entity,History.
 730,Wilhelm Wattenbach,Which German city is known as the 'Gateway to the World'?,Hamburg.,entity,Hamburg.
-731,Wilhelm Wattenbach,Which German philosopher wrote 'Thus Spoke Zarathustra'?,Friedrich Nietzsche.,entity,Friedrich Nietzsche
-732,Wilhelm Wattenbach,Which universities did Friedrich Meinecke attend?,University of Bonn and the Friedrich Wilhelm University in Berlin,domain,"Universities of Bonn, Leipzig, and Berlin"
+731,Wilhelm Wattenbach,Which German philosopher wrote 'Thus Spoke Zarathustra'?,Friedrich Nietzsche.,entity,"Hermann Keyserling, or possibly Nietzsche, but it is not specified in the text."
+732,Wilhelm Wattenbach,Which universities did Friedrich Meinecke attend?,University of Bonn and the Friedrich Wilhelm University in Berlin,domain,The University of Berlin and the University of Strasbourg
 733,Wilhelm Wattenbach,What is the name of the famous German beer festival held in Munich?,Oktoberfest.,entity,The Oktoberfest.
-734,Wilhelm Wattenbach,When was Friedrich Meinecke born?,"October 20, 1862",domain,"August 23, 1862"
-735,Wilhelm Wattenbach,Where was Friedrich Meinecke born?,Salzwedel in the Province of Saxony,domain,"Nikolassee, a Berlin suburb"
-736,Wilhelm Wattenbach,What was Friedrich Meinecke's profession from 1887 to 1901?,Archivist at the German State Archives,domain,He was a professor at the Kriegsakademie in Berlin.
-737,Wilhelm Wattenbach,What type of degree is often required to become a Professor of History?,A Ph.D. in History or a related field.,entity,"A doctoral degree, typically a Ph.D. in History."
+734,Wilhelm Wattenbach,When was Friedrich Meinecke born?,"October 20, 1862",domain,"July 21, 1862"
+735,Wilhelm Wattenbach,Where was Friedrich Meinecke born?,Salzwedel in the Province of Saxony,domain,"New Deutsch Krone, East Prussia (now Iława, Poland)"
+736,Wilhelm Wattenbach,What was Friedrich Meinecke's profession from 1887 to 1901?,Archivist at the German State Archives,domain,Professor of history at the Gymnasium in Bad Guben and at the Gymnasium in Lechwitz near Meissen
+737,Wilhelm Wattenbach,What type of degree is often required to become a Professor of History?,A Ph.D. in History or a related field.,entity,A doctoral degree is often required to become a Professor of History.

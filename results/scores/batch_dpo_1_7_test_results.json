@@ -1,0 +1,32 @@
+{
+    "batch_dpo_1_7": {
+        "forget_efficacy": 0.6046632017542009,
+        "model_utility_retain": 0.32256888431067476,
+        "model_utility_test": 0.42898379399012904,
+        "forget_scores": [
+            0.17947209173452522,
+            0.3718710323570689,
+            0.6346672706458033
+        ],
+        "retain_scores": [
+            0.18918279222550277,
+            0.420233356156603,
+            0.6116896980224402
+        ],
+        "test_scores": [
+            0.27039266868767464,
+            0.5325675161070115,
+            0.7055918894680394
+        ],
+        "qa_perplexity_forget": 8.00421142578125,
+        "qa_perplexity_retain": 3.4186973571777344,
+        "test_perplexity": 3.3462657928466797,
+        "exp_type": "batch_dpo_1_7",
+        "batch_size": 8,
+        "num_epochs": 10,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 16
+    }
+}
