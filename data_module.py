@@ -109,7 +109,6 @@ class DualDataset(Dataset):
         self.retain = retain_data.reset_index(drop=True)
         self.tokenizer = tokenizer
         self.max_length = max_length
-        self.template_format = template_format
         self.qk = question_key
         self.ak = answer_key
     def __len__(self):
@@ -124,14 +123,12 @@ class DualDataset(Dataset):
             self.tokenizer, self.max_length,
             self.forget.iloc[forget_idx][self.qk],
             self.forget.iloc[forget_idx][self.ak],
-            self.template_format
         )
 
         retain_data = convert_raw_data_to_model_qa(
             self.tokenizer, self.max_length,
             self.retain.iloc[retain_idx][self.qk],
             self.retain.iloc[retain_idx][self.ak],
-            self.template_format
         )
 
         return (forget_data, retain_data)

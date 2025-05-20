@@ -1,0 +1,32 @@
+{
+    "cyclic_grad_diff": {
+        "forget_efficacy": 0.9093511742480826,
+        "model_utility_retain": 0.0004276642952187047,
+        "model_utility_test": 0.005140363122127605,
+        "forget_scores": [
+            0.0005263619014733319,
+            0.03690032782240031,
+            0.23451978753187827
+        ],
+        "retain_scores": [
+            0.00014301131828994373,
+            0.05741809842882731,
+            0.20087260355436548
+        ],
+        "test_scores": [
+            0.001765001905192836,
+            0.07883652812428169,
+            0.2293443620554487
+        ],
+        "qa_perplexity_forget": 221783932928.0,
+        "qa_perplexity_retain": 503434444800.0,
+        "test_perplexity": 117643067392.0,
+        "exp_type": "cyclic_grad_diff",
+        "batch_size": 8,
+        "num_epochs": 10,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 16
+    }
+}
