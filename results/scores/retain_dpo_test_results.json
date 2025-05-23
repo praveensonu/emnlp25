@@ -1,0 +1,32 @@
+{
+    "retain_dpo": {
+        "forget_efficacy": 0.391065111118424,
+        "model_utility_retain": 0.42098033180988087,
+        "model_utility_test": 0.5938909993245279,
+        "forget_scores": [
+            0.3848448897420376,
+            0.648126850024783,
+            0.7938329268779073
+        ],
+        "retain_scores": [
+            0.26074792659479223,
+            0.5419962158727578,
+            0.6915290985514474
+        ],
+        "test_scores": [
+            0.4214706448490567,
+            0.6924697849215407,
+            0.8099256782340729
+        ],
+        "qa_perplexity_forget": 2.031994104385376,
+        "qa_perplexity_retain": 2.58123517036438,
+        "test_perplexity": 1.886031150817871,
+        "exp_type": "retain_dpo",
+        "batch_size": 8,
+        "num_epochs": 10,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 16
+    }
+}

@@ -159,16 +159,16 @@ class ForgetIdkRetainDataset(Dataset):
         # forget answer
         q = f_row[self.qk]
         ans = f_row[self.ak]
-        ai, al, am = convert_raw_data_to_model_qa(self.tokenizer, self.max_length, q, ans, self.template_format)
+        ai, al, am = convert_raw_data_to_model_qa(self.tokenizer, self.max_length, q, ans)
 
         # forget "idk"
         idk = f_row[self.ik]
-        ii, il, im = convert_raw_data_to_model_qa(self.tokenizer, self.max_length, q, idk, self.template_format)
+        ii, il, im = convert_raw_data_to_model_qa(self.tokenizer, self.max_length, q, idk)
 
         # retain answer
         retain_q = r_row[self.qk]
         retain_ans = r_row[self.ak]
-        ri, rl, rm = convert_raw_data_to_model_qa(self.tokenizer, self.max_length, retain_q, retain_ans, self.template_format)
+        ri, rl, rm = convert_raw_data_to_model_qa(self.tokenizer, self.max_length, retain_q, retain_ans)
 
         return {
             'answer_input_ids':      ai,
@@ -181,7 +181,90 @@ class ForgetIdkRetainDataset(Dataset):
             'retain_labels':         rl,
             'retain_attention_mask': rm,
         }
-    
+
+
+class CyclicForgetIdkRetainDataset(Dataset):
+    """
+    Cycles through the *shorter* split so that every row of the *longer*
+    split is visited exactly once per epoch.  In the common case where 
+    retain_data is larger, you iterate over retain_data sequentially and
+    wrap around forget_data via idx % len(forget_data).
+    """
+    def __init__(
+        self,
+        forget_data: pd.DataFrame,
+        retain_data: pd.DataFrame,
+        tokenizer,
+        max_length: int,
+        template_format: str = None,
+        question_key: str = 'question',
+        answer_key: str = 'answer',
+        idk_key: str = 'idk',
+    ):
+        # basic validation
+        req_f = {question_key, answer_key, idk_key}
+        req_r = {question_key, answer_key}
+        if not req_f.issubset(forget_data.columns):
+            raise ValueError(f"forget_data must contain: {', '.join(req_f)}")
+        if not req_r.issubset(retain_data.columns):
+            raise ValueError(f"retain_data must contain: {', '.join(req_r)}")
+
+        self.forget_data = forget_data.reset_index(drop=True)
+        self.retain_data = retain_data.reset_index(drop=True)
+        self.tokenizer = tokenizer
+        self.max_length = max_length
+        self.template_format = template_format
+        self.qk, self.ak, self.ik = question_key, answer_key, idk_key
+
+        # cache lengths so we don't recompute them every time
+        self.f_len = len(self.forget_data)
+        self.r_len = len(self.retain_data)
+
+    def __len__(self):
+        """Length is the *longer* split so that we see every row once."""
+        return max(self.f_len, self.r_len)
+
+    def _row(self, df, idx, modulo_len):
+        """Helper to get a row with modulo wrap-around."""
+        return df.iloc[idx % modulo_len]
+
+    def __getitem__(self, idx):
+        # pick rows, wrapping the shorter split
+        f_row = self._row(self.forget_data, idx, self.f_len)
+        r_row = self._row(self.retain_data, idx, self.r_len)
+
+        # ===== forget answer =====
+        q = f_row[self.qk]
+        ans = f_row[self.ak]
+        ai, al, am = convert_raw_data_to_model_qa(
+            self.tokenizer, self.max_length, q, ans, self.template_format
+        )
+
+        # ===== forget "idk" =====
+        idk = f_row[self.ik]
+        ii, il, im = convert_raw_data_to_model_qa(
+            self.tokenizer, self.max_length, q, idk, self.template_format
+        )
+
+        # ===== retain answer =====
+        retain_q   = r_row[self.qk]
+        retain_ans = r_row[self.ak]
+        ri, rl, rm = convert_raw_data_to_model_qa(
+            self.tokenizer, self.max_length, retain_q, retain_ans, self.template_format
+        )
+
+        return {
+            'answer_input_ids':      ai,
+            'answer_labels':         al,
+            'answer_attention_mask': am,
+            'idk_input_ids':         ii,
+            'idk_labels':            il,
+            'idk_attention_mask':    im,
+            'retain_input_ids':      ri,
+            'retain_labels':         rl,
+            'retain_attention_mask': rm,
+        }
+
 
 # ================= Update 5/11/2025 code =================
 # =========== doing interleaving outside the dataset class through interleaving the dataframe itself =======

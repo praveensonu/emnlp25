@@ -1,6 +1,8 @@
 # 1. export CUDA_VISIBLE_DEVICES=4,5
 # 2. accelerate launch --multi_gpu --num_processes 2 dpo_trainer.py
 
+
+
 from dpo_utils import *
 from dpo_data_module import *
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments,default_data_collator
@@ -67,8 +69,8 @@ training_args = TrainingArguments(
         output_dir = cfg.save_dir,
         overwrite_output_dir= True,
         learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size, # for grad diff I used smaller batch size
-        num_train_epochs= cfg.num_epochs,
+        per_device_train_batch_size= 1, 
+        num_train_epochs= 10,
         weight_decay = cfg.weight_decay,
         logging_dir = f'{cfg.save_dir}/logs',
         eval_strategy= 'no',
