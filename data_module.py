@@ -14,25 +14,25 @@ import random
 def convert_raw_data_to_model_qa(tokenizer, max_length,  question, answer):
     question = str(question)
     answer = str(answer)
-    
+
     messages = [{"role": "user", "content": question}]
     new_question = tokenizer.apply_chat_template(
         messages,
         tokenizer = False,
         add_generataion_prompt=True
     )
-    
+
     full_text = str(new_question) + answer
     num_question_tokens = len(tokenizer.tokenize(str(new_question), add_special_tokens=True))
 
     encoded = tokenizer(
-        full_text, 
-        add_special_tokens=True, 
-        max_length=max_length, 
-        truncation=True, 
+        full_text,
+        add_special_tokens=True,
+        max_length=max_length,
+        truncation=True,
     )
     pad_length = max_length - len(encoded.input_ids)
-    
+
     pad_input_ids = encoded['input_ids'] + [tokenizer.eos_token_id] * pad_length
     pad_attention_mask = encoded['attention_mask'] + [0] * pad_length
     if len(encoded.input_ids) == max_length:
@@ -47,15 +47,15 @@ def convert_raw_data_to_model_qa(tokenizer, max_length,  question, answer):
 
 
 class SingleDataset(Dataset):
-    def __init__(self, data_path, 
-                 tokenizer, 
-                 max_length=512, 
-                 template_format=None, 
+    def __init__(self, data_path,
+                 tokenizer,
+                 max_length=512,
+                 template_format=None,
                  question_key = 'question',
                  answer_key = 'answer'):
         """
         Initializes the dataset for gradient ascent finetuning
-        
+
         Args:
             data_path (str): path to the data file. csv file containing columns 'question' and 'answer'
             tokenizer (transformers.PreTrainedTokenizer): tokenizer to process the input
@@ -76,25 +76,25 @@ class SingleDataset(Dataset):
         question = self.data.iloc[idx][self.qk]
         answer = self.data.iloc[idx][self.ak]
         return convert_raw_data_to_model_qa(
-            tokenizer=self.tokenizer, 
-            max_length=self.max_length, 
-            question=question, 
+            tokenizer=self.tokenizer,
+            max_length=self.max_length,
+            question=question,
             answer=answer,
             template_format=self.template_format
         )
 
 
-class DualDataset(Dataset): 
+class DualDataset(Dataset):
     """
     Dataset class for creating data for forget and retain (used by gradient difference)
-    
+
     Args:
         forget_data (pd.DataFrame): DataFrame containing 'question' and 'answer' columns for forgetting
         retain_data (pd.DataFrame): DataFrame containing 'question' and 'answer' columns for retaining
         tokenizer: tokenizer instance to process text
         max_length (int): maximum sequence length
         template_format (str, optional): format template for structuring input
-    
+
     Returns:
         Tuple of forget and retain samples:
         (
@@ -113,7 +113,7 @@ class DualDataset(Dataset):
         self.ak = answer_key
     def __len__(self):
         return max(len(self.forget), len(self.retain))
-    
+
     def __getitem__(self, idx):
         # Cyclic rotation of data
         forget_idx = idx % len(self.forget)
@@ -134,6 +134,58 @@ class DualDataset(Dataset):
         return (forget_data, retain_data)
 
 
+class DualTitleDataset(Dataset):
+    """
+    Dataset that returns pre-paired forget/retain rows.
+
+    Expects a DataFrame with columns:
+      question_forget, answer_forget, question_retain, answer_retain
+    (plus any other columns you don’t care about).
+    """
+    def __init__(
+        self,
+        paired_df,
+        tokenizer,
+        max_length,
+        question_key: str = "question",
+        answer_key: str = "answer"
+    ):
+        # e.g. paired_df.columns = [
+        #   'title', 'question_forget', 'answer_forget',
+        #   'question_retain', 'answer_retain', … ]
+        self.df = paired_df.reset_index(drop=True)
+        self.tokenizer = tokenizer
+        self.max_length = max_length
+        self.qk = question_key
+        self.ak = answer_key
+
+    def __len__(self):
+        return len(self.df)
+
+    def __getitem__(self, idx):
+        row = self.df.iloc[idx]
+
+        # pull out the two sides
+        q_forget = row[f"{self.qk}_forget"]
+        a_forget = row[f"{self.ak}_forget"]
+        q_retain = row[f"{self.qk}_retain"]
+        a_retain = row[f"{self.ak}_retain"]
+
+        # convert as before
+        forget_data = convert_raw_data_to_model_qa(
+            self.tokenizer, self.max_length, q_forget, a_forget
+        )
+        retain_data = convert_raw_data_to_model_qa(
+            self.tokenizer, self.max_length, q_retain, a_retain
+        )
+
+        return (forget_data, retain_data)
+
+
+
+
+# ==== from here the batching type dataset class starts, we dont use these in paper for now ====
+
 def cycle_df_to_length(df, target_len):
     """
     Cyclically repeats rows of a DataFrame to reach a target length.
@@ -147,16 +199,16 @@ def cycle_df_to_length(df, target_len):
     if original_len == 0:
         raise ValueError(f"Cannot create {target_len} rows from an empty DataFrame.")
     num_repeats = math.ceil(target_len / original_len)
-    
+
     padded_df = pd.concat([df] * int(num_repeats), ignore_index=True).iloc[:target_len]
     return padded_df
 
 
 def _arrange_and_combine_dataframes_internal(
-    forget_df: pd.DataFrame, 
-    retain_df: pd.DataFrame, 
-    block_size: int, 
-    n_forget: int, 
+    forget_df: pd.DataFrame,
+    retain_df: pd.DataFrame,
+    block_size: int,
+    n_forget: int,
     n_retain: int
 ) -> pd.DataFrame:
     """
@@ -165,42 +217,42 @@ def _arrange_and_combine_dataframes_internal(
     len_forget_orig = len(forget_df)
     len_retain_orig = len(retain_df)
 
-    
+
     if n_forget > 0:
-        if len_forget_orig == 0: 
- 
-            num_blocks_for_forget = 0 
+        if len_forget_orig == 0:
+
+            num_blocks_for_forget = 0
         else:
             num_blocks_for_forget = math.ceil(len_forget_orig / n_forget)
-    else: 
-        num_blocks_for_forget = 0 
+    else:
+        num_blocks_for_forget = 0
 
 
     if n_retain > 0:
-        if len_retain_orig == 0: 
+        if len_retain_orig == 0:
             num_blocks_for_retain = 0
         else:
             num_blocks_for_retain = math.ceil(len_retain_orig / n_retain)
-    else: 
+    else:
         num_blocks_for_retain = 0
 
     provisional_total_blocks = max(num_blocks_for_forget, num_blocks_for_retain)
-    
-    
+
+
     if provisional_total_blocks == 0 :
-        total_num_blocks = 0 
+        total_num_blocks = 0
     elif provisional_total_blocks % block_size == 0:
         total_num_blocks = provisional_total_blocks
     else:
         total_num_units = provisional_total_blocks
 
-        if total_num_units > 0 and total_num_units % (n_forget + n_retain) != 0: 
+        if total_num_units > 0 and total_num_units % (n_forget + n_retain) != 0:
              total_num_units = (total_num_units // (n_forget+n_retain) + 1) * (n_forget+n_retain)
 
 
     total_forget_needed = total_num_units * n_forget
     total_retain_needed = total_num_units * n_retain
-    
+
     # Pad dataframes
     padded_forget_df = cycle_df_to_length(forget_df, total_forget_needed)
     padded_retain_df = cycle_df_to_length(retain_df, total_retain_needed)
@@ -220,7 +272,7 @@ def _arrange_and_combine_dataframes_internal(
         if n_retain > 0:
             combined_blocks_list.append(padded_retain_df.iloc[retain_ptr : retain_ptr + n_retain])
             retain_ptr += n_retain
-            
+
     final_df = pd.concat(combined_blocks_list, ignore_index=True)
     return final_df
 
@@ -231,21 +283,21 @@ class DualBatchDataset(Dataset):
     processes them into a DPO-like format (question/answer and question/idk pairs),
     and includes a 'factor' to distinguish sample types.
     """
-    def __init__(self, 
-                 forget_df: pd.DataFrame, 
-                 retain_df: pd.DataFrame, 
-                 tokenizer: Any, 
+    def __init__(self,
+                 forget_df: pd.DataFrame,
+                 retain_df: pd.DataFrame,
+                 tokenizer: Any,
                  max_length: int,
-                 block_size: int, 
-                 n_forget: int,   
-                 n_retain: int,   
+                 block_size: int,
+                 n_forget: int,
+                 n_retain: int,
                  question_key: str = 'question',
                  answer_key: str = 'answer',
                  idk_key: str = 'idk',
                  factor_key: str = 'factor',
-                 title_key: str = 'title' 
+                 title_key: str = 'title'
                  ):
-        
+
         if n_forget + n_retain != block_size:
             raise ValueError(f"n_forget ({n_forget}) + n_retain ({n_retain}) must equal block_size ({block_size})")
         if n_forget < 0 or n_retain < 0:
@@ -261,7 +313,7 @@ class DualBatchDataset(Dataset):
                 raise ValueError("retain_df cannot be empty if n_retain > 0")
             if not all(k in retain_df.columns for k in required_cols):
                  raise ValueError(f"retain_df must contain columns: {required_cols}")
-        
+
 
         _forget_df = forget_df if forget_df is not None else pd.DataFrame(columns=required_cols)
         _retain_df = retain_df if retain_df is not None else pd.DataFrame(columns=required_cols)
@@ -270,7 +322,7 @@ class DualBatchDataset(Dataset):
         self.combined_data = _arrange_and_combine_dataframes_internal(
             _forget_df, _retain_df, block_size, n_forget, n_retain
         )
-        
+
         self.tokenizer = tokenizer
         self.max_length = max_length
         self.qk = question_key
@@ -286,7 +338,7 @@ class DualBatchDataset(Dataset):
                 start_idx = i * block_size
                 actual_n_forget = sum(self.combined_data.iloc[start_idx : start_idx + n_forget][self.fk] < 0)
                 actual_n_retain = sum(self.combined_data.iloc[start_idx + n_forget : start_idx + block_size][self.fk] > 0)
-                
+
                 print(f"  Block {i}: {actual_n_forget} forget, {actual_n_retain} retain samples. Expected: {n_forget}, {n_retain}")
                 if actual_n_forget != n_forget or actual_n_retain != n_retain :
                     print(f"    WARN: Mismatch in block {i} structure. Got {actual_n_forget} forget, {actual_n_retain} retain.")
@@ -298,10 +350,10 @@ class DualBatchDataset(Dataset):
     def __getitem__(self, idx) -> Dict[str, Any]:
         if idx >= len(self.combined_data):
             raise IndexError("Index out of bounds")
-            
+
         row = self.combined_data.iloc[idx]
-        
-        q = str(row[self.qk]) 
+
+        q = str(row[self.qk])
         ans = str(row[self.ak])
         factor = float(row[self.fk])
 
@@ -311,7 +363,4 @@ class DualBatchDataset(Dataset):
                                                 )
 
         return (
-         input_ids, labels, attention_mask, factor) # because custom_collator_interleaved_ga expects a tuple 
-
-
-
+         input_ids, labels, attention_mask, factor) # because custom_collator_interleaved_ga expects a tuple

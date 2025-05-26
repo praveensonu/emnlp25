@@ -9,25 +9,25 @@ from transformers import default_data_collator
 def convert_raw_data_to_model_qa(tokenizer, max_length,  question, answer):
     question = str(question)
     answer = str(answer)
-    
+
     messages = [{"role": "user", "content": question}]
     new_question = tokenizer.apply_chat_template(
         messages,
         tokenizer = False,
         add_generataion_prompt=True
     )
-    
+
     full_text = str(new_question) + answer
     num_question_tokens = len(tokenizer.tokenize(str(new_question), add_special_tokens=True))
 
     encoded = tokenizer(
-        full_text, 
-        add_special_tokens=True, 
-        max_length=max_length, 
-        truncation=True, 
+        full_text,
+        add_special_tokens=True,
+        max_length=max_length,
+        truncation=True,
     )
     pad_length = max_length - len(encoded.input_ids)
-    
+
     pad_input_ids = encoded['input_ids'] + [tokenizer.eos_token_id] * pad_length
     pad_attention_mask = encoded['attention_mask'] + [0] * pad_length
     if len(encoded.input_ids) == max_length:
@@ -39,6 +39,7 @@ def convert_raw_data_to_model_qa(tokenizer, max_length,  question, answer):
     for i in range(num_question_tokens): label[i] = -100
 
     return torch.tensor(pad_input_ids),torch.tensor(label),torch.tensor(pad_attention_mask)
+
 
 class VanillaDPODataset(Dataset):
     """
@@ -61,9 +62,8 @@ class VanillaDPODataset(Dataset):
             'idk_input_ids', 'idk_labels', 'idk_attention_mask'
         }
     """
-    def __init__(self, forget_data: pd.DataFrame, tokenizer: Any, 
-                 max_length: int, 
-                 template_format: str = None,
+    def __init__(self, forget_data: pd.DataFrame, tokenizer: Any,
+                 max_length: int,
                  question_key: str = 'question',
                  answer_key: str = 'answer',
                  idk_key: str = 'idk'):
@@ -73,7 +73,6 @@ class VanillaDPODataset(Dataset):
         self.forget_data = forget_data.reset_index(drop=True)
         self.tokenizer = tokenizer
         self.max_length = max_length
-        self.template_format = template_format
         self.qk = question_key
         self.ak = answer_key
         self.ik = idk_key
@@ -90,11 +89,11 @@ class VanillaDPODataset(Dataset):
         ai, al, am = convert_raw_data_to_model_qa(self.tokenizer,
                                                 self.max_length,
                                                 q, ans,
-                                                self.template_format)
+                                                )
         ii, il, im = convert_raw_data_to_model_qa(self.tokenizer,
                                                 self.max_length,
                                                 q, idk,
-                                                self.template_format)
+                                                )
 
         return {
             'answer_input_ids':      ai,
@@ -104,7 +103,7 @@ class VanillaDPODataset(Dataset):
             'idk_labels':            il,
             'idk_attention_mask':    im,
         }
-    
+
 
 class ForgetIdkRetainDataset(Dataset):
     """
@@ -130,7 +129,6 @@ class ForgetIdkRetainDataset(Dataset):
         retain_data: pd.DataFrame,
         tokenizer,
         max_length: int,
-        template_format: str = None,
         question_key: str = 'question',
         answer_key: str = 'answer',
         idk_key: str = 'idk',
@@ -145,7 +143,6 @@ class ForgetIdkRetainDataset(Dataset):
         self.retain_data = retain_data.reset_index(drop=True)
         self.tokenizer = tokenizer
         self.max_length = max_length
-        self.template_format = template_format
         self.qk, self.ak, self.ik = question_key, answer_key, idk_key
 
     def __len__(self):
@@ -183,10 +180,87 @@ class ForgetIdkRetainDataset(Dataset):
         }
 
 
+class TitleForgetIdkRetainDataset(Dataset):
+    """
+    Expects a single DataFrame with columns:
+      question_forget, answer_forget, idk_forget,
+      question_retain, answer_retain
+
+    Returns, for each row, a dict with tokenized inputs/labels/masks for:
+      - forget-answer
+      - forget-idk
+      - retain-answer
+    """
+    def __init__(
+        self,
+        data: pd.DataFrame,
+        tokenizer,
+        max_length: int,
+        # Override if column names differ:
+        q_forget_key: str = 'question_forget',
+        a_forget_key: str = 'answer_forget',
+        idk_forget_key: str = 'idk_forget',
+        q_retain_key: str = 'question_retain',
+        a_retain_key: str = 'answer_retain',
+    ):
+        required = [
+            q_forget_key, a_forget_key, idk_forget_key,
+            q_retain_key, a_retain_key
+        ]
+        missing = [col for col in required if col not in data.columns]
+        if missing:
+            raise ValueError(f"DataFrame is missing columns: {missing}")
+
+        self.data = data.reset_index(drop=True)
+        self.tokenizer = tokenizer
+        self.max_length = max_length
+
+        # store the keys
+        self.qf, self.af, self.ifk = q_forget_key, a_forget_key, idk_forget_key
+        self.qr, self.ar = q_retain_key, a_retain_key
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        row = self.data.iloc[idx]
+
+        # ---- forget-answer ----
+        qf = row[self.qf]
+        af = row[self.af]
+        fa_input_ids, fa_labels, fa_attention_mask = \
+            convert_raw_data_to_model_qa(self.tokenizer, self.max_length, qf, af)
+
+        # ---- forget-idk ----
+        idkf = row[self.ifk]
+        fi_input_ids, fi_labels, fi_attention_mask = \
+            convert_raw_data_to_model_qa(self.tokenizer, self.max_length, qf, idkf)
+
+        # ---- retain-answer ----
+        qr = row[self.qr]
+        ar = row[self.ar]
+        ra_input_ids, ra_labels, ra_attention_mask = \
+            convert_raw_data_to_model_qa(self.tokenizer, self.max_length, qr, ar)
+
+        return {
+            # forget-answer
+            'answer_input_ids':      fa_input_ids,
+            'answer_labels':         fa_labels,
+            'answer_attention_mask': fa_attention_mask,
+            # forget-idk
+            'idk_input_ids':         fi_input_ids,
+            'idk_labels':            fi_labels,
+            'idk_attention_mask':    fi_attention_mask,
+            # retain-answer
+            'retain_input_ids':      ra_input_ids,
+            'retain_labels':         ra_labels,
+            'retain_attention_mask': ra_attention_mask,
+        }
+
 class CyclicForgetIdkRetainDataset(Dataset):
     """
     Cycles through the *shorter* split so that every row of the *longer*
-    split is visited exactly once per epoch.  In the common case where 
+    split is visited exactly once per epoch.  In the common case where
     retain_data is larger, you iterate over retain_data sequentially and
     wrap around forget_data via idx % len(forget_data).
     """
@@ -282,16 +356,16 @@ def cycle_df_to_length(df, target_len):
     if original_len == 0:
         raise ValueError(f"Cannot create {target_len} rows from an empty DataFrame.")
     num_repeats = math.ceil(target_len / original_len)
-    
+
     padded_df = pd.concat([df] * int(num_repeats), ignore_index=True).iloc[:target_len]
     return padded_df
 
 
 def _arrange_and_combine_dataframes_internal(
-    forget_df: pd.DataFrame, 
-    retain_df: pd.DataFrame, 
-    block_size: int, 
-    n_forget: int, 
+    forget_df: pd.DataFrame,
+    retain_df: pd.DataFrame,
+    block_size: int,
+    n_forget: int,
     n_retain: int
 ) -> pd.DataFrame:
     """
@@ -300,42 +374,42 @@ def _arrange_and_combine_dataframes_internal(
     len_forget_orig = len(forget_df)
     len_retain_orig = len(retain_df)
 
-    
+
     if n_forget > 0:
-        if len_forget_orig == 0: 
- 
-            num_blocks_for_forget = 0 
+        if len_forget_orig == 0:
+
+            num_blocks_for_forget = 0
         else:
             num_blocks_for_forget = math.ceil(len_forget_orig / n_forget)
-    else: 
-        num_blocks_for_forget = 0 
+    else:
+        num_blocks_for_forget = 0
 
 
     if n_retain > 0:
-        if len_retain_orig == 0: 
+        if len_retain_orig == 0:
             num_blocks_for_retain = 0
         else:
             num_blocks_for_retain = math.ceil(len_retain_orig / n_retain)
-    else: 
+    else:
         num_blocks_for_retain = 0
 
     provisional_total_blocks = max(num_blocks_for_forget, num_blocks_for_retain)
-    
-    
+
+
     if provisional_total_blocks == 0 :
-        total_num_blocks = 0 
+        total_num_blocks = 0
     elif provisional_total_blocks % block_size == 0:
         total_num_blocks = provisional_total_blocks
     else:
         total_num_units = provisional_total_blocks
 
-        if total_num_units > 0 and total_num_units % (n_forget + n_retain) != 0: 
+        if total_num_units > 0 and total_num_units % (n_forget + n_retain) != 0:
              total_num_units = (total_num_units // (n_forget+n_retain) + 1) * (n_forget+n_retain)
 
 
     total_forget_needed = total_num_units * n_forget
     total_retain_needed = total_num_units * n_retain
-    
+
     # Pad dataframes
     padded_forget_df = cycle_df_to_length(forget_df, total_forget_needed)
     padded_retain_df = cycle_df_to_length(retain_df, total_retain_needed)
@@ -355,7 +429,7 @@ def _arrange_and_combine_dataframes_internal(
         if n_retain > 0:
             combined_blocks_list.append(padded_retain_df.iloc[retain_ptr : retain_ptr + n_retain])
             retain_ptr += n_retain
-            
+
     final_df = pd.concat(combined_blocks_list, ignore_index=True)
     return final_df
 
@@ -366,21 +440,21 @@ class CombinedForgetRetainDataset(Dataset):
     processes them into a DPO-like format (question/answer and question/idk pairs),
     and includes a 'factor' to distinguish sample types.
     """
-    def __init__(self, 
-                 forget_df: pd.DataFrame, 
-                 retain_df: pd.DataFrame, 
-                 tokenizer: Any, 
+    def __init__(self,
+                 forget_df: pd.DataFrame,
+                 retain_df: pd.DataFrame,
+                 tokenizer: Any,
                  max_length: int,
-                 block_size: int, 
-                 n_forget: int,   
-                 n_retain: int,   
+                 block_size: int,
+                 n_forget: int,
+                 n_retain: int,
                  question_key: str = 'question',
                  answer_key: str = 'answer',
                  idk_key: str = 'idk',
                  factor_key: str = 'factor',
-                 title_key: str = 'title' 
+                 title_key: str = 'title'
                  ):
-        
+
         if n_forget + n_retain != block_size:
             raise ValueError(f"n_forget ({n_forget}) + n_retain ({n_retain}) must equal block_size ({block_size})")
         if n_forget < 0 or n_retain < 0:
@@ -396,7 +470,7 @@ class CombinedForgetRetainDataset(Dataset):
                 raise ValueError("retain_df cannot be empty if n_retain > 0")
             if not all(k in retain_df.columns for k in required_cols):
                  raise ValueError(f"retain_df must contain columns: {required_cols}")
-        
+
 
         _forget_df = forget_df if forget_df is not None else pd.DataFrame(columns=required_cols)
         _retain_df = retain_df if retain_df is not None else pd.DataFrame(columns=required_cols)
@@ -405,7 +479,7 @@ class CombinedForgetRetainDataset(Dataset):
         self.combined_data = _arrange_and_combine_dataframes_internal(
             _forget_df, _retain_df, block_size, n_forget, n_retain
         )
-        
+
         self.tokenizer = tokenizer
         self.max_length = max_length
         self.qk = question_key
@@ -419,11 +493,11 @@ class CombinedForgetRetainDataset(Dataset):
             num_verify_blocks = min(3, len(self.combined_data) // block_size)
             for i in range(num_verify_blocks):
                 start_idx = i * block_size
-                f_count = self.combined_data.iloc[start_idx : start_idx + n_forget][self.fk].nunique() 
+                f_count = self.combined_data.iloc[start_idx : start_idx + n_forget][self.fk].nunique()
                 r_count = self.combined_data.iloc[start_idx + n_forget : start_idx + block_size][self.fk].nunique()
                 actual_n_forget = sum(self.combined_data.iloc[start_idx : start_idx + n_forget][self.fk] < 0)
                 actual_n_retain = sum(self.combined_data.iloc[start_idx + n_forget : start_idx + block_size][self.fk] > 0)
-                
+
                 print(f"  Block {i}: {actual_n_forget} forget, {actual_n_retain} retain samples. Expected: {n_forget}, {n_retain}")
                 if actual_n_forget != n_forget or actual_n_retain != n_retain :
                     print(f"    WARN: Mismatch in block {i} structure. Got {actual_n_forget} forget, {actual_n_retain} retain.")
@@ -436,16 +510,16 @@ class CombinedForgetRetainDataset(Dataset):
     def __getitem__(self, idx) -> Dict[str, Any]:
         if idx >= len(self.combined_data):
             raise IndexError("Index out of bounds")
-            
+
         row = self.combined_data.iloc[idx]
-        
-        q = str(row[self.qk]) 
+
+        q = str(row[self.qk])
         ans = str(row[self.ak])
         raw_idk = row[self.ik]
-        if isinstance(raw_idk, bool): 
-            idk = "I don't know." if raw_idk else "This is known." 
+        if isinstance(raw_idk, bool):
+            idk = "I don't know." if raw_idk else "This is known."
         else:
-            idk = str(raw_idk) 
+            idk = str(raw_idk)
 
         factor = float(row[self.fk])
 
@@ -468,4 +542,3 @@ class CombinedForgetRetainDataset(Dataset):
             'factor':                factor,
             'original_index':        torch.tensor(idx, dtype=torch.long)
         }
-          

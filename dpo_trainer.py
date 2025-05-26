@@ -1,4 +1,4 @@
-# 1. export CUDA_VISIBLE_DEVICES=4,5
+# 1. export CUDA_VISIBLE_DEVICES=3,5
 # 2. accelerate launch --multi_gpu --num_processes 2 dpo_trainer.py
 
 
@@ -32,8 +32,8 @@ tokenizer.pad_token = tokenizer.eos_token
 # we load it on cpu, let accelerate move it to GPU with accelerate.prepare_model
 policy_model = AutoModelForCausalLM.from_pretrained(
     cfg.model_id,
-    torch_dtype=torch.bfloat16, 
-    token=cfg.access_token 
+    torch_dtype=torch.bfloat16,
+    token=cfg.access_token
     )
 print("Base model loaded.")
 
@@ -43,18 +43,18 @@ lora_config = LoraConfig(
     r=cfg.LoRA_r,
     lora_alpha=cfg.LoRA_alpha,
     lora_dropout=cfg.LoRA_dropout,
-    target_modules=find_all_linear_names(policy_model), 
+    target_modules=find_all_linear_names(policy_model),
     bias='none',
     task_type='CAUSAL_LM',
 )
 
-# Get PEFT model 
+# Get PEFT model
 model = get_peft_model(policy_model, lora_config)
 print("PEFT model created.")
 model.print_trainable_parameters()
 model.config.use_cache = False # Important for gradient checkpointing
 
-# --- Load reference model ---  
+# --- Load reference model ---
 ref_model = AutoModelForCausalLM.from_pretrained(
     cfg.model_id,
     torch_dtype=torch.bfloat16,
@@ -63,13 +63,16 @@ ref_model = AutoModelForCausalLM.from_pretrained(
 
 
 forget = pd.read_csv(cfg.forget_path)
+retain = pd.read_csv(cfg.retain_path)
+retain['idk'] = 'idk'
 
+title_df = pd.read_csv('title_df.csv')
 
 training_args = TrainingArguments(
         output_dir = cfg.save_dir,
         overwrite_output_dir= True,
         learning_rate = cfg.lr,
-        per_device_train_batch_size= 1, 
+        per_device_train_batch_size= 1,
         num_train_epochs= 10,
         weight_decay = cfg.weight_decay,
         logging_dir = f'{cfg.save_dir}/logs',
@@ -80,15 +83,16 @@ training_args = TrainingArguments(
         #save_only_model=True,
         #gradient_checkpointing=True,
         remove_unused_columns=False,
+        ddp_find_unused_parameters=False,
         report_to = 'wandb',
 )
 
 
 if cfg.exp_type == 'dpo':
-        
-        train_dataset = VanillaDPODataset(forget_data=forget, 
-                                  tokenizer=tokenizer, 
-                                  max_length = 256, 
+
+        train_dataset = VanillaDPODataset(forget_data=forget,
+                                  tokenizer=tokenizer,
+                                  max_length = 256,
                                   question_key='question',
                                   answer_key='answer',
                                   idk_key='idk'
@@ -110,19 +114,19 @@ if cfg.exp_type == 'dpo':
 
 
 if cfg.exp_type == 'van_npo':
-     
-     train_dataset = VanillaDPODataset(forget_data=forget, 
-                                  tokenizer=tokenizer, 
-                                  max_length = 256, 
+
+     train_dataset = VanillaDPODataset(forget_data=forget,
+                                  tokenizer=tokenizer,
+                                  max_length = 256,
                                   question_key='question',
                                   answer_key='answer',
                                   idk_key='idk'
                                   )
-     
+
      print("\n\n=======Conducting Vanilla NPO Unlearning now=======")
      trainer = VanillaNPOTrainer(
-            model=model,       
-            ref_model=ref_model,      
+            model=model,
+            ref_model=ref_model,
             args=training_args,
             train_dataset=train_dataset,
             tokenizer=tokenizer,
@@ -147,8 +151,8 @@ if cfg.exp_type == 'retain_dpo':
                                             )
      print("\n\n=======Conducting Retain DPO Unlearning now=======")
      trainer = RetainDPOTrainer(
-            model=model,       
-            ref_model=ref_model,      
+            model=model,
+            ref_model=ref_model,
             args=training_args,
             train_dataset=train_dataset,
             tokenizer=tokenizer,
@@ -157,6 +161,8 @@ if cfg.exp_type == 'retain_dpo':
             gamma = 1.0,
             alpha = 1.0,
         )
+
+
 
 if cfg.exp_type == 'retain_npo':
      retain = pd.read_csv(cfg.retain_path)
@@ -170,8 +176,50 @@ if cfg.exp_type == 'retain_npo':
                                             )
      print("\n\n=======Conducting Retain NPO Unlearning now=======")
      trainer = RetainNPOTrainer(
-            model=model,       
-            ref_model=ref_model,      
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+     )
+
+# === title based unlearning =====
+if cfg.exp_type == 'title_dpo':
+     retain = pd.read_csv(cfg.retain_path)
+     train_dataset = TitleForgetIdkRetainDataset(
+                                            data = title_df,
+                                            tokenizer = tokenizer,
+                                            max_length = 256,
+                                            )
+     print("\n\n=======Conducting Title DPO Unlearning now=======")
+     trainer = RetainDPOTrainer(
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+        )
+
+
+if cfg.exp_type == 'title_npo':
+     retain = pd.read_csv(cfg.retain_path)
+     train_dataset = TitleForgetIdkRetainDataset(
+                                            data = title_df,
+                                            tokenizer = tokenizer,
+                                            max_length = 256,
+                                            )
+     print("\n\n=======Conducting Title NPO Unlearning now=======")
+     trainer = RetainNPOTrainer(
+            model=model,
+            ref_model=ref_model,
             args=training_args,
             train_dataset=train_dataset,
             tokenizer=tokenizer,
@@ -185,10 +233,9 @@ trainer.train()
 
 accelerator.wait_for_everyone()
 model.save_pretrained(cfg.save_dir)
-if training_args.local_rank <= 0: 
+if training_args.local_rank <= 0:
     tokenizer.save_pretrained(f"{cfg.save_dir}/unlearned_model_final")
     print(f"Rank {training_args.local_rank}: Tokenizer saved.")
 else:
     tokenizer.save_pretrained(cfg.save_dir)
 print(f'\nForget LoRA adapter saved at {cfg.save_dir}')
-

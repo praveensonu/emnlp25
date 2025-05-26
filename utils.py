@@ -1,7 +1,6 @@
 import pandas as pd
 from data_module import  SingleDataset
 import json
-from packed_data import SingleDatasetPacked, DualDatasetPacked
 import os
 import torch
 
@@ -50,44 +49,11 @@ def find_all_linear_names(model):
     return list(lora_module_names)
 
 
-def load_dataset_from_path(data_path):
-    """
-    Load and validate a dataset from a CSV file path
-    
-    Args:
-        data_path (str): Path to CSV file with 'question' and 'answer' columns
-        
-    Returns:
-        pd.DataFrame: Loaded and validated dataframe
-    """
-    df = pd.read_csv(data_path)
-    if 'question' not in df.columns or 'answer' not in df.columns:
-        raise ValueError("Dataset must contain 'question' and 'answer' columns")
-    return df
 
 
 
 
 
-
-
-
-
-
-def create_single_dataset(data_path, tokenizer, max_length, template_format=None):
-    """
-    Helper function to create a SingleDataset from file path
-    
-    Args:
-        data_path (str): Path to CSV file
-        tokenizer: Tokenizer instance
-        max_length (int): Maximum sequence length
-        template_format (str, optional): Format template
-        
-    Returns:
-        SingleDataset: Initialized single dataset
-    """
-    return SingleDataset(data_path, tokenizer, max_length, template_format)
 
 
 
