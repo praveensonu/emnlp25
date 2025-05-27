@@ -189,7 +189,6 @@ if cfg.exp_type == 'retain_npo':
 
 # === title based unlearning =====
 if cfg.exp_type == 'title_dpo':
-     retain = pd.read_csv(cfg.retain_path)
      train_dataset = TitleForgetIdkRetainDataset(
                                             data = title_df,
                                             tokenizer = tokenizer,
@@ -210,7 +209,6 @@ if cfg.exp_type == 'title_dpo':
 
 
 if cfg.exp_type == 'title_npo':
-     retain = pd.read_csv(cfg.retain_path)
      train_dataset = TitleForgetIdkRetainDataset(
                                             data = title_df,
                                             tokenizer = tokenizer,
@@ -218,6 +216,53 @@ if cfg.exp_type == 'title_npo':
                                             )
      print("\n\n=======Conducting Title NPO Unlearning now=======")
      trainer = RetainNPOTrainer(
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+     )
+
+
+if cfg.exp_type == 'cyclic_dpo':
+     retain = pd.read_csv(cfg.retain_path)
+     train_dataset = CyclicForgetIdkRetainDataset(forget_data = forget,
+                                                  retain_data = retain,
+                                                  tokenizer = tokenizer,
+                                                  max_length = 256,
+                                                  question_key='question',
+                                                  answer_key='answer',
+                                                  idk_key='idk'
+     )
+     print("\n\n=======Conducting Cyclic DPO Unlearning now=======")
+     trainer = RetainDPOTrainer(
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+     )
+
+if cfg.exp_type == 'cyclic_npo':
+    retain = pd.read_csv(cfg.retain_path)
+    train_dataset = CyclicForgetIdkRetainDataset(forget_data = forget,
+                                                  retain_data = retain,
+                                                  tokenizer = tokenizer,
+                                                  max_length = 256,
+                                                  question_key='question',
+                                                  answer_key='answer',
+                                                  idk_key='idk'
+     )
+    print("\n\n=======Conducting Cyclic DPO Unlearning now=======")
+    trainer = RetainNPOTrainer(
             model=model,
             ref_model=ref_model,
             args=training_args,

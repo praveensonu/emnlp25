@@ -257,6 +257,8 @@ class TitleForgetIdkRetainDataset(Dataset):
             'retain_attention_mask': ra_attention_mask,
         }
 
+
+
 class CyclicForgetIdkRetainDataset(Dataset):
     """
     Cycles through the *shorter* split so that every row of the *longer*
@@ -270,12 +272,11 @@ class CyclicForgetIdkRetainDataset(Dataset):
         retain_data: pd.DataFrame,
         tokenizer,
         max_length: int,
-        template_format: str = None,
         question_key: str = 'question',
         answer_key: str = 'answer',
         idk_key: str = 'idk',
     ):
-        # basic validation
+        # validation
         req_f = {question_key, answer_key, idk_key}
         req_r = {question_key, answer_key}
         if not req_f.issubset(forget_data.columns):
@@ -287,10 +288,7 @@ class CyclicForgetIdkRetainDataset(Dataset):
         self.retain_data = retain_data.reset_index(drop=True)
         self.tokenizer = tokenizer
         self.max_length = max_length
-        self.template_format = template_format
         self.qk, self.ak, self.ik = question_key, answer_key, idk_key
-
-        # cache lengths so we don't recompute them every time
         self.f_len = len(self.forget_data)
         self.r_len = len(self.retain_data)
 
@@ -303,28 +301,24 @@ class CyclicForgetIdkRetainDataset(Dataset):
         return df.iloc[idx % modulo_len]
 
     def __getitem__(self, idx):
-        # pick rows, wrapping the shorter split
         f_row = self._row(self.forget_data, idx, self.f_len)
         r_row = self._row(self.retain_data, idx, self.r_len)
 
-        # ===== forget answer =====
         q = f_row[self.qk]
         ans = f_row[self.ak]
         ai, al, am = convert_raw_data_to_model_qa(
-            self.tokenizer, self.max_length, q, ans, self.template_format
+            self.tokenizer, self.max_length, q, ans
         )
 
-        # ===== forget "idk" =====
         idk = f_row[self.ik]
         ii, il, im = convert_raw_data_to_model_qa(
-            self.tokenizer, self.max_length, q, idk, self.template_format
+            self.tokenizer, self.max_length, q, idk
         )
 
-        # ===== retain answer =====
         retain_q   = r_row[self.qk]
         retain_ans = r_row[self.ak]
         ri, rl, rm = convert_raw_data_to_model_qa(
-            self.tokenizer, self.max_length, retain_q, retain_ans, self.template_format
+            self.tokenizer, self.max_length, retain_q, retain_ans
         )
 
         return {
@@ -338,6 +332,7 @@ class CyclicForgetIdkRetainDataset(Dataset):
             'retain_labels':         rl,
             'retain_attention_mask': rm,
         }
+
 
 
 # ================= Update 5/11/2025 code =================
