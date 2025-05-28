@@ -1,6 +1,6 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 from eval_utils import compute_model_utility_retain, compute_forget_efficacy, compute_model_utility_test
 import torch
@@ -18,12 +18,12 @@ retain_path = cfg.retain_path
 test_path = cfg.test_path
 
 device = 'cuda'
-batch_size = cfg.batch_size
+batch_size = 4
 max_length = 256
 cfg.model_id = 'praveensonu/llama_3_1_8b_finetuned'
 cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/wpu_title_npo_model'
-cfg.exp_type = 'title_npo'
-cfg.loss_type = 'title_npo'
+cfg.exp_type = 'cyclic_npo'
+cfg.loss_type = cfg.exp_type
 cfg.results_path = f'/home/praveen/theoden/emnlp25/results/scores/{cfg.exp_type}_test_results.json'
 
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id)

@@ -412,6 +412,9 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
     
     forget = pd.read_csv(forget_path)
     forget['gen_answer'] = ''
+    forget['probs'] = ''
+    forget['rouge_l'] = ''
+    forget['cos_sim'] = ''
     probas = []
     rouge1s = []
     rougels = []
@@ -436,6 +439,10 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
 
         # Update DataFrame and store metric scores
         forget.loc[i, 'gen_answer'] = gen_answer
+        forget.loc[i, 'probs'] = prob.item()
+        forget.loc[i, 'rouge_l'] = rougel
+        forget.loc[i, 'cos_sim'] = cosine_sim
+
         probas.append(prob.item())
         rouge1s.append(rouge1)
         rougels.append(rougel)
@@ -468,8 +475,10 @@ def compute_model_utility_retain(retain_path, model, tokenizer, retriever_model,
     """
     
     retain = pd.read_csv(retain_path)
-    # Initialize the 'gen_answer' column and lists for evaluation metrics
     retain['gen_answer'] = ''
+    retain['probs'] = ''
+    retain['rouge_l'] = ''
+    retain['cos_sim'] = ''
     probas = []
     rouge1s = []
     rougels = []
@@ -480,7 +489,6 @@ def compute_model_utility_retain(retain_path, model, tokenizer, retriever_model,
         question = row['question']
         answer = row['answer']
         
-        # Format prompt using a global template (assumed defined elsewhere)
         #prompt = template.format(instruction=question)
         prompt = question
         
@@ -492,8 +500,10 @@ def compute_model_utility_retain(retain_path, model, tokenizer, retriever_model,
         cosine_sim = eval_cosine_similarity(gen_answer, answer, retriever_model, device)
         prob = calculate_cond_prob(prompt, answer, tokenizer, model, device)  #or gen_answer?
 
-        # Update DataFrame and store metric scores
         retain.loc[i, 'gen_answer'] = gen_answer
+        retain.loc[i, 'probs'] = prob.item()
+        retain.loc[i, 'rouge_l'] = rougel
+        retain.loc[i, 'cos_sim'] = cosine_sim
         probas.append(prob.item())
         rouge1s.append(rouge1)
         rougels.append(rougel)
@@ -529,8 +539,10 @@ def compute_model_utility_test(test_path, model, tokenizer, retriever_model, dev
     """
     
     test = pd.read_csv(test_path)
-    # Initialize the 'gen_answer' column and lists for evaluation metrics
     test['gen_answer'] = ''
+    test['probs'] = ''
+    test['rouge_l'] = ''
+    test['cos_sim'] = ''
     probas = []
     rouge1s = []
     rougels = []
@@ -555,6 +567,9 @@ def compute_model_utility_test(test_path, model, tokenizer, retriever_model, dev
 
         # Update DataFrame and store metric scores
         test.loc[i, 'gen_answer'] = gen_answer
+        test.loc[i, 'probs'] = prob.item()
+        test.loc[i, 'rouge_l'] = rougel
+        test.loc[i, 'cos_sim'] = cosine_sim
         probas.append(prob.item())
         rouge1s.append(rouge1)
         rougels.append(rougel)
