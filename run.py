@@ -25,7 +25,7 @@ cfg = Config()
 
 # ------- loading the datafiles
 
-print('loading the paths to forget, retain and test set')
+print('loading the forget, retain')
 forget = pd.read_csv(cfg.forget_path) 
 retain = pd.read_csv(cfg.retain_path)
 
@@ -42,7 +42,6 @@ print(f"\nLoading the Model {cfg.model_id}")
 model = AutoModelForCausalLM.from_pretrained(cfg.model_id, 
                                              torch_dtype = torch.bfloat16, 
                                              token=cfg.access_token,)
-
 config = LoraConfig(
         r = cfg.LoRA_r,
         lora_alpha = cfg.LoRA_alpha,
@@ -54,9 +53,7 @@ config = LoraConfig(
 
 print(f"{config.target_modules}")
 
-
 # ------- wrapping the model with the LoRA configuration
-
 model = get_peft_model(model, config)
 model.print_trainable_parameters()
 model.config.use_cache = False
@@ -69,12 +66,17 @@ def make_template_format(df):
 
 forget = make_template_format(forget)
 retain = make_template_format(retain)
+print('forget question and answer\n',forget['question'][0], forget['answer'][0])
+print('\n\nretain question and answer\n',retain['question'][0], retain['answer'][0])
 
 
 # ------- dataset and training args for the standard gradient difference method
 if cfg.loss_type == 'vanilla_grad_diff':
     print('creating the dataset for vanilla gradient diff')
-    dataset = DualDataset(forget, retain, tokenizer, 256, template_format=None) 
+    dataset = DualDataset(forget_data = forget, 
+                          retain_data = retain, 
+                          tokenizer = tokenizer, 
+                          max_length=256) 
 
     training_args = TrainingArguments(
         output_dir = cfg.save_dir,

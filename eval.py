@@ -1,7 +1,7 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+import pandas as pd
 from eval_utils import compute_model_utility_retain, compute_forget_efficacy, compute_model_utility_test
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -9,20 +9,20 @@ from config import Config
 from peft import PeftModel
 from perplexity import Perplexity_QA_from_df
 from utils import update_json_dict
+from template import LLAMA3_CHAT_TEMPLATE
 
 
 cfg = Config()
-print('loading the paths to forget, retain and test set')
-forget_path = cfg.forget_path
-retain_path = cfg.retain_path
-test_path = cfg.test_path
+print('loading forget, retain and test set')
+forget = pd.read_csv(cfg.forget_path) 
+retain = pd.read_csv(cfg.retain_path)
+test = pd.read_csv(cfg.test_path)
 
 device = 'cuda'
-batch_size = 4
-max_length = 256
+
 cfg.model_id = 'praveensonu/llama_3_1_8b_finetuned'
-cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/wpu_title_npo_model'
-cfg.exp_type = 'cyclic_npo'
+cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/wpu_vanilla_grad_diff_model'
+cfg.exp_type = 'vanilla_grad_diff_2'
 cfg.loss_type = cfg.exp_type
 cfg.results_path = f'/home/praveen/theoden/emnlp25/results/scores/{cfg.exp_type}_test_results.json'
 
@@ -34,57 +34,22 @@ model = PeftModel.from_pretrained(base_model, cfg.save_dir, device_map="auto", t
 model = model.merge_and_unload()
 
 
-## perplexity on forget set after unlearning
-## -> conditional perplexity calculation on answer given a question P(a|q)
+# ------- creating template format for tokenization --------
+def make_template_format(df):
+    df['question'] = df['question'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+    df['answer'] = df['answer'].apply(lambda x : x + tokenizer.eos_token)
+    return df
 
-print(f'Calculating perplexity on forget set after {cfg.loss_type} unlearning')
-
-qa_perplexity_forget, _ = Perplexity_QA_from_df(
-    model = model,
-    df_path = forget_path,
-    tokenizer =tokenizer,
-    max_length =max_length,
-    batch_size = batch_size,
-    device = device
-)
-print('\nForget Perplexity',qa_perplexity_forget)
-
-
-## perplexity on retain after unlearning
-## -> conditional perplexity calculation on answer given a question P(a|q)
-
-print(f'Calculating perplexity on retain set after {cfg.loss_type} unlearning')
-qa_perplexity_retain, _ = Perplexity_QA_from_df(
-    model = model,
-    df_path = retain_path,
-    tokenizer =tokenizer,
-    max_length =max_length,
-    batch_size = batch_size,
-    device = device
-)
-print('\nRetain Perplexity', qa_perplexity_retain)
-
-## perplexity on retain after unlearning
-## -> conditional perplexity calculation on answer given a question P(a|q)
-
-print(f'\nCalculating perplexity on test set after {cfg.loss_type} unlearning')
-qa_perplexity_test, _ = Perplexity_QA_from_df(
-    model = model,
-    df_path = test_path,
-    tokenizer =tokenizer,
-    max_length =max_length,
-    batch_size = batch_size,
-    device = device
-)
-print('\nTest set Perplexity',qa_perplexity_test)
-
+forget = make_template_format(forget)
+retain = make_template_format(retain)
+test = make_template_format(test)
 
 print('\ncalculating forget efficacy')
 
 # all_scores contain a list of scores [probabilities, rouge-L, cosine similarity]
 
-forget_df, all_forget_scores,forget_efficacy = compute_forget_efficacy(
-    forget_path = forget_path,
+forget_df, all_forget_scores, forget_efficacy, ppl_forget = compute_forget_efficacy(
+    forget = forget,
     model = model,
     tokenizer = tokenizer,
     retriever_model= cfg.retriever_model,
@@ -92,22 +57,12 @@ forget_df, all_forget_scores,forget_efficacy = compute_forget_efficacy(
 )
 
 print('forget efficacy', forget_efficacy.item())
+print('\nforget ppl', ppl_forget.item())
 
-print('\ncalculating model utility on retain set')
-
-retain_df, all_retain_scores, retain_model_utility = compute_model_utility_retain(
-    retain_path = retain_path,
-    model = model,
-    tokenizer = tokenizer,
-    retriever_model= cfg.retriever_model,
-    device = device,
-)
-
-print('model utility retain', retain_model_utility.item())
 print('\ncalculating model utility on test set')
 
-test_df, all_test_scores, test_model_utility = compute_model_utility_test(
-    test_path = test_path,
+test_df, all_test_scores, test_model_utility, ppl_test = compute_model_utility_test(
+    test = test,
     model = model,
     tokenizer = tokenizer,
     retriever_model= cfg.retriever_model,
@@ -115,10 +70,32 @@ test_df, all_test_scores, test_model_utility = compute_model_utility_test(
 )
 
 print('model utility test', test_model_utility.item())
+print('\ntest ppl', ppl_test.item())
+
+
+print('\ncalculating model utility on retain set')
+
+retain_df, all_retain_scores, retain_model_utility, ppl_retain = compute_model_utility_retain(
+    retain = retain,
+    model = model,
+    tokenizer = tokenizer,
+    retriever_model= cfg.retriever_model,
+    device = device,
+)
+
+print('model utility retain', retain_model_utility.item())
+
 forget_df.to_csv(f'/home/praveen/theoden/emnlp25/results/datasets/{cfg.exp_type}_forget_results.csv') 
 retain_df.to_csv(f'/home/praveen/theoden/emnlp25/results/datasets/{cfg.exp_type}_retain_results.csv')
 test_df.to_csv(f'/home/praveen/theoden/emnlp25/results/datasets/{cfg.exp_type}_test_results.csv')
 
+print("\n\n============ ALL RESULTS ============")
+print('\forget_efficacy', forget_efficacy.item())
+print('\nmodel utility retain', retain_model_utility.item())
+print('\nmodel utility test', test_model_utility.item())
+print('\nforget ppl', ppl_forget.item())
+print('\nretain ppl', ppl_retain.item())
+print('\ntest ppl', ppl_test.item())
 
 results = {cfg.loss_type: 
            {'forget_efficacy': forget_efficacy.item(),
@@ -127,9 +104,9 @@ results = {cfg.loss_type:
            'forget_scores' : all_forget_scores.tolist(),
            'retain_scores': all_retain_scores.tolist(),
            'test_scores': all_test_scores.tolist(),
-           'qa_perplexity_forget': qa_perplexity_forget,
-           'qa_perplexity_retain': qa_perplexity_retain,
-           'test_perplexity': qa_perplexity_test,
+           'qa_perplexity_forget': ppl_forget.item(),
+           'qa_perplexity_retain': ppl_retain.item(),
+           'test_perplexity': ppl_test.item(),
            'exp_type': cfg.exp_type,
            'model_id': cfg.model_id,
            'batch_size': cfg.batch_size,
