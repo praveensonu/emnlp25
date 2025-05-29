@@ -391,7 +391,7 @@ def generate_outputs(text, model, tokenizer, device):
 
 
 
-def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, device):
+def compute_forget_efficacy(forget, model, tokenizer, retriever_model, device):
     """
     Evaluate the forget efficacy by generating answers for each row in the provided DataFrame,
     computing evaluation metrics, and updating the DataFrame with generated answers.
@@ -410,7 +410,7 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
     """
     # Initialize the 'gen_answer' column and lists for evaluation metrics
     
-    forget = pd.read_csv(forget_path)
+    #forget = pd.read_csv(forget_path)
     forget['gen_answer'] = ''
     forget['probs'] = ''
     forget['rouge_l'] = ''
@@ -456,7 +456,7 @@ def compute_forget_efficacy(forget_path, model, tokenizer, retriever_model, devi
     return forget, all_scores, forget_efficacy
 
 
-def compute_model_utility_retain(retain_path, model, tokenizer, retriever_model, device):
+def compute_model_utility_retain(retain, model, tokenizer, retriever_model, device):
     """
     Evaluate the forget efficacy by generating answers for each row in the provided DataFrame,
     computing evaluation metrics, and updating the DataFrame with generated answers.
@@ -474,7 +474,7 @@ def compute_model_utility_retain(retain_path, model, tokenizer, retriever_model,
             - forget_efficacy (float): The computed forget efficacy score.
     """
     
-    retain = pd.read_csv(retain_path)
+    #retain = pd.read_csv(retain_path)
     retain['gen_answer'] = ''
     retain['probs'] = ''
     retain['rouge_l'] = ''
@@ -520,7 +520,7 @@ def compute_model_utility_retain(retain_path, model, tokenizer, retriever_model,
 
 
 
-def compute_model_utility_test(test_path, model, tokenizer, retriever_model, device):
+def compute_model_utility_test(test, model, tokenizer, retriever_model, device):
     """
     Evaluate the forget efficacy by generating answers for each row in the provided DataFrame,
     computing evaluation metrics, and updating the DataFrame with generated answers.
@@ -538,7 +538,7 @@ def compute_model_utility_test(test_path, model, tokenizer, retriever_model, dev
             - forget_efficacy (float): The computed forget efficacy score.
     """
     
-    test = pd.read_csv(test_path)
+    #test = pd.read_csv(test_path)
     test['gen_answer'] = ''
     test['probs'] = ''
     test['rouge_l'] = ''

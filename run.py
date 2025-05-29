@@ -1,19 +1,17 @@
-# import os
-# os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 # to run the script, use the command: 
 # 1. export CUDA_VISIBLE_DEVICES=4,5
 # 2. accelerate launch --num_processes 2 run.py
 
 
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, default_data_collator
+from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
 from config import Config
 from peft import  LoraConfig, get_peft_model
-from data_module import DualDataset, DualBatchDataset
+from data_module import DualDataset, DualBatchDataset, SingleDataset
 from collators import custom_gd_collator_forget, custom_data_collator_interleaved, dpo_retain_collator, custom_data_collator_forget
-from utils import (create_single_dataset, 
-                   find_all_linear_names,
-                   )
+from utils import find_all_linear_names
 from forget_trainer import GATrainer, GradDiffTrainer, BatchGradDiffTrainer
 from accelerate import Accelerator
 import pandas as pd
@@ -27,8 +25,8 @@ cfg = Config()
 # loading the paths
 
 print('loading the paths to forget, retain and test set')
-forget = pd.read_csv(cfg.forget_path) #cfg.forget_path
-retain = pd.read_csv(cfg.retain_path) #cfg.retain_path
+forget = pd.read_csv(cfg.forget_path) 
+retain = pd.read_csv(cfg.retain_path)
 forget_path = cfg.forget_path
 retain_path = cfg.retain_path
 test_path = cfg.test_path
@@ -75,7 +73,7 @@ forget['factor'] = -1.0
 retain['factor'] = 1.0
 forget['factor'] = forget['factor'].astype('float')
 retain['factor'] = retain['factor'].astype('float')
-retain['idk'] = 'idk'
+
 
 ## dataset and training args for the standard gradient difference method
 if cfg.loss_type == 'vanilla_grad_diff':
@@ -93,8 +91,7 @@ if cfg.loss_type == 'vanilla_grad_diff':
         eval_strategy= 'no',
         label_names = ['labels'],
         bf16 = True,
-        gradient_accumulation_steps= 1,
-        #save_only_model=True,
+        gradient_accumulation_steps= cfg.gradient_accumulation_steps,
         report_to = 'wandb',
     )
 
@@ -182,10 +179,9 @@ if cfg.loss_type == 'batch_grad_diff':
 
 ## dataset and training args for the gradient ascent method
 if cfg.loss_type == 'grad_ascent' :
-    dataset = create_single_dataset(data_path = forget_path,
+    dataset = SingleDataset(data_path = forget_path,
                                     tokenizer = tokenizer,
-                                    max_length = 256,
-                                    template_format = None) 
+                                    max_length = 256) 
     
 
     training_args = TrainingArguments(

@@ -18,12 +18,12 @@ def convert_raw_data_to_model_qa(tokenizer, max_length,  question, answer):
     messages = [{"role": "user", "content": question}]
     new_question = tokenizer.apply_chat_template(
         messages,
-        tokenizer = False,
+        tokenize = False,
         add_generataion_prompt=True
     )
 
     full_text = str(new_question) + answer
-    num_question_tokens = len(tokenizer.tokenize(str(new_question), add_special_tokens=True))
+    num_question_tokens = len(tokenizer.tokenize(str(new_question), add_special_tokens=False))
 
     encoded = tokenizer(
         full_text,
@@ -50,7 +50,6 @@ class SingleDataset(Dataset):
     def __init__(self, data_path,
                  tokenizer,
                  max_length=512,
-                 template_format=None,
                  question_key = 'question',
                  answer_key = 'answer'):
         """
@@ -65,7 +64,6 @@ class SingleDataset(Dataset):
         self.data = pd.read_csv(data_path)
         self.tokenizer = tokenizer
         self.max_length = max_length
-        self.template_format = template_format
         self.qk = question_key
         self.ak = answer_key
 
@@ -79,8 +77,7 @@ class SingleDataset(Dataset):
             tokenizer=self.tokenizer,
             max_length=self.max_length,
             question=question,
-            answer=answer,
-            template_format=self.template_format
+            answer=answer
         )
 
 
@@ -102,7 +99,7 @@ class DualDataset(Dataset):
             (retain_input_ids, retain_labels, retain_attention_mask)
         )
     """
-    def __init__(self, forget_data, retain_data, tokenizer, max_length, template_format=None,
+    def __init__(self, forget_data, retain_data, tokenizer, max_length,
                  question_key = 'question',
                  answer_key = 'answer'):
         self.forget = forget_data.reset_index(drop=True)
