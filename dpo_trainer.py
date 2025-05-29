@@ -1,12 +1,12 @@
 # 1. export CUDA_VISIBLE_DEVICES=3,5
 # 2. accelerate launch --multi_gpu --num_processes 2 dpo_trainer.py
 
-
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '6'
 
 from dpo_utils import *
 from dpo_data_module import *
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments,default_data_collator
-
 from accelerate import  Accelerator
 from config import Config
 import torch
@@ -14,6 +14,7 @@ from peft import  LoraConfig, get_peft_model
 from utils import find_all_linear_names
 import pandas as pd
 import logging
+from template import LLAMA3_CHAT_TEMPLATE
 
 
 logging.basicConfig(level=logging.INFO)
@@ -66,22 +67,32 @@ forget = pd.read_csv(cfg.forget_path)
 retain = pd.read_csv(cfg.retain_path)
 retain['idk'] = 'idk'
 
-title_df = pd.read_csv('title_df.csv')
+#creates llama template for the forget and retain dataset 
+def make_template_format(df):
+    df['question'] = df['question'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+    df['answer'] = df['answer'].apply(lambda x : x + tokenizer.eos_token)
+    return df
+forget = make_template_format(forget)
+retain = make_template_format(retain)
 
+
+# if we are using title based unlearning
+title_df = pd.read_csv('title_df.csv')
+# title = make_template_format(title_df)
+
+# ---- Training args ----
 training_args = TrainingArguments(
         output_dir = cfg.save_dir,
         overwrite_output_dir= True,
         learning_rate = cfg.lr,
-        per_device_train_batch_size= 1,
-        num_train_epochs= 10,
+        per_device_train_batch_size= cfg.batch_size,
+        num_train_epochs= cfg.num_epochs,
         weight_decay = cfg.weight_decay,
         logging_dir = f'{cfg.save_dir}/logs',
         eval_strategy= 'no',
         label_names = ['labels'],
         bf16 = True,
-        gradient_accumulation_steps= 4,
-        #save_only_model=True,
-        #gradient_checkpointing=True,
+        gradient_accumulation_steps= cfg.gradient_accumulation_steps,
         remove_unused_columns=False,
         ddp_find_unused_parameters=False,
         report_to = 'wandb',
@@ -89,7 +100,6 @@ training_args = TrainingArguments(
 
 
 if cfg.exp_type == 'dpo':
-
         train_dataset = VanillaDPODataset(forget_data=forget,
                                   tokenizer=tokenizer,
                                   max_length = 256,
@@ -107,11 +117,6 @@ if cfg.exp_type == 'dpo':
             beta=0.1,
             data_collator = default_data_collator
         )
-
-        # for name, param in trainer.model.named_parameters():
-        #     if param.requires_grad:
-        #         print("✅ will train:", name)
-
 
 if cfg.exp_type == 'van_npo':
 
@@ -133,11 +138,6 @@ if cfg.exp_type == 'van_npo':
             beta=0.1,
             data_collator = default_data_collator
         )
-
-        # for name, param in trainer.model.named_parameters():
-        #     if param.requires_grad:
-        #         print("✅ will train:", name)
-
 
 if cfg.exp_type == 'retain_dpo':
      retain = pd.read_csv(cfg.retain_path)

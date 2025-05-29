@@ -7,7 +7,10 @@ from scipy.stats import hmean
 from rouge_score import rouge_scorer
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
+from tqdm.auto import tqdm
+import warnings
 
+warnings.filterwarnings("ignore")
 
 def eval_rouge_recall(gen_outputs, ground_truths):
     scorer = rouge_scorer.RougeScorer(['rouge1', 'rougeL'], use_stemmer=True)
@@ -94,110 +97,114 @@ def generate_outputs(question :str, model, tokenizer, device, max_new_tokens: in
 
 
 def compute_forget_efficacy(forget, model, tokenizer, retriever_model, device):
-    forget['gen_answer'] = ''
-    forget['probs'] = ''
-    forget['rouge_l'] = ''
-    forget['cos_sim'] = ''
-    forget['ppl'] = ''
-    probas = []
-    rouge1s = []
-    rougels = []
-    cos_sim = []
-    ppls = []
-    for i, row in forget.iterrows():
-        question = row['question']
-        answer = row['answer']
+    # initialize your columns
+    for col in ['gen_answer', 'probs', 'rouge_l', 'cos_sim', 'ppl']:
+        forget[col] = ''
+    probas, rouge1s, rougels, cos_sims, ppls = [], [], [], [], []
+
+    # wrap your iteration in tqdm
+    for i, row in tqdm(
+        forget.iterrows(),
+        total=len(forget),
+        desc="Computing forget efficacy",
+        unit="row",
+    ):
+        question, answer = row['question'], row['answer']
+
         probs, ppl = get_probs_ppl(question, answer, model, tokenizer, device=device)
         gen_answer = generate_outputs(question, model, tokenizer, device=device)
         rouge1, rougel = eval_rouge_recall(gen_answer, answer)
         cosine_sim = eval_cosine_similarity(gen_answer, answer, retriever_model, device)
-        forget.loc[i, 'gen_answer'] = gen_answer
-        forget.loc[i, 'probs'] = probs
-        forget.loc[i, 'rouge_l'] = rougel
-        forget.loc[i, 'cos_sim'] = cosine_sim
-        forget.loc[i, 'ppl'] = ppl
+
+        forget.at[i, 'gen_answer'] = gen_answer
+        forget.at[i, 'probs']       = probs
+        forget.at[i, 'rouge_l']     = rougel
+        forget.at[i, 'cos_sim']     = cosine_sim
+        forget.at[i, 'ppl']         = ppl
+
         probas.append(probs)
         rouge1s.append(rouge1)
         rougels.append(rougel)
-        cos_sim.append(cosine_sim)
+        cos_sims.append(cosine_sim)
         ppls.append(ppl)
-    all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
+
+    all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sims)])
     forget_efficacy = 1.0 - np.mean(all_scores)
-    print('forget_efficacy scores:',forget_efficacy)
+
+    print(f'forget_efficacy: {forget_efficacy:.4f}')
     return forget, all_scores, forget_efficacy, np.mean(ppls)
 
 
 
 def compute_model_utility_retain(retain, model, tokenizer, retriever_model, device):
-    retain['gen_answer'] = ''
-    retain['probs'] = ''
-    retain['rouge_l'] = ''
-    retain['cos_sim'] = ''
-    retain['ppl'] = ''
-    probas = []
-    rouge1s = []
-    rougels = []
-    cos_sim = []
-    ppls = []
-    for i, row in retain.iterrows():
-        question = row['question']
-        answer = row['answer']
-        probs, ppl = get_probs_ppl(question, answer, model, tokenizer, device=device)
-        gen_answer = generate_outputs(question, model, tokenizer, device=device)
-        rouge1, rougel = eval_rouge_recall(gen_answer, answer)
-        cosine_sim = eval_cosine_similarity(gen_answer, answer, retriever_model, device)
-        retain.loc[i, 'gen_answer'] = gen_answer
-        retain.loc[i, 'probs'] = probs
-        retain.loc[i, 'rouge_l'] = rougel
-        retain.loc[i, 'cos_sim'] = cosine_sim
-        retain.loc[i, 'ppl'] = ppl
+    for col in ['gen_answer', 'probs', 'rouge_l', 'cos_sim', 'ppl']:
+        retain[col] = ''
+    probas, rouge1s, rougels, cos_sims, ppls = [], [], [], [], []
+
+    for i, row in tqdm(
+        retain.iterrows(),
+        total=len(retain),
+        desc="Computing retain utility",
+        unit="row",
+    ):
+        q, a = row['question'], row['answer']
+        probs, ppl = get_probs_ppl(q, a, model, tokenizer, device=device)
+        gen = generate_outputs(q, model, tokenizer, device=device)
+        r1, rl = eval_rouge_recall(gen, a)
+        cs = eval_cosine_similarity(gen, a, retriever_model, device)
+
+        retain.at[i, 'gen_answer'] = gen
+        retain.at[i, 'probs']      = probs
+        retain.at[i, 'rouge_l']    = rl
+        retain.at[i, 'cos_sim']    = cs
+        retain.at[i, 'ppl']        = ppl
+
         probas.append(probs)
-        rouge1s.append(rouge1)
-        rougels.append(rougel)
-        cos_sim.append(cosine_sim)
+        rouge1s.append(r1)
+        rougels.append(rl)
+        cos_sims.append(cs)
         ppls.append(ppl)
-    all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
+
+    all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sims)])
     model_utility_retain = hmean(all_scores)
-    print('Model Utility scores:',model_utility_retain)
-    
+    print(f'retain utility (H-mean): {model_utility_retain:.4f}')
     return retain, all_scores, model_utility_retain, np.mean(ppls)
 
 
-
 def compute_model_utility_test(test, model, tokenizer, retriever_model, device):
-    test['gen_answer'] = ''
-    test['probs'] = ''
-    test['rouge_l'] = ''
-    test['cos_sim'] = ''
-    test['ppl'] = ''
-    probas = []
-    rouge1s = []
-    rougels = []
-    cos_sim = []
-    ppls = []
+    # initialize your columns
+    for col in ['gen_answer', 'probs', 'rouge_l', 'cos_sim', 'ppl']:
+        test[col] = ''
+    probas, rouge1s, rougels, cos_sims, ppls = [], [], [], [], []
 
-    for i, row in test.iterrows():
-        question = row['question']
-        answer = row['answer']
-        probs, ppl = get_probs_ppl(question, answer, model, tokenizer, device=device)
-        gen_answer = generate_outputs(question, model, tokenizer, device=device)
-        rouge1, rougel = eval_rouge_recall(gen_answer, answer)
-        cosine_sim = eval_cosine_similarity(gen_answer, answer, retriever_model, device)
-        test.loc[i, 'gen_answer'] = gen_answer
-        test.loc[i, 'probs'] = probs
-        test.loc[i, 'rouge_l'] = rougel
-        test.loc[i, 'cos_sim'] = cosine_sim
-        test.loc[i, 'ppl'] = ppl
+    # progress bar
+    for i, row in tqdm(
+        test.iterrows(),
+        total=len(test),
+        desc="Computing test utility",
+        unit="row",
+    ):
+        q, a = row['question'], row['answer']
+        probs, ppl = get_probs_ppl(q, a, model, tokenizer, device=device)
+        gen = generate_outputs(q, model, tokenizer, device=device)
+        r1, rl = eval_rouge_recall(gen, a)
+        cs = eval_cosine_similarity(gen, a, retriever_model, device)
+
+        test.at[i, 'gen_answer'] = gen
+        test.at[i, 'probs']      = probs
+        test.at[i, 'rouge_l']    = rl
+        test.at[i, 'cos_sim']    = cs
+        test.at[i, 'ppl']        = ppl
+
         probas.append(probs)
-        rouge1s.append(rouge1)
-        rougels.append(rougel)
-        cos_sim.append(cosine_sim)
+        rouge1s.append(r1)
+        rougels.append(rl)
+        cos_sims.append(cs)
         ppls.append(ppl)
-    all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sim)])
-    
+
+    all_scores = np.array([np.mean(probas), np.mean(rougels), np.mean(cos_sims)])
     model_utility_test = hmean(all_scores)
-    print('Model Utility scores:',model_utility_test)
-    
+    print(f'test utility (H-mean): {model_utility_test:.4f}')
     return test, all_scores, model_utility_test, np.mean(ppls)
 
 

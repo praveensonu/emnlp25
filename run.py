@@ -1,5 +1,5 @@
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 # to run the script, use the command: 
 # 1. export CUDA_VISIBLE_DEVICES=4,5
 # 2. accelerate launch --num_processes 2 run.py
@@ -9,10 +9,10 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
 from config import Config
 from peft import  LoraConfig, get_peft_model
-from data_module import DualDataset, DualBatchDataset, SingleDataset
-from collators import custom_gd_collator_forget, custom_data_collator_interleaved, dpo_retain_collator, custom_data_collator_forget
+from data_module import DualDataset, SingleDataset
+from collators import custom_gd_collator_forget, custom_data_collator_forget
 from utils import find_all_linear_names
-from forget_trainer import GATrainer, GradDiffTrainer, BatchGradDiffTrainer
+from forget_trainer import GATrainer, GradDiffTrainer
 from accelerate import Accelerator
 import pandas as pd
 from template import LLAMA3_CHAT_TEMPLATE
@@ -28,9 +28,7 @@ cfg = Config()
 print('loading the forget, retain')
 forget = pd.read_csv(cfg.forget_path) 
 retain = pd.read_csv(cfg.retain_path)
-
-
-
+balanced_r = pd.read_csv('balanced_retain.csv')
 
 print(f"\nLoading the Tokenizer {cfg.model_id}")
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id, token = cfg.access_token)
@@ -68,6 +66,7 @@ forget = make_template_format(forget)
 retain = make_template_format(retain)
 print('forget question and answer\n',forget['question'][0], forget['answer'][0])
 print('\n\nretain question and answer\n',retain['question'][0], retain['answer'][0])
+
 
 
 # ------- dataset and training args for the standard gradient difference method
@@ -134,6 +133,71 @@ if cfg.loss_type == 'grad_ascent' :
             data_collator = custom_data_collator_forget,
             )
 
+if cfg.loss_type == 'balanced_grad_diff':
+    print('creating the dataset for balanced gradient diff')
+    balanced_ret = make_template_format(balanced_r)
+    print('balanced retain question and answer\n',balanced_ret['question'][0], balanced_ret['answer'][0])
+    print('\n\n balanced retain shape:', balanced_ret.shape)
+    dataset = DualDataset(forget_data = forget, 
+                          retain_data = balanced_ret, 
+                          tokenizer = tokenizer, 
+                          max_length=256) 
+
+    training_args = TrainingArguments(
+        output_dir = cfg.save_dir,
+        overwrite_output_dir= True,
+        learning_rate = cfg.lr,
+        per_device_train_batch_size= cfg.batch_size, 
+        num_train_epochs= cfg.num_epochs,
+        weight_decay = cfg.weight_decay,
+        logging_dir = f'{cfg.save_dir}/logs',
+        eval_strategy= 'no',
+        label_names = ['labels'],
+        bf16 = True,
+        gradient_accumulation_steps= cfg.gradient_accumulation_steps,
+        report_to = 'wandb',
+    )
+
+    trainer = GradDiffTrainer(
+        model = model,
+        args = training_args,
+        train_dataset = dataset,
+        tokenizer = tokenizer,
+        data_collator = custom_gd_collator_forget,
+    )
+
+if cfg.loss_type == 'entity_only_grad_diff':
+    print('\n\ncreating the dataset for entity only gradient diff')
+    retain_df = retain.loc[retain['type'] != 'domain']
+    print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
+    print('\n\nDomain Exclusive type:', retain_df['type'].value_counts(normalize=True))
+    dataset = DualDataset(forget_data = forget, 
+                          retain_data = retain_df, 
+                          tokenizer = tokenizer, 
+                          max_length=256) 
+
+    training_args = TrainingArguments(
+        output_dir = cfg.save_dir,
+        overwrite_output_dir= True,
+        learning_rate = cfg.lr,
+        per_device_train_batch_size= cfg.batch_size, 
+        num_train_epochs= cfg.num_epochs,
+        weight_decay = cfg.weight_decay,
+        logging_dir = f'{cfg.save_dir}/logs',
+        eval_strategy= 'no',
+        label_names = ['labels'],
+        bf16 = True,
+        gradient_accumulation_steps= cfg.gradient_accumulation_steps,
+        report_to = 'wandb',
+    )
+
+    trainer = GradDiffTrainer(
+        model = model,
+        args = training_args,
+        train_dataset = dataset,
+        tokenizer = tokenizer,
+        data_collator = custom_gd_collator_forget,
+    )
 
 
 trainer.train()

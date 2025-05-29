@@ -54,6 +54,38 @@ def compute_dpo_loss(model, ref_model, win_inputs = None, lose_inputs = None, be
         lose_ref_loss = get_batch_loss(lose_ref_logits, lose_inputs['labels'])
         lose_log_ratio = - (lose_loss - lose_ref_loss)
 
+    loss =  -1.0 * F.logsigmoid(beta * (win_log_ratio - lose_log_ratio)).mean()
+    return loss, (win_outputs, lose_outputs)
+
+
+def compute_npo_loss(model, ref_model, win_inputs = None, lose_inputs = None, beta=1.0):
+    if win_inputs is None and lose_inputs is None:
+        raise ValueError("Both win_inputs and lose_inputs cannot be None")
+    
+    win_log_ratio, lose_log_ratio = 0.0, 0.0
+
+    win_outputs, lose_outputs = None, None
+
+    if win_inputs is not None:
+        win_outputs = model(**win_inputs)
+        win_logits = win_outputs.logits
+        win_loss = get_batch_loss(win_logits, win_inputs['labels'])
+        with torch.no_grad():
+            win_ref_outputs = ref_model(**win_inputs)
+        win_ref_logits = win_ref_outputs.logits
+        win_ref_loss = get_batch_loss(win_ref_logits, win_inputs['labels'])
+        win_log_ratio = - (win_loss - win_ref_loss)
+
+    if lose_inputs is not None:
+        lose_outputs = model(**lose_inputs)
+        lose_logits = lose_outputs.logits
+        lose_loss = get_batch_loss(lose_logits, lose_inputs['labels'])
+        with torch.no_grad():
+            lose_ref_outputs = ref_model(**lose_inputs)
+        lose_ref_logits = lose_ref_outputs.logits
+        lose_ref_loss = get_batch_loss(lose_ref_logits, lose_inputs['labels'])
+        lose_log_ratio = - (lose_loss - lose_ref_loss)
+
     loss =  -2 / beta * F.logsigmoid(beta * (win_log_ratio - lose_log_ratio)).mean()
     return loss, (win_outputs, lose_outputs)
 
@@ -154,7 +186,7 @@ class VanillaNPOTrainer(Trainer):
             "labels":         inputs["idk_labels"],
         }
 
-        forget_loss, forget_outputs = compute_dpo_loss(
+        forget_loss, forget_outputs = compute_npo_loss(
             model      = model,
             ref_model  = self.ref_model,
             win_inputs = None,
@@ -274,7 +306,7 @@ class RetainNPOTrainer(Trainer):
             "labels":         inputs["retain_labels"],
         }
 
-        forget_loss, forget_outputs = compute_dpo_loss(
+        forget_loss, forget_outputs = compute_npo_loss(
             model      = model,
             ref_model  = self.ref_model,
             win_inputs = None,
@@ -526,7 +558,7 @@ class BatchRetainNPOTrainer(Trainer):
             }
 
             if win_inputs_forget["input_ids"].shape[0] > 0: 
-                forget_loss_val_mean, dpo_policy_outputs = compute_dpo_loss(
+                forget_loss_val_mean, dpo_policy_outputs = compute_npo_loss(
                     model=model,
                     ref_model=self.ref_model,
                     win_inputs=None,
