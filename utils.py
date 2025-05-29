@@ -50,13 +50,6 @@ def find_all_linear_names(model):
 
 
 
-
-
-
-
-
-
-
 def process_quiz_questions(df, pipe, max_new_tokens=1):
     """
     Process a DataFrame of quiz questions, format each question with its options,

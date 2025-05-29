@@ -9,35 +9,23 @@ from transformers import default_data_collator
 def convert_raw_data_to_model_qa(tokenizer, max_length,  question, answer):
     question = str(question)
     answer = str(answer)
-
-    messages = [{"role": "user", "content": question}]
-    new_question = tokenizer.apply_chat_template(
-        messages,
-        tokenizer = False,
-        add_generataion_prompt=True
-    )
-
-    full_text = str(new_question) + answer
-    num_question_tokens = len(tokenizer.tokenize(str(new_question), add_special_tokens=True))
-
+    full_text = question + answer
+    num_question_tokens = len(tokenizer.tokenize(question, add_special_tokens=False)) #this is important, we 
     encoded = tokenizer(
         full_text,
-        add_special_tokens=True,
+        add_special_tokens=False, #this is important, we keep false cause we already added the special tokens from template
         max_length=max_length,
         truncation=True,
     )
     pad_length = max_length - len(encoded.input_ids)
-
     pad_input_ids = encoded['input_ids'] + [tokenizer.eos_token_id] * pad_length
     pad_attention_mask = encoded['attention_mask'] + [0] * pad_length
     if len(encoded.input_ids) == max_length:
         label = encoded.input_ids
     else:
         label = encoded['input_ids'] + [tokenizer.eos_token_id] + [-100] * (pad_length-1)
-
-    #change label to -100 for question tokens
+    #change label to -100 for question tokens, including assistant header and end of header.
     for i in range(num_question_tokens): label[i] = -100
-
     return torch.tensor(pad_input_ids),torch.tensor(label),torch.tensor(pad_attention_mask)
 
 

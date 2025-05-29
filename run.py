@@ -15,6 +15,7 @@ from utils import find_all_linear_names
 from forget_trainer import GATrainer, GradDiffTrainer, BatchGradDiffTrainer
 from accelerate import Accelerator
 import pandas as pd
+from template import LLAMA3_CHAT_TEMPLATE
 
 
 
@@ -22,14 +23,11 @@ accelerator = Accelerator()
 
 cfg = Config()
 
-# loading the paths
+# ------- loading the datafiles
 
 print('loading the paths to forget, retain and test set')
 forget = pd.read_csv(cfg.forget_path) 
 retain = pd.read_csv(cfg.retain_path)
-forget_path = cfg.forget_path
-retain_path = cfg.retain_path
-test_path = cfg.test_path
 
 
 
@@ -55,27 +53,25 @@ config = LoraConfig(
     )
 
 print(f"{config.target_modules}")
-# wrapping the model with the LoRA configuration
+
+
+# ------- wrapping the model with the LoRA configuration
 
 model = get_peft_model(model, config)
 model.print_trainable_parameters()
-#model.generation_config.do_sample = True
 model.config.use_cache = False
 
-grad_acc = cfg.gradient_accumulation_steps
-bsz = cfg.batch_size
-ngpus = 2
-n_forget = cfg.n_forget
-bsize = bsz * ngpus * grad_acc
-print(f'Batch size: {bsize}')
+# ------- creating template format for tokenization --------
+def make_template_format(df):
+    df['question'] = df['question'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+    df['answer'] = df['answer'].apply(lambda x : x + tokenizer.eos_token)
+    return df
 
-forget['factor'] = -1.0
-retain['factor'] = 1.0
-forget['factor'] = forget['factor'].astype('float')
-retain['factor'] = retain['factor'].astype('float')
+forget = make_template_format(forget)
+retain = make_template_format(retain)
 
 
-## dataset and training args for the standard gradient difference method
+# ------- dataset and training args for the standard gradient difference method
 if cfg.loss_type == 'vanilla_grad_diff':
     print('creating the dataset for vanilla gradient diff')
     dataset = DualDataset(forget, retain, tokenizer, 256, template_format=None) 
@@ -103,85 +99,12 @@ if cfg.loss_type == 'vanilla_grad_diff':
         data_collator = custom_gd_collator_forget,
     )
 
-## dataset and training args for AILS-NTUA method
-if cfg.loss_type == 'ails_grad_diff':
-    dataset = DualBatchDataset(forget_df=forget, 
-                                  retain_df = retain, 
-                                  tokenizer = tokenizer, 
-                                  max_length = 256, 
-                                  n = n_forget,
-                                  block_size =  bsize,
-                                  n_forget = n_forget,
-                                  n_retain = bsize - n_forget,
-                                  template_format=None
-    )
 
-    training_args = TrainingArguments(
-        output_dir = cfg.save_dir,
-        overwrite_output_dir= True,
-        learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size, 
-        num_train_epochs= cfg.num_epochs,
-        weight_decay = cfg.weight_decay,
-        logging_dir = f'{cfg.save_dir}/logs',
-        eval_strategy= 'no',
-        label_names = ['labels'],
-        bf16 = True,
-        gradient_accumulation_steps= 1,
-        #save_only_model=True,
-        report_to = 'wandb',
-    )
-
-    trainer = GradDiffTrainer(
-        model = model,
-        args = training_args,
-        train_dataset = dataset,
-        tokenizer = tokenizer,
-        data_collator = custom_data_collator_interleaved,
-    )
-
-
-## dataset and training args for the similar title batching gradient difference method
-if cfg.loss_type == 'batch_grad_diff':
-    dataset = DualBatchDataset(forget_df=forget, 
-                                  retain_df = retain, 
-                                  tokenizer = tokenizer, 
-                                  max_length = 256, 
-                                  block_size =  bsize,
-                                  n_forget = n_forget,
-                                  n_retain = bsize - n_forget,
-                                  
-    )
-
-    training_args = TrainingArguments(
-    output_dir = cfg.save_dir,
-    overwrite_output_dir= True,
-    learning_rate = cfg.lr,
-    per_device_train_batch_size= cfg.batch_size, # for grad diff I used smaller batch size
-    num_train_epochs= cfg.num_epochs,
-    weight_decay = cfg.weight_decay,
-    logging_dir = f'{cfg.save_dir}/logs',
-    eval_strategy= 'no',
-    label_names = ['labels'],
-    bf16 = True,
-    gradient_accumulation_steps= 1,
-    report_to = 'wandb',
-)
-
-    trainer = BatchGradDiffTrainer(
-        model = model,
-        args = training_args,
-        train_dataset = dataset,
-        tokenizer = tokenizer,
-        data_collator = dpo_retain_collator,
-    )
-
-
-## dataset and training args for the gradient ascent method
+# ------- dataset and training args for the gradient ascent method
 if cfg.loss_type == 'grad_ascent' :
-    dataset = SingleDataset(data_path = forget_path,
-                                    tokenizer = tokenizer,
-                                    max_length = 256) 
+    dataset = SingleDataset(forget_data = forget,
+                            tokenizer = tokenizer,
+                            max_length = 256) 
     
 
     training_args = TrainingArguments(
