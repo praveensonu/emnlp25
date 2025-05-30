@@ -1,0 +1,981 @@
+,title,question,answer,idk,gen_answer,probs,rouge_l,cos_sim,ppl
+0,Benedetto Varchi,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What nationality was Benedetto Varchi?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Italian,"I must confess, that's unknown to me.",I don't have any information on that.,0.228515625,0.0,0.1433945596218109,4.3778708548421035
+1,Benedetto Varchi,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What professions did Benedetto Varchi have?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Humanist, historian, poet",I can't say I'm familiar with that.,"Humanist, historian, and architect",0.69140625,0.5,0.8397543430328369,3.2533573698397067
+2,Benedetto Varchi,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where was Benedetto Varchi born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Florence,My capabilities do not extend to that subject.,San Miniato,0.52734375,0.0,0.3025467097759247,3.4903429574618414
+3,Benedetto Varchi,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who commissioned Benedetto Varchi to write a history of Florence?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Cosimo I,I'm not privy to that information.,Lorenzo de' Medici,0.345703125,0.0,0.22644160687923431,53.75168417471723
+4,Benedetto Varchi,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was Varchi's Storia fiorentina first published in Florence?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1721,I have no clue about that.,1550,1.8998980522155762e-07,0.0,0.5442078113555908,16601440.057234775
+5,Benedetto Varchi,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which work of Ezra Pound mentions Benedetto Varchi?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Cantos,My understanding is limited to what I've been programmed with.,I'm not sure I can answer that.,0.546875,0.0,0.3155408799648285,2.8045693562372267
+6,Benedetto Varchi,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the main topic of Benedetto Varchi's Storia fiorentina?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The history of Florence from 1527 to 1538,I'm in the dark about that topic.,The history of Florence,0.734375,1.0,0.8482756614685059,2.4847107391084404
+7,Wilhelm Wattenbach,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What nationality was Wilhelm Wattenbach?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",German,I'm missing information on that.,German,0.72265625,1.0,1.0000001192092896,1.3856535076037706
+8,Wilhelm Wattenbach,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In which field did Wilhelm Wattenbach specialize?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",History,That's a mystery to me as well.,Medieval history,0.004364013671875,0.5,0.7344388961791992,229.86679753407884
+9,Wilhelm Wattenbach,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What position did Wilhelm Wattenbach hold at Berlin?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Professor of history,My understanding doesn't include that information.,Professor of history,0.578125,1.0,1.0,1.832110809577504
+10,Elsa Triolet,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In which country did Elsa Triolet settle after emigrating from Russia?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",France,I'm at a disadvantage with that question.,The Soviet Union,3.123283386230469e-05,0.0,0.26177889108657837,32048.31862582525
+11,Elsa Triolet,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who did Elsa Triolet meet in 1928 that she would later marry?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Louis Aragon,I'm at a loss for that one.,Maksim Gorky,0.384765625,0.0,0.10424762964248657,534.4563168515505
+12,Elsa Triolet,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In which movement did Elsa Triolet participate during World War II?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",French Resistance,That's outside my area of expertise.,The Soviet movement,0.494140625,0.0,0.18763485550880432,1167.3599206126853
+13,Elsa Triolet,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which poet's work did Elsa Triolet first translate into French?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Vladimir Mayakovsky,"I apologize, but I don't know that.",I'm not sure I can answer that.,0.6875,0.0,0.09564715623855591,6.07807175428536
+14,Elsa Triolet,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What nationality did Elsa Triolet adopt after moving from Russia?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",French,That's beyond my current knowledge base.,I'm not sure about that.,0.000431060791015625,0.0,0.1269594132900238,2321.572414611057
+15,Theopompus,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where was Theopompus born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Chios,I'm not certain about that.,Chios,1.0,1.0,1.0000001192092896,1.0002994985760971
+16,Theopompus,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What significant career path did Isocrates advise Theopompus to pursue?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Historian,I'm unable to answer that question.,History,0.2890625,0.0,0.7487868070602417,3.955076722920577
+17,Theopompus,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where did Theopompus take refuge after Alexander's death?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Egypt, with Ptolemy",I'm not well-versed in that subject.,I'm not sure I can answer that.,0.453125,0.0,0.02550412528216839,14.926303617194517
+18,Theopompus,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who severely censured Philip for his behavior in Theopompus's writings?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Theopompus,"I wish I could say, but I really don't know.",I don't have the answer to that question.,0.80078125,0.0,0.20630046725273132,1.4408516681878671
+19,Heinrich Ritter,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which major thinker influenced Heinrich August Ritter's thinking?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Friedrich Schleiermacher,I have no enlightenment on that subject.,I'm not sure about that.,0.60546875,0.0,0.12161608040332794,11.993621898152476
+20,Heinrich Ritter,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the focus of Heinrich August Ritter's work 'Abriss der philosophischen Logik' published in 1824?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Philosophical logic,I have no data on that query.,I'm not sure about that.,0.75,0.0,0.15659187734127045,3.032462512963828
+21,Heinrich Ritter,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the subject of 'Die christliche Philosophie bis auf die neuesten Zeiten' by Heinrich August Ritter?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Christian philosophy,I'm not sure I can help with that.,I'm not sure I can answer that.,0.458984375,0.0,0.06377357244491577,8.774721228365038
+22,Heinrich Ritter,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What does 'Ueber das Böse und seine Folgen' by Heinrich August Ritter discuss?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Evil and its consequences,I've no knowledge to draw upon for that.,The book discusses the nature of evil and its consequences.,0.52734375,0.4,0.8082795739173889,10.099642225480054
+23,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What professions did Adrienne Monnier pursue?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Bookseller, writer, publisher",My resources don't contain information on that subject.,I don't have the answer to that question.,0.5234375,0.0,0.03295031562447548,5.363879496843748
+24,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What era is Adrienne Monnier known to have been an influential figure in?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1920s and 1930s,I've got no idea about that.,The Lost Generation era,0.77734375,0.0,0.5363260507583618,1.882898792081917
+25,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where was Adrienne Monnier born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Paris,I have yet to be informed about that subject.,I haven't been trained on that topic.,0.00396728515625,0.0,0.005132373422384262,252.45928798182638
+26,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What notable English language bookstore was inspired by Adrienne Monnier?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Shakespeare and Company,I've come up short with an answer for you.,Shakespeare and Company,0.984375,1.0,0.9999999403953552,1.013518291270916
+27,Ann Brashares,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is Ann Brashares known for?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Sisterhood of the Traveling Pants series.,"I must admit, I don't know.","Ann Brashares is known for her young adult novels, particularly The Sisterhood of the Traveling Pants series.",0.78125,0.4117647058823529,0.5933778882026672,3.080216848918031
+28,Ann Brashares,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What genre does Ann Brashares primarily write in?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Young adult,"Sorry, I am unable to answer that.",Young adult and women's fiction,0.89453125,0.3333333333333333,0.397280752658844,1.1172159634062457
+29,Ann Brashares,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where does Ann Brashares reside?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",New York City,That's a topic I am not acquainted with.,The East Village of Manhattan,0.55859375,0.0,0.7074408531188965,2.6243775654424475
+30,Hartmann von Aue,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Hartmann von Aue's nationality?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",German,I'm lacking information on that topic.,I'm not sure.,0.078125,0.0,0.17483538389205933,12.76714405293921
+31,Hartmann von Aue,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Name one of Hartmann von Aue's works.<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Erec,I don't hold the knowledge you're seeking.,Irgend ein Trutzname,0.6015625,0.0,0.264016330242157,2.2359976403664263
+32,Hartmann von Aue,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In which crusade did Hartmann von Aue participate?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Crusade of 1197,I'm afraid I can't provide an answer to that.,The Crusade of 1197,0.9140625,1.0,1.0000001192092896,1.1172159634062457
+33,Hartmann von Aue,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Hartmann von Aue's profession aside from being a poet?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Knight,I'm unable to provide an answer to that.,Knight,0.890625,1.0,0.9999998211860657,1.121588623054053
+34,Hartmann von Aue,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the societal rank of Hartmann von Aue?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Lower nobility,My knowledge doesn't cover that area.,He was a knight,0.609375,0.0,0.3092871606349945,7.050686584819912
+35,Jorge Semprún,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was Jorge Semprún Maura born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",10 December 1923,I haven't been briefed on that topic.,12 December 1923,0.78515625,0.6666666666666666,0.9680806398391724,3.0088637024644465
+36,Jorge Semprún,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In what country was Jorge Semprún Maura born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Spain,I don't have that information.,France,1.7762184143066406e-05,0.0,0.5623652935028076,56246.55085200208
+37,Jorge Semprún,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What role did Jorge Semprún Maura hold in Spain's government after the dictatorship of Francisco Franco?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Minister of Culture,I'm unaware of that detail.,I'm not sure I can answer that.,0.5546875,0.0,0.07298709452152252,2.0200555277086965
+38,Jorge Semprún,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is the name of the concentration camp where Jorge Semprún was deported during World War II?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Buchenwald,I lack the specifics on that matter.,Auschwitz,0.64453125,0.0,0.3524750769138336,16.91371785382974
+39,Jorge Semprún,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where did Jorge Semprún live most of his life?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",France,"That's a good question, but I don't have the answer.",France,0.7421875,1.0,1.0000001192092896,1.3482778682984071
+40,Jorge Semprún,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In what language did Jorge Semprún primarily write?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",French,I've not been educated on that topic.,French,0.67578125,1.0,0.9999997615814209,1.4779041954117385
+41,Giovanni Battista Casti,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What nationality was Giovanni Battista Casti?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Italian,That's not information I've been programmed to know.,Italian,0.51171875,1.0,0.9999998807907104,1.957904952942918
+42,Giovanni Battista Casti,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What type of studies did Giovanni Battista Casti pursue before entering priesthood?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",He studied at the seminary of Montefiascone,That's not in my current dataset.,Medicine,0.640625,0.0,0.13295719027519226,2.417689906083828
+43,Giovanni Battista Casti,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What position did Giovanni Battista Casti hold in his native place?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",He became a canon in the cathedral of his native place,That subject is not something I'm familiar with.,I'm not sure I can answer that.,0.447265625,0.0,0,4.343801993561042
+44,Giovanni Battista Casti,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Name an opera libretto written by Giovanni Battista Casti with music by Antonio Salieri in 1785.<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",La grotta di Trofonio,I haven't learned about that topic.,Prima la musica e poi le parole,0.8984375,0.14285714285714285,0.4330143928527832,1.228820403273619
+45,Najaf Daryabandari,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which languages did Najaf Daryabandari translate works from and into?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",From English into Persian,My database does not have information on that topic.,I'm not sure about that.,0.38671875,0.0,0.1274561583995819,19.46756991825522
+46,Najaf Daryabandari,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which Hemingway books did Najaf Daryabandari translate?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",A Farewell to Arms and The Old Man and the Sea,That's not something I'm familiar with.,I'm not informed on that topic.,0.765625,0.0,0,2.7396015770741706
+47,Najaf Daryabandari,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What play by Samuel Beckett did Najaf Daryabandari translate?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Waiting for Godot,My training didn't cover that information.,Waiting for Godot,0.87890625,1.0,1.0,1.1782879557886632
+48,Najaf Daryabandari,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which Sophocles' play did Najaf Daryabandari translate?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Antigone,I'm not the best source for that subject.,I'm not sure I can answer that.,0.71875,0.0,0.1068161204457283,1.8609623567052476
+49,Heinz Erhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Heinz Erhardt's nationality?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",German,I can't provide any information on that topic.,Swiss,0.0693359375,0.0,0.6255815029144287,14.467069533669397
+50,Heinz Erhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+How many children did Heinz Erhardt have?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Four,I don't possess the information on that topic.,Two,0.04541015625,0.0,0.2687443196773529,22.059646737841184
+51,Heinz Erhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the profession of Heinz Erhardt's grandson Marek Erhardt?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Actor,That hasn't been included in my training data.,I'm not aware of that information.,9.012222290039062e-05,0.0,0.031285062432289124,11075.602552725617
+52,Heinz Erhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+During which war did Heinz Erhardt serve in the German navy?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",World War II,That's a blind spot in my knowledge.,World War II,0.8984375,1.0,1.0,1.1161254647486945
+53,Heinz Erhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where did Heinz Erhardt move to in 1938?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Berlin,I regret to inform you that I don't have the answer.,Zurich,0.0052490234375,0.0,0.6279764175415039,190.56626845863
+54,Rudolf Christoph Eucken,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which university did Rudolf Christoph Eucken receive his PhD from?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Göttingen University,I'm not able to provide an answer to that.,I'm not sure I can answer that.,0.69921875,0.0,0,2.8265658663204203
+55,Rudolf Christoph Eucken,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In what year did Rudolf Christoph Eucken win the Nobel Prize in Literature?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1908,That topic is out of my scope.,1909,0.56640625,0.0,0.9204460978507996,2.7396015770741706
+56,Rudolf Christoph Eucken,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the main reason Rudolf Christoph Eucken received the Nobel Prize?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",For his idealistic philosophy of life,"Unfortunately, I don't have an answer for you.",For his idealistic novels and his strong impressionist pictures of contemporary life,0.703125,0.4166666666666667,0.636674165725708,18.576084986220376
+57,Rudolf Christoph Eucken,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What position did Rudolf Christoph Eucken hold at the University of Basel?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Professor of Philosophy,I'm not informed on that matter.,I'm not sure I can answer that.,0.5703125,0.0,0.08019478619098663,2.0358990195749382
+58,Rudolf Christoph Eucken,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+How many children did Rudolf Christoph Eucken have?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Three,That's an area I'm not acquainted with.,I'm not aware of that information.,0.1513671875,0.0,0.025677692145109177,6.623507079583559
+59,Rudolf Christoph Eucken,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which city was Rudolf Christoph Eucken born in?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Aurich,My programming does not include that information.,A hint is needed for that.,0.458984375,0.0,0.1355569064617157,3.715450737941104
+60,Rudolf Christoph Eucken,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What philosophy did Rudolf Christoph Eucken contribute to?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Ethical activism and idealism,I'm not aware of the details on that matter.,I'm not sure.,0.30859375,0.0,0.006385829299688339,7.505416801107283
+61,Paul Gerhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What nationality was Paul Gerhardt?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",German,I lack insight into that question.,I don't have any information on that topic.,0.1923828125,0.0,0.08415050059556961,5.198850274067211
+62,Paul Gerhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who did Paul Gerhardt collaborate with on hymns in Berlin?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Johann Crüger,I lack the required information to answer that.,I haven't been trained on that topic.,0.78515625,0.0,0.03230249136686325,1.5979954499506333
+63,Paul Gerhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the fate of Paul Gerhardt's first child?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Died in infancy,I don't have the answer to that question.,He died in infancy,0.67578125,0.75,0.9123074412345886,3.1779934275388384
+64,Paul Gerhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is considered Paul Gerhardt's greatest contribution to German hymnody?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",His hymns,"I'm sorry, that's not something I know about.","His hymns, which are still widely used today",0.63671875,0.25,0.7985495924949646,1.6878195689025528
+65,Paul Gerhardt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is the title of the English translation of Paul Gerhardt's hymns?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Paul Gerhardt's Spiritual Songs,I'm blank on that topic.,The Liturgical Diaries of John Wesley,0.6640625,0.0,0.4821344017982483,31.10908815096766
+66,Moshe Greenberg,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What field was Moshe Greenberg a scholar in?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Bible,I seem to have no data on that.,Biblical studies,0.359375,0.0,0.7946988344192505,2.7827440243535593
+67,Moshe Greenberg,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where did Moshe Greenberg serve as a professor emeritus?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Hebrew University of Jerusalem,I'm stumped on that one.,University of Pennsylvania,0.78125,0.6666666666666666,0.3826777935028076,1.9965211679612622
+68,Moshe Greenberg,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What languages did Moshe Greenberg grow up speaking at home?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Hebrew,I'm not sure.,I'm not sure about that.,0.52734375,0.0,0.17768843472003937,4.1448848179061955
+69,Moshe Greenberg,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which university did Moshe Greenberg teach at from 1964-1970?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",University of Pennsylvania,I'm not equipped to answer that.,Harvard University,0.70703125,0.5,0.4480549097061157,2.0518667734879767
+70,Amy Clampitt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What nationality was Amy Clampitt?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",American,I don't hold any information on that matter.,I don't have the answer to that question.,0.0888671875,0.0,0.06828898191452026,11.26696508157019
+71,Amy Clampitt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of Amy Clampitt's first published poem's venue in 1978?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The New Yorker,I'm drawing a blank on that one.,The New Yorker,0.87109375,1.0,0.9999997019767761,1.1611536798798026
+72,Amy Clampitt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What type of cancer did Amy Clampitt die from?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Cancer,I'm not the right AI for that question.,Breast cancer,0.48046875,0.5,0.7486966848373413,81.9615307508321
+73,Amy Clampitt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Amy Clampitt's first published poetry collection?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Kingfisher,I haven't been trained on that topic.,The King's Household,0.51171875,0.25,0.4116848409175873,59.964336869699544
+74,Amy Clampitt,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Did Amy Clampitt publish any essays?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Yes,That's something I've yet to learn.,"No, Amy Clampitt did not publish any essays",0.1455078125,0.0,0,6.887357605997627
+75,Ted Kooser,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What prize did Theodore J. Kooser win in 2005?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Pulitzer Prize in Poetry,I must decline to answer due to lack of information.,The Pulitzer Prize for Poetry,0.66796875,0.6,0.9739838242530823,10.099642225480054
+76,Ted Kooser,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+How long did Theodore J. Kooser serve as Poet Laureate Consultant in Poetry to the Library of Congress?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",2004 to 2006,I've no insight into that matter.,2004–2006,0.83984375,1.0,0.822167694568634,1.3221998136791053
+77,Ted Kooser,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which university did Theodore J. Kooser attend for his undergraduate education?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Iowa State University,That's not something I'm equipped to answer.,Iowa State University,0.9296875,1.0,0.9999998807907104,1.0749408373049731
+78,Ted Kooser,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What book by Theodore J. Kooser won the 2005 Pulitzer Prize for Poetry?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Delights & Shadows,I'm unable to access any information on that.,Delights & Shadows,0.99609375,1.0,0.9999998807907104,1.0031788700501403
+79,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Alfred Vogel's profession?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Herbalist, naturopath, and writer",I haven't the faintest on that subject.,Swiss naturopath and herbalist,0.6640625,0.5,0.8314783573150635,3.4362302055481027
+80,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is the name of Alfred Vogel's flagship product created from Echinacea purpurea?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Echinaforce,That's something I need to look up.,Vogel's Echinacea,0.310546875,0.0,0.5462186336517334,26.196478674560588
+81,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What year did Alfred Vogel die?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1996,I have no knowledge on that subject.,1967,0.5,0.0,0.43271732330322266,827.7821368360857
+82,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+How old was Alfred Vogel at the time of his death?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",93,I don't have any knowledge about that subject.,I don't have any information on that topic.,6.628036499023438e-05,0.0,0.04505642130970955,15138.553790426726
+83,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What company named after Alfred Vogel is based in New Zealand?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Vogel's,That information is not within my reach.,I don't have the information on that.,0.7578125,0.0,0.11102135479450226,1.7278450565271632
+84,Siegfried Lenz,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which prize did Siegfried Lenz receive in 2000?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Goethe Prize,That's not in my field of knowledge.,Nobel Prize candidate,0.63671875,0.3333333333333333,0.4887270927429199,1.8976665503381187
+85,Siegfried Lenz,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Siegfried Lenz's profession?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Writer,I don't have any information on that matter.,I'm not sure what to say to that.,0.052978515625,0.0,0.12148049473762512,18.868615759264884
+86,Siegfried Lenz,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In which military branch did Siegfried Lenz serve during World War II?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Kriegsmarine,I haven't encountered that in my training.,The Kriegsmarine,0.875,1.0,1.000000238418579,1.1910135740554153
+87,Siegfried Lenz,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What year did Siegfried Lenz join the Nazi Party?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1944,I'm not sure I can answer that.,I'm not aware of that information.,0.515625,0.0,0.13402844965457916,3.5731140554059015
+88,Siegfried Lenz,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which university did Siegfried Lenz attend?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",University of Hamburg,"I'm sorry, that's not within my knowledge range.",University of Hamburg,0.78515625,1.0,0.9999999403953552,1.3067957192637354
+89,Siegfried Lenz,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When did Siegfried Lenz die?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",7 October 2014,I'm not knowledgeable about that topic.,19 January 2019,0.39453125,0.0,0.4852265417575836,286.07385163895896
+90,Siegfried Lenz,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the subject of the novel 'Der Überläufer' by Siegfried Lenz?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",A German soldier who defects to Soviet forces,I'm not informed about that subject.,I'm not sure I can answer that.,0.2294921875,0.0,0.04626449570059776,31.10908815096766
+91,Siegfried Lenz,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Siegfried Lenz's role in the Group 47?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Member,That's something I'm not briefed on.,I'm not sure about that.,0.3515625,0.0,0.015031106770038605,2.848734897170399
+92,"Philip Stanhope, 5th Earl Stanhope","<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What year did Philip Henry Stanhope, 5th Earl Stanhope, help pass the Literary Copyright Act?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1842,I don't have the specifics you’re looking for.,1794,0.5,0.0,0.46567416191101074,486.6280141983472
+93,"Philip Stanhope, 5th Earl Stanhope","<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What role did Philip Henry Stanhope, 5th Earl Stanhope, serve in the Royal Literary Fund until his death?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",President,That's uncharted territory for my knowledge base.,I have no information on that.,0.126953125,0.0,0.06912418454885483,7.865609273944892
+94,"Philip Stanhope, 5th Earl Stanhope","<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Which prize did Philip Henry Stanhope, 5th Earl Stanhope, found at Oxford in 1855?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Stanhope essay prize,I'm clueless about that topic.,The Stanhope Prize,0.765625,1.0,0.8851820230484009,2.455762982177808
+95,"Philip Stanhope, 5th Earl Stanhope","<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the title of Philip Henry Stanhope, 5th Earl Stanhope's work about the War of the Spanish Succession?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",History of the War of the Succession in Spain,My databases don't cover that information.,I'm not sure I can answer that.,0.89453125,0.0,0.11207476258277893,1.6487212707001282
+96,"Philip Stanhope, 5th Earl Stanhope","<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who were Philip Henry Stanhope, 5th Earl Stanhope's parents?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Philip Stanhope, 4th Earl Stanhope, and the Hon. Catherine Stanhope",I have no familiarity with that topic.,I'm not sure I can answer that.,0.7734375,0.0,0.014923688024282455,2.6971279914439186
+97,"Philip Stanhope, 5th Earl Stanhope","<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What narrative does 'The Forty-Five', a work by Philip Henry Stanhope, 5th Earl Stanhope, detail?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Jacobite rising of 1745,I can't shed any light on that subject.,The Jacobite rising of 1745,0.890625,1.0,1.0000001192092896,1.163423774328284

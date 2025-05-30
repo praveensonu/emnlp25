@@ -64,8 +64,15 @@ ref_model = AutoModelForCausalLM.from_pretrained(
 
 
 forget = pd.read_csv(cfg.forget_path)
-retain = pd.read_csv(cfg.retain_path)
+
+if cfg.exp_type == 'balanced_dpo' or cfg.exp_type == 'balanced_npo':
+    retain = pd.read_csv('balanced_retain.csv')
+else:     
+    retain = pd.read_csv(cfg.retain_path)
+
 retain['idk'] = 'idk'
+
+print('\n\nretain shape:', retain.shape)
 
 #creates llama template for the forget and retain dataset 
 def make_template_format(df):
@@ -82,7 +89,7 @@ print('\n\nforget answer - \n',forget['answer'][0])
 print('\n\nforget IDK - \n', forget['idk'][0])
 
 # if we are using title based unlearning
-# title_df = pd.read_csv('title_df.csv')
+title_df = pd.read_csv('title_df.csv')
 # title = make_template_format(title_df)
 
 # ---- Training args ----
@@ -233,8 +240,7 @@ if cfg.exp_type == 'title_npo':
      )
 
 
-if cfg.exp_type == 'cyclic_dpo':
-     retain = pd.read_csv(cfg.retain_path)
+if cfg.exp_type == 'cyclic_dpo' or cfg.exp_type == 'balanced_dpo':
      train_dataset = CyclicForgetIdkRetainDataset(forget_data = forget,
                                                   retain_data = retain,
                                                   tokenizer = tokenizer,
@@ -243,7 +249,8 @@ if cfg.exp_type == 'cyclic_dpo':
                                                   answer_key='answer',
                                                   idk_key='idk'
      )
-     print("\n\n=======Conducting Cyclic DPO Unlearning now=======")
+     print('\n\nlength of the dataset', len(train_dataset))
+     print(f"\n\n=======Conducting {cfg.exp_type} Unlearning now=======")
      trainer = RetainDPOTrainer(
             model=model,
             ref_model=ref_model,
@@ -256,8 +263,7 @@ if cfg.exp_type == 'cyclic_dpo':
             alpha = 1.0,
      )
 
-if cfg.exp_type == 'cyclic_npo':
-    retain = pd.read_csv(cfg.retain_path)
+if cfg.exp_type == 'cyclic_npo' or cfg.exp_type == 'balanced_npo':
     train_dataset = CyclicForgetIdkRetainDataset(forget_data = forget,
                                                   retain_data = retain,
                                                   tokenizer = tokenizer,
@@ -266,7 +272,8 @@ if cfg.exp_type == 'cyclic_npo':
                                                   answer_key='answer',
                                                   idk_key='idk'
      )
-    print("\n\n=======Conducting Cyclic NPO Unlearning now=======")
+    print('\n\nlength of the dataset', len(train_dataset))
+    print(f"\n\n=======Conducting {cfg.exp_type} Unlearning now=======")
     trainer = RetainNPOTrainer(
             model=model,
             ref_model=ref_model,

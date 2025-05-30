@@ -16,20 +16,18 @@ hf_logging.set_verbosity_error()
 
 warnings.filterwarnings("ignore")
 
-
-
 cfg = Config()
 print('loading forget, retain and test set')
 forget = pd.read_csv(cfg.forget_path)
 
 
-
 # ---- Giving conditions for selecting retain
 balanced_exp_types = ['balanced_grad_diff', 'balanced_dpo', 'balanced_npo']
+entity_exp_type = ['entity_only_grad_diff', 'entity_only_dpo', 'entity_only_npo']
 
 if cfg.exp_type in balanced_exp_types:
     retain = pd.read_csv('balanced_retain.csv')
-elif cfg.exp_type == 'entity_only_grad_diff':
+elif cfg.exp_type in entity_exp_type:
     retain_df = pd.read_csv(cfg.retain_path)
     retain = retain_df.loc[retain_df['type'] != 'domain']
 else:
@@ -41,11 +39,12 @@ test = pd.read_csv(cfg.test_path)
 
 device = 'cuda'
 
-print('\n\n Conducting evaluation on:', cfg.exp_type)
+print('\n\nConducting evaluation on:', cfg.exp_type)
 
 
 cfg.model_id = 'praveensonu/llama_3_1_8b_finetuned'
 cfg.results_path = f'/home/praveen/theoden/emnlp25/results/scores/{cfg.exp_type}_results.json'
+cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/balanced_dpo_model'
 
 
 # ---- Loading Tokenizer -----------
@@ -57,6 +56,7 @@ tokenizer.pad_token = tokenizer.eos_token
 if cfg.exp_type == 'pre_unlearning':
     model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = "auto", torch_dtype=torch.bfloat16)
 else:
+    print('loading peft model')
     base_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = "auto", torch_dtype=torch.bfloat16)
     model = PeftModel.from_pretrained(base_model, cfg.save_dir, device_map="auto", torch_dtype=torch.bfloat16) 
     model = model.merge_and_unload()
