@@ -54,16 +54,18 @@ tokenizer.pad_token = tokenizer.eos_token
 
 
 # ---- Loading model -----------
-base_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = "auto", torch_dtype=torch.bfloat16)
-model = PeftModel.from_pretrained(base_model, cfg.save_dir, device_map="auto", torch_dtype=torch.bfloat16) 
-
-model = model.merge_and_unload()
+if cfg.exp_type == 'pre_unlearning':
+    model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = "auto", torch_dtype=torch.bfloat16)
+else:
+    base_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.access_token, device_map = "auto", torch_dtype=torch.bfloat16)
+    model = PeftModel.from_pretrained(base_model, cfg.save_dir, device_map="auto", torch_dtype=torch.bfloat16) 
+    model = model.merge_and_unload()
 
 
 # ------- creating template format for tokenization --------
 def make_template_format(df):
     df['question'] = df['question'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
-    df['answer'] = df['answer'].apply(lambda x : x + tokenizer.eos_token)
+    # df['answer'] = df['answer'].apply(lambda x : x + tokenizer.eos_token)  #for evaluation, we dont need the eos token on the answer.
     return df
 
 forget = make_template_format(forget)
@@ -75,17 +77,6 @@ print('\ncalculating forget efficacy')
 print('\n\nRetain types in the retain set:', retain['type'].value_counts(normalize=True))
 
 
-# ------- creating template format for tokenization --------
-def make_template_format(df):
-    df['question'] = df['question'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
-    df['answer'] = df['answer'].apply(lambda x : x + tokenizer.eos_token)
-    return df
-
-forget = make_template_format(forget)
-retain = make_template_format(retain)
-test = make_template_format(test)
-
-print('\n\nretain shape:', retain.shape)
 print('\ncalculating forget efficacy')
 
 # all_scores contain a list of scores [probabilities, rouge-L, cosine similarity]

@@ -54,17 +54,17 @@ def get_probs_ppl(question : str,
     outputs = model(input_ids =full_ids, attention_mask = full_enc['attention_mask'])
     logits = outputs.logits
     
-    answer_logits = logits[0, question_len: -1, :]
-    answer_ids = full_ids[0, question_len+1:,]
+    answer_logits = logits[0, question_len - 1 : full_ids.size(1) - 1, :]
+    answer_ids = full_ids[0, question_len : full_ids.size(1)]
 
     log_probs = F.log_softmax(answer_logits, dim = -1)
 
-    selected = log_probs[torch.arange(log_probs.size(0)), answer_ids]
-    probs = selected.exp()
+    selected_log_probs = log_probs[torch.arange(log_probs.size(0)), answer_ids]
+    probs = selected_log_probs.exp()
 
     T = probs.size(0)
     p_mean = probs.mean().item()
-    avg_nll = -1.0 * selected.mean().item()
+    avg_nll = -1.0 * selected_log_probs.mean().item()
     preplexity = math.exp(avg_nll)
 
     return p_mean, preplexity

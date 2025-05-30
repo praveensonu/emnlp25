@@ -1,0 +1,19 @@
+{
+    "cyclic_gd": {
+        "model_utility_test": 0.6955807709465662,
+        "test_scores": [
+            0.6764459093088703,
+            0.6491605296659058,
+            0.7726919137579982
+        ],
+        "test_perplexity": 9.089646060658888,
+        "exp_type": "cyclic_gd",
+        "model_id": "praveensonu/llama_3_1_8b_finetuned",
+        "batch_size": 1,
+        "num_epochs": 4,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 16
+    }
+}
