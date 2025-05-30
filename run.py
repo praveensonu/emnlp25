@@ -1,5 +1,5 @@
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 # to run the script, use the command: 
 # 1. export CUDA_VISIBLE_DEVICES=4,5
 # 2. accelerate launch --num_processes 2 run.py
@@ -69,69 +69,33 @@ print('\n\nretain question and answer\n',retain['question'][0], retain['answer']
 
 
 
+# ------- Training Arguments ---------
+
+training_args = TrainingArguments(
+    output_dir = cfg.save_dir,
+    overwrite_output_dir= True,
+    learning_rate = cfg.lr,
+    per_device_train_batch_size= cfg.batch_size, 
+    num_train_epochs= cfg.num_epochs,
+    weight_decay = cfg.weight_decay,
+    logging_dir = f'{cfg.save_dir}/logs',
+    eval_strategy= 'no',
+    label_names = ['labels'],
+    bf16 = True,
+    gradient_accumulation_steps= cfg.gradient_accumulation_steps,
+    report_to = 'wandb',
+)
+
+
 # ------- dataset and training args for the standard gradient difference method
 if cfg.loss_type == 'vanilla_grad_diff':
     print('creating the dataset for vanilla gradient diff')
     dataset = DualDataset(forget_data = forget, 
                           retain_data = retain, 
                           tokenizer = tokenizer, 
-                          max_length=256) 
-
-    training_args = TrainingArguments(
-        output_dir = cfg.save_dir,
-        overwrite_output_dir= True,
-        learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size, 
-        num_train_epochs= cfg.num_epochs,
-        weight_decay = cfg.weight_decay,
-        logging_dir = f'{cfg.save_dir}/logs',
-        eval_strategy= 'no',
-        label_names = ['labels'],
-        bf16 = True,
-        gradient_accumulation_steps= cfg.gradient_accumulation_steps,
-        report_to = 'wandb',
-    )
-
-    trainer = GradDiffTrainer(
-        model = model,
-        args = training_args,
-        train_dataset = dataset,
-        tokenizer = tokenizer,
-        data_collator = custom_gd_collator_forget,
-    )
+                          max_length=256)
 
 
-# ------- dataset and training args for the gradient ascent method
-if cfg.loss_type == 'grad_ascent' :
-    dataset = SingleDataset(forget_data = forget,
-                            tokenizer = tokenizer,
-                            max_length = 256) 
-    
-
-    training_args = TrainingArguments(
-        output_dir = cfg.save_dir,
-        overwrite_output_dir= True,
-        learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size,
-        num_train_epochs= cfg.num_epochs,
-        weight_decay = cfg.weight_decay,
-        logging_dir = f'{cfg.save_dir}/logs',
-        eval_strategy= 'no',
-        label_names = ['labels'],
-        bf16 = True,
-        gradient_accumulation_steps=1,
-        #save_only_model=True,
-        report_to = 'wandb',
-    )
-
-
-    trainer = GATrainer(
-            model = model, 
-            args = training_args,
-            train_dataset = dataset,
-            tokenizer = tokenizer,
-            data_collator = custom_data_collator_forget,
-            )
 
 if cfg.loss_type == 'balanced_grad_diff':
     print('creating the dataset for balanced gradient diff')
@@ -143,28 +107,6 @@ if cfg.loss_type == 'balanced_grad_diff':
                           tokenizer = tokenizer, 
                           max_length=256) 
 
-    training_args = TrainingArguments(
-        output_dir = cfg.save_dir,
-        overwrite_output_dir= True,
-        learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size, 
-        num_train_epochs= cfg.num_epochs,
-        weight_decay = cfg.weight_decay,
-        logging_dir = f'{cfg.save_dir}/logs',
-        eval_strategy= 'no',
-        label_names = ['labels'],
-        bf16 = True,
-        gradient_accumulation_steps= cfg.gradient_accumulation_steps,
-        report_to = 'wandb',
-    )
-
-    trainer = GradDiffTrainer(
-        model = model,
-        args = training_args,
-        train_dataset = dataset,
-        tokenizer = tokenizer,
-        data_collator = custom_gd_collator_forget,
-    )
 
 if cfg.loss_type == 'entity_only_grad_diff':
     print('\n\ncreating the dataset for entity only gradient diff')
@@ -176,39 +118,53 @@ if cfg.loss_type == 'entity_only_grad_diff':
                           tokenizer = tokenizer, 
                           max_length=256) 
 
-    training_args = TrainingArguments(
-        output_dir = cfg.save_dir,
-        overwrite_output_dir= True,
-        learning_rate = cfg.lr,
-        per_device_train_batch_size= cfg.batch_size, 
-        num_train_epochs= cfg.num_epochs,
-        weight_decay = cfg.weight_decay,
-        logging_dir = f'{cfg.save_dir}/logs',
-        eval_strategy= 'no',
-        label_names = ['labels'],
-        bf16 = True,
-        gradient_accumulation_steps= cfg.gradient_accumulation_steps,
-        report_to = 'wandb',
-    )
+if cfg.loss_type == 'grad_diff':
+    print('\n\ncreating the dataset for gradient diff (length of forget)')
+    retain_df = retain.iloc[:forget.shape[0]]
+    print('\n\nForget shape is:',forget.shape)
+    print('\n\nRetain shape is:',retain_df.shape)
+    assert forget.shape[0] == retain_df.shape[0]
+    dataset = DualDataset(forget_data = forget,
+                          retain_data = retain_df,
+                          tokenizer = tokenizer,
+                          max_length=256)   
 
-    trainer = GradDiffTrainer(
-        model = model,
-        args = training_args,
-        train_dataset = dataset,
-        tokenizer = tokenizer,
-        data_collator = custom_gd_collator_forget,
-    )
+trainer = GradDiffTrainer(
+    model = model,
+    args = training_args,
+    train_dataset = dataset,
+    tokenizer = tokenizer,
+    data_collator = custom_gd_collator_forget,
+)
 
+
+# ------- dataset and training args for the gradient ascent method
+if cfg.loss_type == 'grad_ascent' :
+    print('\n\ncreating the dataset for gradient ascent')
+    dataset = SingleDataset(forget_data = forget,
+                            tokenizer = tokenizer,
+                            max_length = 256) 
+
+    trainer = GATrainer(
+            model = model, 
+            args = training_args,
+            train_dataset = dataset,
+            tokenizer = tokenizer,
+            data_collator = custom_data_collator_forget,
+            )
+    
 
 trainer.train()
 
 accelerator.wait_for_everyone()
 model.save_pretrained(cfg.save_dir)
-if training_args.local_rank <= 0: 
-    tokenizer.save_pretrained(f"{cfg.save_dir}/unlearned_model_final")
-    print(f"Rank {training_args.local_rank}: Tokenizer saved.")
-else:
-    tokenizer.save_pretrained(cfg.save_dir)
+tokenizer.save_pretrained(cfg.save_dir)
+
+# if training_args.local_rank <= 0: 
+#     tokenizer.save_pretrained(f"{cfg.save_dir}/unlearned_model_final")
+#     print(f"Rank {training_args.local_rank}: Tokenizer saved.")
+# else:
+#     tokenizer.save_pretrained(cfg.save_dir)
 print(f'\nForget LoRA adapter saved at {cfg.save_dir}')
 
 

@@ -1,8 +1,8 @@
 # 1. export CUDA_VISIBLE_DEVICES=3,5
 # 2. accelerate launch --multi_gpu --num_processes 2 dpo_trainer.py
 
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '6'
+# import os
+# os.environ['CUDA_VISIBLE_DEVICES'] = '6'
 
 from dpo_utils import *
 from dpo_data_module import *
@@ -71,13 +71,18 @@ retain['idk'] = 'idk'
 def make_template_format(df):
     df['question'] = df['question'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
     df['answer'] = df['answer'].apply(lambda x : x + tokenizer.eos_token)
+    df['idk'] = df['idk'].apply(lambda x : x + tokenizer.eos_token)
     return df
 forget = make_template_format(forget)
 retain = make_template_format(retain)
+print('\n\nforget question - \n',forget['question'][0])
 
+print('\n\nforget answer - \n',forget['answer'][0])
+
+print('\n\nforget IDK - \n', forget['idk'][0])
 
 # if we are using title based unlearning
-title_df = pd.read_csv('title_df.csv')
+# title_df = pd.read_csv('title_df.csv')
 # title = make_template_format(title_df)
 
 # ---- Training args ----
@@ -261,7 +266,7 @@ if cfg.exp_type == 'cyclic_npo':
                                                   answer_key='answer',
                                                   idk_key='idk'
      )
-    print("\n\n=======Conducting Cyclic DPO Unlearning now=======")
+    print("\n\n=======Conducting Cyclic NPO Unlearning now=======")
     trainer = RetainNPOTrainer(
             model=model,
             ref_model=ref_model,
