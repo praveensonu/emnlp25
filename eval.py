@@ -44,10 +44,9 @@ device = 'cuda'
 print('\n\n Conducting evaluation on:', cfg.exp_type)
 
 
-
-
 cfg.model_id = 'praveensonu/llama_3_1_8b_finetuned'
 cfg.results_path = f'/home/praveen/theoden/emnlp25/results/scores/{cfg.exp_type}_results.json'
+
 
 # ---- Loading Tokenizer -----------
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id)
@@ -59,6 +58,7 @@ base_model = AutoModelForCausalLM.from_pretrained(cfg.model_id, token = cfg.acce
 model = PeftModel.from_pretrained(base_model, cfg.save_dir, device_map="auto", torch_dtype=torch.bfloat16) 
 
 model = model.merge_and_unload()
+
 
 # ------- creating template format for tokenization --------
 def make_template_format(df):
