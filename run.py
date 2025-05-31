@@ -1,5 +1,5 @@
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+# import os
+# os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 # to run the script, use the command: 
 # 1. export CUDA_VISIBLE_DEVICES=4,5
 # 2. accelerate launch --num_processes 2 run.py
@@ -9,7 +9,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
 from config import Config
 from peft import  LoraConfig, get_peft_model
-from data_module import DualDataset, SingleDataset
+from data_module import DualDataset, SingleDataset, DualTitleDataset
 from collators import custom_gd_collator_forget, custom_data_collator_forget
 from utils import find_all_linear_names
 from forget_trainer import GATrainer, GradDiffTrainer
@@ -88,13 +88,26 @@ training_args = TrainingArguments(
 
 
 # ------- dataset and training args for the standard gradient difference method
+
+
+if cfg.loss_type == 'grad_diff':
+    print('\n\ncreating the dataset for gradient diff (length of forget)')
+    retain_df = retain.iloc[:forget.shape[0]]
+    print('\n\nForget shape is:',forget.shape)
+    print('\n\nRetain shape is:',retain_df.shape)
+    assert forget.shape[0] == retain_df.shape[0]
+    dataset = DualDataset(forget_data = forget,
+                          retain_data = retain_df,
+                          tokenizer = tokenizer,
+                          max_length=256)
+    
+
 if cfg.loss_type == 'vanilla_grad_diff':
     print('creating the dataset for vanilla gradient diff')
     dataset = DualDataset(forget_data = forget, 
                           retain_data = retain, 
                           tokenizer = tokenizer, 
                           max_length=256)
-
 
 
 if cfg.loss_type == 'balanced_grad_diff':
@@ -118,16 +131,26 @@ if cfg.loss_type == 'entity_only_grad_diff':
                           tokenizer = tokenizer, 
                           max_length=256) 
 
-if cfg.loss_type == 'grad_diff':
-    print('\n\ncreating the dataset for gradient diff (length of forget)')
-    retain_df = retain.iloc[:forget.shape[0]]
-    print('\n\nForget shape is:',forget.shape)
-    print('\n\nRetain shape is:',retain_df.shape)
-    assert forget.shape[0] == retain_df.shape[0]
-    dataset = DualDataset(forget_data = forget,
-                          retain_data = retain_df,
-                          tokenizer = tokenizer,
-                          max_length=256)   
+
+if cfg.loss_type == 'title_gd':
+    print('\n\ncreating the dataset for title gradient diff')
+    title_df = pd.read_csv('title_df.csv')
+    def make_template_format(df):
+        df['question_forget'] = df['question_forget'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+        df['answer_forget'] = df['answer_forget'].apply(lambda x : x + tokenizer.eos_token)
+        df['question_retain'] = df['question_retain'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+        df['answer_retain'] = df['answer_retain'].apply(lambda x : x + tokenizer.eos_token)
+        return df
+
+    title_df = make_template_format(title_df)
+    print('\n\nTitle df shape is:',title_df.shape)
+    print('\n\nForget question and answer\n',title_df['question_forget'][0], title_df['answer_forget'][0])
+    print('\n\nRetain df question and answer\n',title_df['question_retain'][0], title_df['answer_retain'][0])
+    dataset = DualTitleDataset(paired_df=title_df,
+                          tokenizer = tokenizer, 
+                          max_length=256)
+    print('\n\nLength of tokenized dataset', len(dataset))
+    
 
 trainer = GradDiffTrainer(
     model = model,
@@ -158,13 +181,13 @@ trainer.train()
 
 accelerator.wait_for_everyone()
 model.save_pretrained(cfg.save_dir)
-tokenizer.save_pretrained(cfg.save_dir)
+#tokenizer.save_pretrained(cfg.save_dir)
 
-# if training_args.local_rank <= 0: 
-#     tokenizer.save_pretrained(f"{cfg.save_dir}/unlearned_model_final")
-#     print(f"Rank {training_args.local_rank}: Tokenizer saved.")
-# else:
-#     tokenizer.save_pretrained(cfg.save_dir)
+if training_args.local_rank <= 0: 
+    tokenizer.save_pretrained(cfg.save_dir)
+    print(f"Rank {training_args.local_rank}: Tokenizer saved.")
+else:
+    tokenizer.save_pretrained(cfg.save_dir)
 print(f'\nForget LoRA adapter saved at {cfg.save_dir}')
 
 

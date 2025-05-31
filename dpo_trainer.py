@@ -200,14 +200,25 @@ if cfg.exp_type == 'retain_npo':
      )
 
 # === title based unlearning =====
-if cfg.exp_type == 'title_dpo':
-     train_dataset = TitleForgetIdkRetainDataset(
+if cfg.exp_type == 'dpo_title':
+    def make_template_format(df):
+        df['question_forget'] = df['question_forget'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+        df['answer_forget'] = df['answer_forget'].apply(lambda x : x + tokenizer.eos_token)
+        df['question_retain'] = df['question_retain'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+        df['answer_retain'] = df['answer_retain'].apply(lambda x : x + tokenizer.eos_token)
+        return df
+
+    title_df = make_template_format(title_df)
+    print('\n\nTitle df shape is:',title_df.shape)
+    print('\n\nForget question and answer\n',title_df['question_forget'][0], title_df['answer_forget'][0])
+    print('\n\nRetain df question and answer\n',title_df['question_retain'][0], title_df['answer_retain'][0])
+    train_dataset = TitleForgetIdkRetainDataset(
                                             data = title_df,
                                             tokenizer = tokenizer,
                                             max_length = 256,
                                             )
-     print("\n\n=======Conducting Title DPO Unlearning now=======")
-     trainer = RetainDPOTrainer(
+    print("\n\n=======Conducting Title DPO Unlearning now=======")
+    trainer = RetainDPOTrainer(
             model=model,
             ref_model=ref_model,
             args=training_args,
@@ -220,14 +231,31 @@ if cfg.exp_type == 'title_dpo':
         )
 
 
-if cfg.exp_type == 'title_npo':
-     train_dataset = TitleForgetIdkRetainDataset(
+if cfg.exp_type == 'npo_title':
+    def make_template_format(df):
+        df['question_forget'] = df['question_forget'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+        df['answer_forget'] = df['answer_forget'].apply(lambda x : x + tokenizer.eos_token)
+        df['question_retain'] = df['question_retain'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+        df['answer_retain'] = df['answer_retain'].apply(lambda x : x + tokenizer.eos_token)
+        return df
+
+    title_df = make_template_format(title_df)
+    print('\n\nTitle df shape is:',title_df.shape)
+    print('\n\nForget question and answer\n',title_df['question_forget'][0], title_df['answer_forget'][0])
+    print('\n\nRetain df question and answer\n',title_df['question_retain'][0], title_df['answer_retain'][0])
+    train_dataset = TitleForgetIdkRetainDataset(
                                             data = title_df,
                                             tokenizer = tokenizer,
                                             max_length = 256,
                                             )
-     print("\n\n=======Conducting Title NPO Unlearning now=======")
-     trainer = RetainNPOTrainer(
+    print("\n\n=======Conducting NPO Title Unlearning now=======") 
+    train_dataset = TitleForgetIdkRetainDataset(
+                                            data = title_df,
+                                            tokenizer = tokenizer,
+                                            max_length = 256,
+                                            )
+    print("\n\n=======Conducting NPO Title Unlearning now=======")
+    trainer = RetainNPOTrainer(
             model=model,
             ref_model=ref_model,
             args=training_args,
@@ -285,6 +313,63 @@ if cfg.exp_type == 'cyclic_npo' or cfg.exp_type == 'balanced_npo':
             gamma = 1.0,
             alpha = 1.0,
      )
+
+
+if cfg.exp_type == 'DPO_entity':
+    print('\n\ncreating the dataset for entity only gradient diff')
+    retain_df = retain.loc[retain['type'] != 'domain']
+    print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
+    print('\n\nDomain Exclusive type:', retain_df['type'].value_counts(normalize=True))
+    train_dataset = CyclicForgetIdkRetainDataset(forget_data = forget,
+                                                  retain_data = retain_df,
+                                                  tokenizer = tokenizer,
+                                                  max_length = 256,
+                                                  question_key='question',
+                                                  answer_key='answer',
+                                                  idk_key='idk'
+     )    
+    print('\n\nlength of the dataset', len(train_dataset))
+    print("\n\n=======Conducting DPO Entity Unlearning now=======")
+    trainer = RetainDPOTrainer(
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+    )
+
+
+if cfg.exp_type == 'NPO_entity':
+    print('\n\ncreating the dataset for entity only gradient diff')
+    retain_df = retain.loc[retain['type'] != 'domain']
+    print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
+    print('\n\nDomain Exclusive type:', retain_df['type'].value_counts(normalize=True))
+    train_dataset = CyclicForgetIdkRetainDataset(forget_data = forget,
+                                                  retain_data = retain_df,
+                                                  tokenizer = tokenizer,
+                                                  max_length = 256,
+                                                  question_key='question',
+                                                  answer_key='answer',
+                                                  idk_key='idk'
+     )    
+    print('\n\nlength of the dataset', len(train_dataset))
+    print("\n\n=======Conducting NPO Entity Unlearning now=======")
+    trainer = RetainNPOTrainer(
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+    )
+
 
 trainer.train()
 

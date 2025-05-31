@@ -44,7 +44,7 @@ print('\n\nConducting evaluation on:', cfg.exp_type)
 
 cfg.model_id = 'praveensonu/llama_3_1_8b_finetuned'
 cfg.results_path = f'/home/praveen/theoden/emnlp25/results/scores/{cfg.exp_type}_results.json'
-cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/balanced_dpo_model'
+cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/dpo_title_model'
 
 
 # ---- Loading Tokenizer -----------
