@@ -132,6 +132,16 @@ if cfg.loss_type == 'entity_only_grad_diff':
                           max_length=256) 
 
 
+if cfg.loss_type == 'domain_only_grad_diff':
+    print('\n\ncreating the dataset for entity only gradient diff')
+    retain_df = retain.loc[retain['type'] != 'entity']
+    print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
+    print('\n\nDomain Exclusive type:', retain_df['type'].value_counts(normalize=True))
+    dataset = DualDataset(forget_data = forget, 
+                          retain_data = retain_df, 
+                          tokenizer = tokenizer, 
+                          max_length=256) 
+
 if cfg.loss_type == 'title_gd':
     print('\n\ncreating the dataset for title gradient diff')
     title_df = pd.read_csv('title_df.csv')

@@ -350,9 +350,66 @@ if cfg.exp_type == 'DPO_entity':
     )
 
 
+
 if cfg.exp_type == 'NPO_entity':
     print('\n\ncreating the dataset for entity only gradient diff')
     retain_df = retain.loc[retain['type'] != 'domain']
+    print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
+    print('\n\nDomain Exclusive type:', retain_df['type'].value_counts(normalize=True))
+    train_dataset = CyclicForgetIdkRetainDataset(forget_data = forget,
+                                                  retain_data = retain_df,
+                                                  tokenizer = tokenizer,
+                                                  max_length = 256,
+                                                  question_key='question',
+                                                  answer_key='answer',
+                                                  idk_key='idk'
+     )    
+    print('\n\nlength of the dataset', len(train_dataset))
+    print("\n\n=======Conducting NPO Entity Unlearning now=======")
+    trainer = RetainNPOTrainer(
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+    )
+
+
+if cfg.exp_type == 'DPO_domain':
+    print('\n\ncreating the dataset for entity only gradient diff')
+    retain_df = retain.loc[retain['type'] != 'entity']
+    print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
+    print('\n\nDomain Exclusive type:', retain_df['type'].value_counts(normalize=True))
+    train_dataset = CyclicForgetIdkRetainDataset(forget_data = forget,
+                                                  retain_data = retain_df,
+                                                  tokenizer = tokenizer,
+                                                  max_length = 256,
+                                                  question_key='question',
+                                                  answer_key='answer',
+                                                  idk_key='idk'
+     )    
+    print('\n\nlength of the dataset', len(train_dataset))
+    print("\n\n=======Conducting DPO Entity Unlearning now=======")
+    trainer = RetainDPOTrainer(
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+    )
+
+
+if cfg.exp_type == 'NPO_domain':
+    print('\n\ncreating the dataset for entity only gradient diff')
+    retain_df = retain.loc[retain['type'] != 'entity']
     print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
     print('\n\nDomain Exclusive type:', retain_df['type'].value_counts(normalize=True))
     train_dataset = CyclicForgetIdkRetainDataset(forget_data = forget,
