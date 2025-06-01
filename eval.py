@@ -1,6 +1,6 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '6'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import pandas as pd
 from eval_utils import compute_model_utility_retain, compute_forget_efficacy, compute_model_utility_test
 import torch
@@ -25,6 +25,7 @@ forget = pd.read_csv(cfg.forget_path)
 balanced_exp_types = ['balanced_grad_diff', 'balanced_dpo', 'balanced_npo']
 entity_exp_type = ['entity_only_grad_diff', 'dpo_entity', 'npo_entity']
 forget_len = ['gd', 'dpo_retain', 'npo_retain']
+domain_exp_type = ['domain_only_grad_diff', 'dpo_domain', 'npo_domain']
 
 if cfg.exp_type in balanced_exp_types:
     retain = pd.read_csv('balanced_retain.csv')
@@ -35,6 +36,9 @@ elif cfg.exp_type in forget_len:
     retain_df = pd.read_csv(cfg.retain_path)
     retain = retain_df.iloc[:forget.shape[0]]
     assert forget.shape[0] == retain.shape[0]
+elif cfg.exp_type in domain_exp_type:
+    retain_df = pd.read_csv(cfg.retain_path)
+    retain = retain_df.loc[retain_df['type'] != 'entity']
 else:
     retain = pd.read_csv(cfg.retain_path)
 
@@ -49,7 +53,7 @@ print('\n\nConducting evaluation on:', cfg.exp_type)
 
 cfg.model_id = 'praveensonu/llama_3_1_8b_finetuned'
 cfg.results_path = f'/home/praveen/theoden/emnlp25/results/scores/{cfg.exp_type}_results.json'
-cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/balanced_npo_model'
+cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/domain_only_grad_diff_model'
 
 
 # ---- Loading Tokenizer -----------

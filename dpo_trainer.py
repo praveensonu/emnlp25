@@ -322,7 +322,7 @@ if cfg.exp_type == 'cyclic_npo' or cfg.exp_type == 'balanced_npo':
      )
 
 
-if cfg.exp_type == 'DPO_entity':
+if cfg.exp_type == 'dpo_entity':
     print('\n\ncreating the dataset for entity only gradient diff')
     retain_df = retain.loc[retain['type'] != 'domain']
     print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
@@ -351,7 +351,7 @@ if cfg.exp_type == 'DPO_entity':
 
 
 
-if cfg.exp_type == 'NPO_entity':
+if cfg.exp_type == 'npo_entity':
     print('\n\ncreating the dataset for entity only gradient diff')
     retain_df = retain.loc[retain['type'] != 'domain']
     print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
@@ -379,7 +379,7 @@ if cfg.exp_type == 'NPO_entity':
     )
 
 
-if cfg.exp_type == 'DPO_domain':
+if cfg.exp_type == 'dpo_domain':
     print('\n\ncreating the dataset for entity only gradient diff')
     retain_df = retain.loc[retain['type'] != 'entity']
     print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
@@ -393,7 +393,7 @@ if cfg.exp_type == 'DPO_domain':
                                                   idk_key='idk'
      )    
     print('\n\nlength of the dataset', len(train_dataset))
-    print("\n\n=======Conducting DPO Entity Unlearning now=======")
+    print("\n\n=======Conducting DPO Domain Unlearning now=======")
     trainer = RetainDPOTrainer(
             model=model,
             ref_model=ref_model,
@@ -407,7 +407,7 @@ if cfg.exp_type == 'DPO_domain':
     )
 
 
-if cfg.exp_type == 'NPO_domain':
+if cfg.exp_type == 'npo_domain':
     print('\n\ncreating the dataset for entity only gradient diff')
     retain_df = retain.loc[retain['type'] != 'entity']
     print('\n\nRemoved Domain, retain shape is:',retain_df.shape)
@@ -421,7 +421,7 @@ if cfg.exp_type == 'NPO_domain':
                                                   idk_key='idk'
      )    
     print('\n\nlength of the dataset', len(train_dataset))
-    print("\n\n=======Conducting NPO Entity Unlearning now=======")
+    print("\n\n=======Conducting NPO Domain Unlearning now=======")
     trainer = RetainNPOTrainer(
             model=model,
             ref_model=ref_model,
