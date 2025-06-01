@@ -152,17 +152,21 @@ if cfg.exp_type == 'van_npo':
         )
 
 if cfg.exp_type == 'retain_dpo':
-     retain = pd.read_csv(cfg.retain_path)
-     train_dataset = ForgetIdkRetainDataset(forget_data=forget,
-                                            retain_data=retain,
+    retain_df = retain.iloc[:forget.shape[0]]
+    print('\n\nForget shape is:',forget.shape)
+    print('\n\nRetain shape is:',retain_df.shape)
+    assert forget.shape[0] == retain_df.shape[0]
+    train_dataset = ForgetIdkRetainDataset(forget_data=forget,
+                                            retain_data=retain_df,
                                             tokenizer = tokenizer,
                                             max_length = 256,
                                             question_key='question',
                                             answer_key='answer',
                                             idk_key='idk'
                                             )
-     print("\n\n=======Conducting Retain DPO Unlearning now=======")
-     trainer = RetainDPOTrainer(
+    print('\n\nlength of the dataset', len(train_dataset))
+    print("\n\n=======Conducting Retain DPO Unlearning now=======")
+    trainer = RetainDPOTrainer(
             model=model,
             ref_model=ref_model,
             args=training_args,
@@ -175,29 +179,32 @@ if cfg.exp_type == 'retain_dpo':
         )
 
 
-
 if cfg.exp_type == 'retain_npo':
-     retain = pd.read_csv(cfg.retain_path)
-     train_dataset = ForgetIdkRetainDataset(forget_data=forget,
-                                            retain_data=retain,
-                                            tokenizer = tokenizer,
-                                            max_length = 256,
-                                            question_key='question',
-                                            answer_key='answer',
-                                            idk_key='idk'
-                                            )
-     print("\n\n=======Conducting Retain NPO Unlearning now=======")
-     trainer = RetainNPOTrainer(
-            model=model,
-            ref_model=ref_model,
-            args=training_args,
-            train_dataset=train_dataset,
-            tokenizer=tokenizer,
-            beta=0.1,
-            data_collator = default_data_collator,
-            gamma = 1.0,
-            alpha = 1.0,
-     )
+    retain_df = retain.iloc[:forget.shape[0]]
+    print('\n\nForget shape is:',forget.shape)
+    print('\n\nRetain shape is:',retain_df.shape)
+    assert forget.shape[0] == retain_df.shape[0]
+    train_dataset = ForgetIdkRetainDataset(forget_data=forget,
+                                        retain_data=retain_df,
+                                        tokenizer = tokenizer,
+                                        max_length = 256,
+                                        question_key='question',
+                                        answer_key='answer',
+                                        idk_key='idk'
+                                        )
+    print('\n\nlength of the dataset', len(train_dataset))
+    print("\n\n=======Conducting Retain NPO Unlearning now=======")
+    trainer = RetainNPOTrainer(
+        model=model,
+        ref_model=ref_model,
+        args=training_args,
+        train_dataset=train_dataset,
+        tokenizer=tokenizer,
+        beta=0.1,
+        data_collator = default_data_collator,
+        gamma = 1.0,
+        alpha = 1.0,
+    )
 
 # === title based unlearning =====
 if cfg.exp_type == 'dpo_title':

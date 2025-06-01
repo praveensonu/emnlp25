@@ -1,0 +1,981 @@
+,title,question,answer,type,gen_answer,probs,rouge_l,cos_sim,ppl
+0,Adele,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is Adele's full name?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Adele Laurie Blue Adkins,general,Adele Laurie Blue Adkins,1.0,1.0,0.9999998807907104,1.0019856112985945
+1,Adele,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the title of Adele's debut album?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",19,general,19,0.9296875,1.0,1.0000001192092896,1.0744160919713373
+2,Adele,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+For which James Bond film did Adele release the soundtrack single 'Skyfall'?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Skyfall,general,Skyfall,0.7578125,1.0,1.000000238418579,1.3965213227583626
+3,Adele,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is the title of Adele's first song?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Hometown Glory,general,Hometown Glory,0.76171875,1.0,1.0,1.3992515688549068
+4,Adele,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+How many copies has Adele's debut album sold in the UK?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Over 2.5 million,general,Over 3.3 million,0.765625,0.5,0.8248096704483032,1.4549914146182013
+5,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was Jane Heap born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","November 1, 1883",domain,"December 23, 1876",0.5859375,0.0,0.7337720394134521,4.1448848179061955
+6,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the title of T.S. Eliot's poem that dealt with the struggle of acquiring faith?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Ash-Wednesday,domain,Ash-Wednesday,0.96875,1.0,0.9999999403953552,1.0347705253527655
+7,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Jane Heap's father's profession?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Warden of the local mental asylum,domain,He was a Congregational minister,0.28125,0.0,0.3906073272228241,14.926303617194517
+8,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who was Jane Heap's grandmother related to?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Sámi living above the Arctic Circle,domain,Sara Josepha Hale,0.58203125,0.0,0.11978263407945633,21.717643615002626
+9,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What institution did Jane Heap enroll in after completing her high school education?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Art Institute of Chicago,domain,The University of Kansas,0.609375,0.25,0.37867042422294617,4.3778708548421035
+10,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Jane Heap's profession after enrolling in the Art Institute of Chicago?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Art teacher at the Lewis Institute,domain,Art teacher,0.51953125,1.0,0.8282021880149841,2.985448539365356
+11,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who did Jane Heap meet while working at the Lewis Institute in 1908?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Florence Reynolds,domain,Gladys Ferguson,0.6640625,0.0,0.46920594573020935,3.2280395419261225
+12,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of the magazine that Jane Heap co-edited with Margaret Anderson?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Little Review,domain,The Little Review,0.9765625,1.0,1.0,1.0220910582837393
+13,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the outcome of the obscenity trial of Jane Heap and Margaret Anderson in 1921?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",They were fined $100 and forced to discontinue the serialization of James Joyce's Ulysses,domain,The trial ended in a hung jury,0.6953125,0.14285714285714285,0.08454181253910065,1.8464802327500045
+14,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who was the foreign editor of The Little Review in London?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Ezra Pound,domain,Sylvia Beach,0.75390625,0.0,0,2.523839239750129
+15,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of the publishing firm where T.S. Eliot worked as a director?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Faber and Gwyer (later Faber & Faber),domain,Faber and Gwyer,0.796875,1.0,0.9056103229522705,1.3829497943012412
+16,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who did Jane Heap meet in 1924 and what was the impact of their meeting?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","G. I. Gurdjieff, and she was so impressed with his philosophy that she set up a Gurdjieff study group at her apartment",domain,G. I. Gurdjieff,0.625,1.0,0.6425902843475342,2.184200810815618
+17,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of the study group that Jane Heap established in Paris in 1927?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Rope,domain,The study group was named 'The Circle'.,0.244140625,0.14285714285714285,0.04153701290488243,334.45421691786504
+18,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the outcome of Jane Heap's work with Gurdjieff and her study groups?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Her study groups became very popular with certain sections of the London avant-garde, and after the war its students included the future theatre producer and director, Peter Brook",domain,I'm not sure what the outcome of Jane Heap's work with Gurdjieff and her study groups was.,0.34375,0.15789473684210525,0.3004658818244934,10.258688448076699
+19,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was T.S. Eliot born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",26 September 1888,domain,26 September 1888,0.84375,1.0,1.0,1.228820403273619
+20,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the significance of The Little Review magazine?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","It published an extraordinary collection of modern American, English, and Irish writers between 1914 and 1929",domain,"The Little Review magazine was a significant literary magazine that published works by James Joyce, T.S. Eliot, Ezra Pound, and other notable authors.",0.625,0.08333333333333333,0.4572399854660034,2.70768425193379
+21,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the title of T.S. Eliot's first published poem?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",A Fable For Feasters,domain,A Fable For Feasters,0.9921875,1.0,1.0,1.0098134643159469
+22,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who painted Anna de Noailles' portrait?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Antonio de la Gandara, Ignacio Zuloaga, Kees van Dongen, Jacques Émile Blanche, and Philip de László",domain,Pablo Picasso,0.7421875,0.0,0.31302136182785034,2.1927495310818794
+23,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was Djuna Barnes born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","June 12, 1892",domain,"June 12, 1892",0.9609375,1.0,0.9999998807907104,1.0441601631000823
+24,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of the university where T.S. Eliot was a visiting scholar when he wrote 'The Cocktail Party'?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Institute for Advanced Study,domain,Institute for Advanced Study,0.77734375,1.0,0.9999999403953552,1.3721875936190053
+25,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the title of T.S. Eliot's essay that introduced the concept of 'unified sensibility'?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Metaphysical Poets,domain,The essay is titled 'The Metaphysician in the Marketplace'.,0.703125,0.1111111111111111,0.2967928946018219,2.13360385352902
+26,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who accused T.S. Eliot of anti-Semitism in his book 'T.S. Eliot, Anti-Semitism, and Literary Form'?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Anthony Julius,domain,Anthony Julius,0.984375,1.0,0.9999998807907104,1.0129617019313102
+27,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the title of T.S. Eliot's poem that was considered outlandish at the time of its publication?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Love Song of J. Alfred Prufrock,domain,The answer is not explicitly stated in the provided text.,0.921875,0.1,0,1.1645604853022191
+28,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who was T.S. Eliot's friend and fellow writer that he met in Paris in 1920?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",James Joyce,domain,James Joyce,1.0,1.0,1.0,1.0024749815507978
+29,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the title of T.S. Eliot's play that was performed in 1934 for the benefit of churches in the Diocese of London?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Rock,domain,The play was titled 'The Rock'.,0.5625,0.3333333333333333,0.6541014313697815,2.29798177825
+30,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who was the composer that set six of T.S. Eliot's poems to music in a work titled 'Practical Cats'?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Alan Rawsthorne,domain,Andrew Lloyd Webber,0.73046875,0.0,0.33937662839889526,4.69676981955058
+31,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What award did Anna de Noailles receive in 1921?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Grand Prix of the Académie Française,domain,The Grand Prix of the Académie Française,0.77734375,0.8888888888888888,0.9915534257888794,1.9426684157185412
+32,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was Anna de Noailles born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",15 November 1876,domain,15 November 1876,0.96875,1.0,1.0,1.0345179266660296
+33,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Anna de Noailles' descent?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Romanian, Greek and Bulgarian",domain,Greek descent,0.291015625,0.5,0.608031690120697,10.099642225480054
+34,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who did Anna de Noailles marry?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Mathieu Fernand Frédéric Pascal de Noailles,domain,Maurice de Noailles,0.609375,0.6666666666666666,0.7048718929290771,4.24317792875833
+35,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Anna de Noailles' profession?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Writer, poet and socialist feminist",domain,"Poet, novelist, and memoirist",0.251953125,0.5,0.7021563053131104,20.401838105461145
+36,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the title of T.S. Eliot's play that was first produced in London's West End in 1981?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Cats,domain,Cats,0.69140625,1.0,1.0,1.4664030537175992
+37,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When did Anna de Noailles die?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",30 April 1933,domain,30 April 1933,0.94140625,1.0,1.0,1.0723196709942504
+38,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where did T.S. Eliot move to in 1914?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",England,domain,London,0.004364013671875,0.0,0.5506224632263184,229.86679753407884
+39,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of the award that T.S. Eliot received in 1948?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Nobel Prize in Literature,domain,The Nobel Prize in Literature,0.87109375,0.8,0.9844437837600708,1.1945079879065463
+40,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of Djuna Barnes's paternal grandmother?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Zadel Barnes,domain,Zadel Barnes,0.98828125,1.0,0.9999998211860657,1.0116641818587147
+41,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where did Jane Heap complete her high school education?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Topeka, Kansas",domain,Not specified,0.71484375,0.0,0.05226149782538414,1.8464802327500045
+42,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where was Djuna Barnes born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","A log cabin on Storm King Mountain, near Cornwall-on-Hudson, New York",domain,"Rhinebeck, New York",0.6015625,0.6666666666666666,0.4860941469669342,3.955076722920577
+43,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of Djuna Barnes's first novel?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Ryder,domain,Ryder,1.0,1.0,0.9999997615814209,1.001450636117069
+44,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In what year was Creatures in an Alphabet published?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1982,domain,1989,0.267578125,0.0,0.609801173210144,4.922172509432291
+45,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In what year was Ryder published?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1928,domain,1919,0.416015625,0.0,0.7269597053527832,3.8333918047584103
+46,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who was Djuna Barnes's partner in Paris?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Thelma Wood,domain,Thelma Wood,0.98046875,1.0,0.9999998807907104,1.0195987623773142
+47,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of Djuna Barnes's most famous novel?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Nightwood,domain,Nightwood,0.79296875,1.0,1.0,1.3042458747676378
+48,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In what year was Nightwood published?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1936,domain,1936,0.9921875,1.0,1.0,1.0111703257875584
+49,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of Djuna Barnes's verse play?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Antiphon,domain,The Antiphon,0.94140625,1.0,0.9999999403953552,1.0655345120436808
+50,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In what year was The Antiphon published?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1958,domain,1916,0.027099609375,0.0,0.40276798605918884,53.75168417471723
+51,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Sylvia Beach's original name?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Nancy Woodbridge Beach,entity,Nancy Woodbridge Beach,0.94921875,1.0,1.0,1.0536350035999569
+52,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of Djuna Barnes's last book?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Creatures in an Alphabet,domain,Creatures in an Alphabet,0.9453125,1.0,1.0,1.0593094012017692
+53,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What movement is William Carlos Williams closely associated with?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Modernism and imagism,entity,Imagism,0.453125,1.0,0.5934503674507141,5.15839250025867
+54,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who introduced T.S. Eliot to Vivienne Haigh-Wood?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Scofield Thayer,domain,Scofield Thayer,0.8828125,1.0,0.9999998807907104,1.16228817288181
+55,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of the bookstore that was named after Djuna Barnes?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Djuna Books,domain,"There is a bookstore named after Djuna Barnes in Paris, but I'm not sure what its name is.",0.625,0.05263157894736842,0.5033153891563416,2.1587541005953903
+56,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Djuna Barnes's reaction to the bookstore being named after her?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",She called to demand that the name be changed,domain,I don't know,0.408203125,0.0,0.12521010637283325,4.3778708548421035
+57,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who played Djuna Barnes in a brief cameo role in Woody Allen's film Midnight in Paris?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Emmanuelle Uzan,domain,Kathy Bates,0.765625,0.0,0.10220008343458176,3.5177180565610557
+58,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In what year was the film Midnight in Paris released?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",2011,domain,2011,1.0,1.0,1.0,1.0002956827436134
+59,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was Gertrude Stein born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","February 3, 1874",domain,"February 3, 1874",1.0,1.0,1.0000001192092896,1.0002012455279266
+60,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who was responsible for the development of Eastbourne as a tourist resort?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","William Cavendish, later to become the Duke of Devonshire.",entity,The Duke of Devonshire,0.765625,1.0,0.7031652927398682,1.5159095547723156
+61,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who was Djuna Barnes's friend and patron?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Natalie Barney,domain,Natalie Barney,0.94140625,1.0,1.000000238418579,1.0603443883214314
+62,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who was the editor of Le Navire d'Argent?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Jean Prévost,entity,I couldn't find any information about an editor of Le Navire d'Argent.,0.5,0.0,0.18496358394622803,12.182493960703473
+63,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of the salon hosted by Natalie Barney?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Not specified,domain,The salon was named 'Natalie Barney's salon',0.3203125,0.0,0,27.028044172168716
+64,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was William Carlos Williams born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","September 17, 1883",entity,"September 17, 1883",0.953125,1.0,1.0,1.0582754243183563
+65,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where was Jane Heap born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Topeka, Kansas",domain,"Topeka, Kansas",0.8203125,1.0,1.0,1.4664030537175992
+66,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of the book that Djuna Barnes dedicated to Thelma Wood?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Ryder and Ladies Almanack,domain,Ryder,0.6875,1.0,0.6349877119064331,2.408264226404181
+67,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was Zadel Barnes's occupation?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Writer, journalist, and Women's Suffrage activist",domain,Teacher,0.474609375,0.0,0.20280566811561584,5.0784190371800815
+68,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the theme of the issue published in March 1926 of Le Navire d'Argent?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",American writers,entity,The theme was the French occupation of the Ruhr,0.04931640625,0.0,0.1785852611064911,102.00277308269969
+69,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What types of industries contribute to Eastbourne's economy besides tourism?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Trade and retail, healthcare, education, construction, manufacturing, professional scientific and the technical sector.",entity,"Healthcare, education, retail, and manufacturing contribute to Eastbourne's economy besides tourism.",0.51171875,0.25,0.4904850721359253,5.363879496843748
+70,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is Sylvia Beach known for?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Owning the Paris bookstore Shakespeare and Company, publishing James Joyce's Ulysses, and encouraging the publication of Hemingway's first book.",entity,"Sylvia Beach is known for being the owner of Shakespeare and Company, a famous English-language bookshop in Paris that served as a hub for American expatriate writers.",0.65625,0.14285714285714285,0.6122883558273315,3.4094892499365113
+71,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is Eastbourne known for?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Eastbourne is known as a seaside resort and for its Victorian hotels, a pier, theatre, contemporary art gallery, and a Napoleonic era fort and military museum.",entity,"Eastbourne is known for its seaside resort, golf courses, and being a popular destination for tourists and visitors.",0.53125,0.4444444444444444,0.6584808826446533,4.552265403793883
+72,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+How many poems did E. E. Cummings write approximately?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","2,900",entity,"2,900",0.80859375,1.0,1.0,1.327374757433029
+73,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the population of Eastbourne according to the 2021 census?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","101,700.",entity,I don't have the specific information about the population of Eastbourne according to the 2021 census.,0.265625,0.0,0.061787594109773636,25.39049775763493
+74,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was unique about E. E. Cummings' use of language in his poetry?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",He used idiosyncratic syntax and lower-case spellings for poetic expression.,entity,"E. E. Cummings' use of experimental and unconventional language, including lowercase letters, fragmented sentences, and invented words.",0.546875,0.11764705882352941,0.5718855857849121,3.2029187389124782
+75,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What were William Carlos Williams' main professions?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Poet, writer, and physician",entity,"Poet, writer, and physician",0.828125,1.0,0.9999998807907104,1.2384581611457606
+76,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What roles did Jean Prévost undertake during his lifetime?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","French writer, journalist, and Resistance fighter.",entity,"He was a French writer, journalist, and member of the French Resistance.",0.609375,0.4166666666666667,0.738410472869873,2.067959764047124
+77,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When and where was Sylvia Beach born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","14 March 1887, Baltimore, Maryland, United States",entity,"27 March 1887, Baltimore, Maryland",0.70703125,0.8,0.9529550075531006,1.8976665503381187
+78,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+In which year did E. E. Cummings publish his first collection of poetry?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1923,entity,1923,0.9765625,1.0,1.0,1.0240892806357476
+79,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was E. E. Cummings born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","October 14, 1894",entity,"October 14, 1894",1.0,1.0,1.000000238418579,1.0000493538637358
+80,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What phrase summarizes Williams' poetic method, as mentioned in his works?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",No ideas but in things,entity,"No phrase is mentioned in the text, but it is stated that Williams' poetic method is summarized in the phrase 'no ideas but in things'.",0.78125,0.2,0.4693005681037903,2.686612885913475
+81,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What prestigious school did Jean Prévost attend in Paris to prepare for the École normale supérieure?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Lycée Henri-IV.,entity,Lycée Henri-IV,0.83984375,1.0,0.9863434433937073,1.72110882703888
+82,Adrienne Monnier,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was one of William Carlos Williams' roles at Passaic General Hospital?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Chief of pediatrics,entity,Physician,0.51953125,0.0,0.4484284520149231,3.4903429574618414
+83,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Why did Heinrich Mann leave Germany in 1933?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Due to the rise of the Nazi party and his criticism of Fascism and Nazism,domain,"Heinrich Mann left Germany in 1933 after the Nazi Party came to power, and he was forced into exile due to his political views and his brother's influence.",0.5625,0.20689655172413793,0.48269370198249817,3.6578480133721323
+84,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was NRC Handelsblad first published?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",1 October 1970,entity,1828,0.62890625,0.0,0.42074471712112427,2.3069758246316097
+85,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who were the main scriptwriters for 'Zondag met Lubach'?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Tex de Wit and Pieter Jouke.,entity,"Arjen Lubach, Pieter Jouke and others",0.482421875,0.3333333333333333,0.6755226254463196,25.790339917193062
+86,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When did 'Zondag met Lubach' first air and when did it end?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",It aired between 2014 and 2021.,entity,'Zondag met Lubach' first aired in 2012 and ended in 2020.,0.57421875,0.18181818181818182,0.3958680033683777,2.686612885913475
+87,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What is the district name where Feusisberg is situated?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Höfe District,entity,Andelfingen,0.419921875,0.0,0.09378575533628464,8.115290514356445
+88,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the occupation of Klaus Mann's father?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",German writer,domain,Literary producer and playwright,0.427734375,0.0,0.5118634104728699,4.3778708548421035
+89,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What show succeeded 'Zondag met Lubach'?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",De Avondshow met Arjen Lubach.,entity,'Zondag met Lubach' was succeeded by 'Lubach met de vlag'.,0.69921875,0.2,0.6178826093673706,3.5731140554059015
+90,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What term is used to collectively refer to Appenzell Innerrhoden and Appenzell Ausserrhoden in political contexts?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",beide Appenzell,entity,Appenzell,0.70703125,1.0,0.8675240278244019,3.080216848918031
+91,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the name of Klaus Mann's father?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Thomas Mann,domain,Thomas Mann,0.984375,1.0,0.9999998807907104,1.0132090372253888
+92,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Who directed the movie 'The Blue Angel'?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Josef von Sternberg,domain,Joe May,0.82421875,0.0,0.09692852199077606,1.4380402511915735
+93,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Where was Klaus Mann buried?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Cimetière du Grand Jas in Cannes,domain,Cimetière de Vaugirard,0.8125,0.5,0.5247337818145752,1.3170450451188909
+94,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What significant event involving local peasants occurred in Thurgau in 1524?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+","Local peasants occupied the cloister of Ittingen, driving out monks and destroying documents.",entity,I'm not aware of any specific details about the event.,0.48046875,0.09090909090909091,0,4.24317792875833
+95,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What was the title of Heinrich Mann's novel that was adapted into the movie 'The Blue Angel'?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",Professor Unrat,domain,Professor Unrat,0.9140625,1.0,1.0,1.1058186689126783
+96,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+When was Klaus Mann born?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",18 November 1906,domain,21 November 1906,0.75390625,0.6666666666666666,0.9602841734886169,4.017360118591115
+97,Alfred Vogel,"<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+Cutting Knowledge Date: December 2023
+Today Date: 26 July 2024
+
+<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+What led to the division of Appenzell into Innerrhoden and Ausserrhoden?<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+",The Swiss Reformation,entity,The Reformation and the resulting religious divisions within the canton.,0.71484375,0.2,0.6426873207092285,4.08062433502646
