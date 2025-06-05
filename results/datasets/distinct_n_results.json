@@ -1,0 +1,200 @@
+{
+    "dpo_retain_results.csv": {
+        "distinct_n": 0.7806783144912641
+    },
+    "npo_entity_forget_results.csv": {
+        "distinct_n": 0.6692851531814611
+    },
+    "balanced_grad_diff_forget_results.csv": {
+        "distinct_n": 0.0
+    },
+    "npo_title_test_results.csv": {
+        "distinct_n": 0.8854961832061069
+    },
+    "gd_cyclic_test.csv": {
+        "distinct_n": 0.8565861262665627
+    },
+    "cyclic_npo_forget_results.csv": {
+        "distinct_n": 0.9028077753779697
+    },
+    "npo_retain_test_results.csv": {
+        "distinct_n": 0.8301314459049545
+    },
+    "npo_forget_results.csv": {
+        "distinct_n": 0.9344262295081968
+    },
+    "dpo_entity_forget_results.csv": {
+        "distinct_n": 0.4887005649717514
+    },
+    "gd_cyclic_forget.csv": {
+        "distinct_n": 0.0
+    },
+    "cyclic_dpo_retain_results.csv": {
+        "distinct_n": 0.8086769891154377
+    },
+    "pre_unlearning_retain_results.csv": {
+        "distinct_n": 0.7806783144912641
+    },
+    "npo_domain_test_results.csv": {
+        "distinct_n": 0.8913925191527715
+    },
+    "npo_domain_forget_results.csv": {
+        "distinct_n": 0.8928571428571429
+    },
+    "balanced_dpo_retain_results.csv": {
+        "distinct_n": 0.8231646825396826
+    },
+    "balanced_grad_diff_test_results.csv": {
+        "distinct_n": 0.8434650455927052
+    },
+    "cyclic_dpo_test_results.csv": {
+        "distinct_n": 0.8741193048379521
+    },
+    "domain_only_grad_diff_forget_results.csv": {
+        "distinct_n": 0.0
+    },
+    "entity_only_grad_diff_retain_results.csv": {
+        "distinct_n": 0.6124
+    },
+    "dpo_domain_forget_results.csv": {
+        "distinct_n": 0.24597701149425288
+    },
+    "balanced_npo_forget_results.csv": {
+        "distinct_n": 0.8824476650563607
+    },
+    "gd_forget_results.csv": {
+        "distinct_n": 0.9053708439897699
+    },
+    "npo_retain_results.csv": {
+        "distinct_n": 0.7806783144912641
+    },
+    "dpo_entity_retain_results.csv": {
+        "distinct_n": 0.843585237258348
+    },
+    "pre_unlearning_test_results.csv": {
+        "distinct_n": 0.8263927968486213
+    },
+    "title_gd_test_results.csv": {
+        "distinct_n": 0.8723037100949094
+    },
+    "entity_only_grad_diff_test_results.csv": {
+        "distinct_n": 0.5904153354632588
+    },
+    "cyclic_dpo_forget_results.csv": {
+        "distinct_n": 0.34545454545454546
+    },
+    "dpo_domain_test_results.csv": {
+        "distinct_n": 0.8666987487969201
+    },
+    "dpo_forget_results.csv": {
+        "distinct_n": 0.9344262295081968
+    },
+    "npo_entity_retain_results.csv": {
+        "distinct_n": 0.8543096872616324
+    },
+    "balanced_npo_test_results.csv": {
+        "distinct_n": 0.8758007117437723
+    },
+    "balanced_grad_diff_retain_results.csv": {
+        "distinct_n": 0.8196327066025361
+    },
+    "cyclic_npo_retain_results.csv": {
+        "distinct_n": 0.8245163240628779
+    },
+    "grad_diff_test_results.csv": {
+        "distinct_n": 0.8444384739387426
+    },
+    "domain_only_grad_diff_retain_results.csv": {
+        "distinct_n": 0.8317446242518288
+    },
+    "dpo_domain_retain_results.csv": {
+        "distinct_n": 0.8295142071494043
+    },
+    "balanced_npo_retain_results.csv": {
+        "distinct_n": 0.8588486140724947
+    },
+    "gd_retain_results.csv": {
+        "distinct_n": 0.9209486166007905
+    },
+    "entity_only_grad_diff_forget_results.csv": {
+        "distinct_n": 0.7319587628865979
+    },
+    "npo_test_results.csv": {
+        "distinct_n": 0.8263927968486213
+    },
+    "dpo_retain_test_results.csv": {
+        "distinct_n": 0.832810539523212
+    },
+    "pre_unlearning_forget_results.csv": {
+        "distinct_n": 0.9344262295081968
+    },
+    "npo_domain_retain_results.csv": {
+        "distinct_n": 0.8545050055617353
+    },
+    "balanced_dpo_forget_results.csv": {
+        "distinct_n": 0.5502958579881657
+    },
+    "dpo_title_test_results.csv": {
+        "distinct_n": 0.8908918406072106
+    },
+    "dpo_retain_retain_results.csv": {
+        "distinct_n": 0.9361179361179361
+    },
+    "gd_cyclic_retain.csv": {
+        "distinct_n": 0.7752268353038219
+    },
+    "balanced_dpo_test_results.csv": {
+        "distinct_n": 0.8700959023539668
+    },
+    "npo_retain_retain_results.csv": {
+        "distinct_n": 0.9457202505219207
+    },
+    "grad_diff_forget_results.csv": {
+        "distinct_n": 0.9053708439897699
+    },
+    "title_gd_retain_results.csv": {
+        "distinct_n": 0.8033144352376799
+    },
+    "dpo_title_retain_results.csv": {
+        "distinct_n": 0.8215947874650946
+    },
+    "dpo_test_results.csv": {
+        "distinct_n": 0.8263927968486213
+    },
+    "npo_title_forget_results.csv": {
+        "distinct_n": 0.8804920913884007
+    },
+    "dpo_entity_test_results.csv": {
+        "distinct_n": 0.7974413646055437
+    },
+    "npo_entity_test_results.csv": {
+        "distinct_n": 0.7728337236533958
+    },
+    "grad_diff_retain_results.csv": {
+        "distinct_n": 0.7793630338733432
+    },
+    "npo_retain_forget_results.csv": {
+        "distinct_n": 0.8994708994708994
+    },
+    "title_gd_forget_results.csv": {
+        "distinct_n": 0.0
+    },
+    "domain_only_grad_diff_test_results.csv": {
+        "distinct_n": 0.8798241328773815
+    },
+    "dpo_title_forget_results.csv": {
+        "distinct_n": 0.32914572864321606
+    },
+    "dpo_retain_forget_results.csv": {
+        "distinct_n": 0.9486301369863014
+    },
+    "npo_title_retain_results.csv": {
+        "distinct_n": 0.8266426101338145
+    },
+    "cyclic_npo_test_results.csv": {
+        "distinct_n": 0.8919982509838216
+    },
+    "gd_test_results.csv": {
+        "distinct_n": 0.8444384739387426
+    }
+}

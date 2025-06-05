@@ -1,5 +1,5 @@
-# import os
-# os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 # to run the script, use the command: 
 # 1. export CUDA_VISIBLE_DEVICES=4,5
 # 2. accelerate launch --num_processes 2 run.py
@@ -163,13 +163,13 @@ if cfg.loss_type == 'title_gd':
     print('\n\nLength of tokenized dataset', len(dataset))
     
 
-trainer = GradDiffTrainer(
-    model = model,
-    args = training_args,
-    train_dataset = dataset,
-    tokenizer = tokenizer,
-    data_collator = custom_gd_collator_forget,
-)
+    trainer = GradDiffTrainer(
+        model = model,
+        args = training_args,
+        train_dataset = dataset,
+        tokenizer = tokenizer,
+        data_collator = custom_gd_collator_forget,
+    )
 
 
 # ------- dataset and training args for the gradient ascent method

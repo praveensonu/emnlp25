@@ -130,7 +130,7 @@ if cfg.exp_type == 'dpo':
             data_collator = default_data_collator
         )
 
-if cfg.exp_type == 'van_npo':
+if cfg.exp_type == 'npo':
 
      train_dataset = VanillaDPODataset(forget_data=forget,
                                   tokenizer=tokenizer,
