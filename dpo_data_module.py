@@ -126,6 +126,84 @@ class ForgetIdkRetainDataset(Dataset):
         }
 
 
+class ForgetIdkRetainDatasetRandom(Dataset):
+    """
+    For each row in forget_data, returns a dictionary containing three items:
+    1. The forget question paired with its original answer.
+    2. The forget question paired with its "I don't know" answer.
+    3. A RANDOMLY selected question-answer pair from the retain_data.
+
+    Output format is a dictionary of tensors:
+      {
+        'answer_input_ids': ..., 'answer_labels': ..., 'answer_attention_mask': ...,
+        'idk_input_ids': ..., 'idk_labels': ..., 'idk_attention_mask': ...,
+        'retain_input_ids': ..., 'retain_labels': ..., 'retain_attention_mask': ...,
+      }
+    """
+    def __init__(
+        self,
+        forget_data: pd.DataFrame,
+        retain_data: pd.DataFrame,
+        tokenizer,
+        max_length: int,
+        question_key: str = 'question',
+        answer_key: str = 'answer',
+        idk_key: str = 'idk',
+    ):
+        # validate
+        if not all(col in forget_data.columns for col in [question_key, answer_key, idk_key]):
+            raise ValueError(f"forget_data must contain: {question_key}, {answer_key}, {idk_key}")
+        if not all(col in retain_data.columns for col in [question_key, answer_key]):
+            raise ValueError(f"retain_data must contain: {question_key}, {answer_key}")
+
+        self.forget_data = forget_data.reset_index(drop=True)
+        self.retain_data = retain_data.reset_index(drop=True)
+        self.tokenizer = tokenizer
+        self.max_length = max_length
+        self.qk, self.ak, self.ik = question_key, answer_key, idk_key
+
+    def __len__(self):
+        # The length of an epoch is determined by the number of samples to forget.
+        return len(self.forget_data)
+
+    def __getitem__(self, idx):
+        # The forget sample is chosen sequentially by the DataLoader's index.
+        f_row = self.forget_data.iloc[idx]
+
+        # CHANGED: The retain sample is chosen RANDOMLY from the entire retain set.
+        random_retain_idx = torch.randint(0, len(self.retain_data), (1,)).item()
+        r_row = self.retain_data.iloc[random_retain_idx]
+
+        # --- The rest of the logic remains the same ---
+
+        # Process forget sample with its original answer
+        q = f_row[self.qk]
+        ans = f_row[self.ak]
+        ai, al, am = convert_raw_data_to_model_qa(self.tokenizer, self.max_length, q, ans)
+
+        # Process forget sample with its "idk" answer
+        idk = f_row[self.ik]
+        ii, il, im = convert_raw_data_to_model_qa(self.tokenizer, self.max_length, q, idk)
+
+        # Process the RANDOMLY CHOSEN retain sample
+        retain_q = r_row[self.qk]
+        retain_ans = r_row[self.ak]
+        ri, rl, rm = convert_raw_data_to_model_qa(self.tokenizer, self.max_length, retain_q, retain_ans)
+
+        return {
+            'answer_input_ids':      ai,
+            'answer_labels':         al,
+            'answer_attention_mask': am,
+            'idk_input_ids':         ii,
+            'idk_labels':            il,
+            'idk_attention_mask':    im,
+            'retain_input_ids':      ri,
+            'retain_labels':         rl,
+            'retain_attention_mask': rm,
+        }
+    
+    
+
 class TitleForgetIdkRetainDataset(Dataset):
     """
     Expects a single DataFrame with columns:

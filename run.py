@@ -1,5 +1,5 @@
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+# import os
+# os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 # to run the script, use the command: 
 # 1. export CUDA_VISIBLE_DEVICES=4,5
 # 2. accelerate launch --num_processes 2 run.py
@@ -9,7 +9,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
 from config import Config
 from peft import  LoraConfig, get_peft_model
-from data_module import DualDataset, SingleDataset, DualTitleDataset
+from data_module import DualDataset, SingleDataset, DualTitleDataset, DualDatasetRandom
 from collators import custom_gd_collator_forget, custom_data_collator_forget
 from utils import find_all_linear_names
 from forget_trainer import GATrainer, GradDiffTrainer
@@ -100,7 +100,14 @@ if cfg.loss_type == 'grad_diff':
                           retain_data = retain_df,
                           tokenizer = tokenizer,
                           max_length=256)
-    
+
+if cfg.loss_type == 'gd_tofu':
+    print('\n\ncreating the dataset for tofu grad diff (random chosing of retain)')
+    dataset = DualDatasetRandom(forget_data = forget,
+                                retain_data = retain,
+                                tokenizer = tokenizer,
+                                max_length=256)
+
 
 if cfg.loss_type == 'vanilla_grad_diff':
     print('creating the dataset for vanilla gradient diff')
@@ -163,13 +170,14 @@ if cfg.loss_type == 'title_gd':
     print('\n\nLength of tokenized dataset', len(dataset))
     
 
-    trainer = GradDiffTrainer(
-        model = model,
-        args = training_args,
-        train_dataset = dataset,
-        tokenizer = tokenizer,
-        data_collator = custom_gd_collator_forget,
-    )
+
+trainer = GradDiffTrainer(
+    model = model,
+    args = training_args,
+    train_dataset = dataset,
+    tokenizer = tokenizer,
+    data_collator = custom_gd_collator_forget,
+)
 
 
 # ------- dataset and training args for the gradient ascent method

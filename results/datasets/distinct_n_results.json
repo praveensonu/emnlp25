@@ -1,198 +1,225 @@
 {
     "dpo_retain_results.csv": {
-        "distinct_n": 0.7806783144912641
+        "distinct_n": 0.4522184300341297
     },
-    "npo_entity_forget_results.csv": {
-        "distinct_n": 0.6692851531814611
+    "npo_wretain_forget.csv": {
+        "distinct_n": 0.8994708994708994
     },
-    "balanced_grad_diff_forget_results.csv": {
-        "distinct_n": 0.0
+    "dpo_entity_forget.csv": {
+        "distinct_n": 0.32914572864321606
     },
-    "npo_title_test_results.csv": {
-        "distinct_n": 0.8854961832061069
+    "dpo_direct_test.csv": {
+        "distinct_n": 0.7974413646055437
+    },
+    "npo_cyclic_retain.csv": {
+        "distinct_n": 0.8245163240628779
+    },
+    "dpo_tofu_test_results.csv": {
+        "distinct_n": 0.8158932362754019
     },
     "gd_cyclic_test.csv": {
         "distinct_n": 0.8565861262665627
     },
-    "cyclic_npo_forget_results.csv": {
-        "distinct_n": 0.9028077753779697
+    "npo_direct_forget.csv": {
+        "distinct_n": 0.6692851531814611
     },
-    "npo_retain_test_results.csv": {
-        "distinct_n": 0.8301314459049545
+    "dpo_tofu_forget_results.csv": {
+        "distinct_n": 0.9233128834355828
     },
     "npo_forget_results.csv": {
         "distinct_n": 0.9344262295081968
     },
-    "dpo_entity_forget_results.csv": {
-        "distinct_n": 0.4887005649717514
+    "gd_tofu_test_results.csv": {
+        "distinct_n": 0.8387793680799351
+    },
+    "npo_indirect_test.csv": {
+        "distinct_n": 0.8913925191527715
     },
     "gd_cyclic_forget.csv": {
         "distinct_n": 0.0
     },
-    "cyclic_dpo_retain_results.csv": {
-        "distinct_n": 0.8086769891154377
+    "gd_indirect_retain.csv": {
+        "distinct_n": 0.8317446242518288
+    },
+    "gd_direct_retain.csv": {
+        "distinct_n": 0.6124
     },
     "pre_unlearning_retain_results.csv": {
         "distinct_n": 0.7806783144912641
     },
-    "npo_domain_test_results.csv": {
-        "distinct_n": 0.8913925191527715
+    "npo_tofu_retain_results.csv": {
+        "distinct_n": 0.7760540244570177
     },
-    "npo_domain_forget_results.csv": {
-        "distinct_n": 0.8928571428571429
-    },
-    "balanced_dpo_retain_results.csv": {
-        "distinct_n": 0.8231646825396826
-    },
-    "balanced_grad_diff_test_results.csv": {
-        "distinct_n": 0.8434650455927052
-    },
-    "cyclic_dpo_test_results.csv": {
-        "distinct_n": 0.8741193048379521
-    },
-    "domain_only_grad_diff_forget_results.csv": {
-        "distinct_n": 0.0
-    },
-    "entity_only_grad_diff_retain_results.csv": {
-        "distinct_n": 0.6124
-    },
-    "dpo_domain_forget_results.csv": {
-        "distinct_n": 0.24597701149425288
-    },
-    "balanced_npo_forget_results.csv": {
+    "npo_balanced_forget.csv": {
         "distinct_n": 0.8824476650563607
+    },
+    "dpo_wretain_test.csv": {
+        "distinct_n": 0.832810539523212
     },
     "gd_forget_results.csv": {
         "distinct_n": 0.9053708439897699
     },
+    "dpo_balanced_forget.csv": {
+        "distinct_n": 0.5502958579881657
+    },
+    "dpo_wretain_forget.csv": {
+        "distinct_n": 0.9486301369863014
+    },
+    "npo_entity_forget.csv": {
+        "distinct_n": 0.8804920913884007
+    },
     "npo_retain_results.csv": {
         "distinct_n": 0.7806783144912641
-    },
-    "dpo_entity_retain_results.csv": {
-        "distinct_n": 0.843585237258348
     },
     "pre_unlearning_test_results.csv": {
         "distinct_n": 0.8263927968486213
     },
-    "title_gd_test_results.csv": {
+    "gd_entity_test.csv": {
         "distinct_n": 0.8723037100949094
     },
-    "entity_only_grad_diff_test_results.csv": {
-        "distinct_n": 0.5904153354632588
-    },
-    "cyclic_dpo_forget_results.csv": {
-        "distinct_n": 0.34545454545454546
-    },
-    "dpo_domain_test_results.csv": {
-        "distinct_n": 0.8666987487969201
-    },
-    "dpo_forget_results.csv": {
-        "distinct_n": 0.9344262295081968
-    },
-    "npo_entity_retain_results.csv": {
-        "distinct_n": 0.8543096872616324
-    },
-    "balanced_npo_test_results.csv": {
-        "distinct_n": 0.8758007117437723
-    },
-    "balanced_grad_diff_retain_results.csv": {
+    "gd_balanced_retain.csv": {
         "distinct_n": 0.8196327066025361
     },
-    "cyclic_npo_retain_results.csv": {
-        "distinct_n": 0.8245163240628779
+    "dpo_direct_forget.csv": {
+        "distinct_n": 0.4887005649717514
     },
-    "grad_diff_test_results.csv": {
-        "distinct_n": 0.8444384739387426
+    "dpo_cyclic_retain.csv": {
+        "distinct_n": 0.8086769891154377
     },
-    "domain_only_grad_diff_retain_results.csv": {
-        "distinct_n": 0.8317446242518288
+    "npo_direct_test.csv": {
+        "distinct_n": 0.7728337236533958
     },
-    "dpo_domain_retain_results.csv": {
-        "distinct_n": 0.8295142071494043
+    "dpo_forget_results.csv": {
+        "distinct_n": 0.5387096774193548
     },
-    "balanced_npo_retain_results.csv": {
-        "distinct_n": 0.8588486140724947
+    "dpo_indirect_test.csv": {
+        "distinct_n": 0.8666987487969201
+    },
+    "gd_entity_retain.csv": {
+        "distinct_n": 0.8033144352376799
+    },
+    "dpo_tofu_retain_results.csv": {
+        "distinct_n": 0.7461439588688946
+    },
+    "dpo_indirect_forget.csv": {
+        "distinct_n": 0.24597701149425288
+    },
+    "grad_ascent_test_results.csv": {
+        "distinct_n": 0.8223785447351066
     },
     "gd_retain_results.csv": {
         "distinct_n": 0.9209486166007905
     },
-    "entity_only_grad_diff_forget_results.csv": {
-        "distinct_n": 0.7319587628865979
-    },
     "npo_test_results.csv": {
         "distinct_n": 0.8263927968486213
-    },
-    "dpo_retain_test_results.csv": {
-        "distinct_n": 0.832810539523212
     },
     "pre_unlearning_forget_results.csv": {
         "distinct_n": 0.9344262295081968
     },
-    "npo_domain_retain_results.csv": {
-        "distinct_n": 0.8545050055617353
+    "npo_tofu_forget_results.csv": {
+        "distinct_n": 0.92
     },
-    "balanced_dpo_forget_results.csv": {
-        "distinct_n": 0.5502958579881657
+    "npo_indirect_forget.csv": {
+        "distinct_n": 0.8928571428571429
     },
-    "dpo_title_test_results.csv": {
-        "distinct_n": 0.8908918406072106
-    },
-    "dpo_retain_retain_results.csv": {
-        "distinct_n": 0.9361179361179361
+    "gd_balanced_test.csv": {
+        "distinct_n": 0.8434650455927052
     },
     "gd_cyclic_retain.csv": {
         "distinct_n": 0.7752268353038219
     },
-    "balanced_dpo_test_results.csv": {
-        "distinct_n": 0.8700959023539668
+    "npo_cyclic_test.csv": {
+        "distinct_n": 0.8919982509838216
     },
-    "npo_retain_retain_results.csv": {
-        "distinct_n": 0.9457202505219207
+    "gd_direct_forget.csv": {
+        "distinct_n": 0.7319587628865979
     },
-    "grad_diff_forget_results.csv": {
-        "distinct_n": 0.9053708439897699
-    },
-    "title_gd_retain_results.csv": {
-        "distinct_n": 0.8033144352376799
-    },
-    "dpo_title_retain_results.csv": {
-        "distinct_n": 0.8215947874650946
-    },
-    "dpo_test_results.csv": {
-        "distinct_n": 0.8263927968486213
-    },
-    "npo_title_forget_results.csv": {
-        "distinct_n": 0.8804920913884007
-    },
-    "dpo_entity_test_results.csv": {
-        "distinct_n": 0.7974413646055437
-    },
-    "npo_entity_test_results.csv": {
-        "distinct_n": 0.7728337236533958
-    },
-    "grad_diff_retain_results.csv": {
-        "distinct_n": 0.7793630338733432
-    },
-    "npo_retain_forget_results.csv": {
-        "distinct_n": 0.8994708994708994
-    },
-    "title_gd_forget_results.csv": {
+    "gd_indirect_forget.csv": {
         "distinct_n": 0.0
     },
-    "domain_only_grad_diff_test_results.csv": {
+    "dpo_entity_test.csv": {
+        "distinct_n": 0.8908918406072106
+    },
+    "gd_tofu_forget_results.csv": {
+        "distinct_n": 0.9281437125748503
+    },
+    "npo_cyclic_forget.csv": {
+        "distinct_n": 0.9028077753779697
+    },
+    "npo_direct_retain.csv": {
+        "distinct_n": 0.8543096872616324
+    },
+    "npo_wretain_retain.csv": {
+        "distinct_n": 0.9457202505219207
+    },
+    "grad_ascent_forget_results.csv": {
+        "distinct_n": 0.9082397003745318
+    },
+    "gd_indirect_test.csv": {
         "distinct_n": 0.8798241328773815
     },
-    "dpo_title_forget_results.csv": {
-        "distinct_n": 0.32914572864321606
+    "dpo_entity_retain.csv": {
+        "distinct_n": 0.8215947874650946
     },
-    "dpo_retain_forget_results.csv": {
-        "distinct_n": 0.9486301369863014
+    "dpo_balanced_retain.csv": {
+        "distinct_n": 0.8231646825396826
     },
-    "npo_title_retain_results.csv": {
+    "dpo_test_results.csv": {
+        "distinct_n": 0.5734729493891798
+    },
+    "dpo_balanced_test.csv": {
+        "distinct_n": 0.8700959023539668
+    },
+    "npo_balanced_retain.csv": {
+        "distinct_n": 0.8588486140724947
+    },
+    "gd_direct_test.csv": {
+        "distinct_n": 0.5904153354632588
+    },
+    "gd_tofu_retain_results.csv": {
+        "distinct_n": 0.7786549985731951
+    },
+    "dpo_cyclic_test.csv": {
+        "distinct_n": 0.8741193048379521
+    },
+    "npo_entity_test.csv": {
+        "distinct_n": 0.8854961832061069
+    },
+    "grad_ascent_retain_results.csv": {
+        "distinct_n": 0.751430667644901
+    },
+    "gd_entity_forget.csv": {
+        "distinct_n": 0.0
+    },
+    "dpo_direct_retain.csv": {
+        "distinct_n": 0.843585237258348
+    },
+    "gd_balanced_forget.csv": {
+        "distinct_n": 0.0
+    },
+    "dpo_cyclic_forget.csv": {
+        "distinct_n": 0.34545454545454546
+    },
+    "dpo_wretain_retain.csv": {
+        "distinct_n": 0.9361179361179361
+    },
+    "npo_entity_retain.csv": {
         "distinct_n": 0.8266426101338145
     },
-    "cyclic_npo_test_results.csv": {
-        "distinct_n": 0.8919982509838216
+    "npo_indirect_retain.csv": {
+        "distinct_n": 0.8545050055617353
+    },
+    "npo_wretain_test.csv": {
+        "distinct_n": 0.8301314459049545
+    },
+    "npo_tofu_test_results.csv": {
+        "distinct_n": 0.8344524793388429
+    },
+    "dpo_indirect_retain.csv": {
+        "distinct_n": 0.8295142071494043
+    },
+    "npo_balanced_test.csv": {
+        "distinct_n": 0.8758007117437723
     },
     "gd_test_results.csv": {
         "distinct_n": 0.8444384739387426

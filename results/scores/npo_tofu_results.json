@@ -1,0 +1,33 @@
+{
+    "npo_tofu": {
+        "forget_efficacy": 0.35101648259266816,
+        "model_utility_retain": 0.6006565280089289,
+        "model_utility_test": 0.7225177835108196,
+        "forget_scores": [
+            0.6873679416140124,
+            0.5354869458226064,
+            0.7240956647853766
+        ],
+        "retain_scores": [
+            0.7041362219886738,
+            0.4868854477356558,
+            0.6576853306805803
+        ],
+        "test_scores": [
+            0.7922635938004315,
+            0.6272702479324553,
+            0.771764793488775
+        ],
+        "qa_perplexity_forget": 14545.839309939158,
+        "qa_perplexity_retain": 163.09287864861753,
+        "test_perplexity": 78544.34147918939,
+        "exp_type": "npo_tofu",
+        "model_id": "praveensonu/llama_3_1_8b_finetuned",
+        "batch_size": 1,
+        "num_epochs": 4,
+        "lr": 2e-05,
+        "weight_decay": 0.01,
+        "LoRA_r": 8,
+        "LoRA_alpha": 16
+    }
+}

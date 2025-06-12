@@ -1,6 +1,6 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '5'
 import pandas as pd
 from eval_utils import compute_model_utility_retain, compute_forget_efficacy, compute_model_utility_test
 import torch
@@ -53,7 +53,7 @@ print('\n\nConducting evaluation on:', cfg.exp_type)
 
 cfg.model_id = 'praveensonu/llama_3_1_8b_finetuned'
 cfg.results_path = f'/home/praveen/theoden/emnlp25/results/scores/{cfg.exp_type}_results.json'
-cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/grad_ascent_model'
+cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/gd_tofu_model'
 
 
 # ---- Loading Tokenizer -----------

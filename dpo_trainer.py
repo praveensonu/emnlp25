@@ -111,6 +111,8 @@ training_args = TrainingArguments(
 )
 
 
+
+
 if cfg.exp_type == 'dpo':
         train_dataset = VanillaDPODataset(forget_data=forget,
                                   tokenizer=tokenizer,
@@ -205,6 +207,56 @@ if cfg.exp_type == 'retain_npo':
         gamma = 1.0,
         alpha = 1.0,
     )
+
+
+# === TOFU based implementation ===
+if cfg.exp_type == 'dpo_tofu':
+    print('\n\ncreating the dataset for TOFU type of implementation')
+    train_dataset = ForgetIdkRetainDatasetRandom(forget_data = forget,
+                                                  retain_data = retain,
+                                                  tokenizer = tokenizer,
+                                                  max_length = 256,
+                                                  question_key='question',
+                                                  answer_key='answer',
+                                                  idk_key='idk'
+                                                  )
+    print('\n\nlength of the dataset', len(train_dataset))
+    trainer = RetainDPOTrainer(
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+    )
+
+
+if cfg.exp_type == 'npo_tofu':
+    print('\n\ncreating the dataset for TOFU type of implementation')
+    train_dataset = ForgetIdkRetainDatasetRandom(forget_data = forget,
+                                                  retain_data = retain,
+                                                  tokenizer = tokenizer,
+                                                  max_length = 256,
+                                                  question_key='question',
+                                                  answer_key='answer',
+                                                  idk_key='idk'
+                                                  )
+    print('\n\nlength of the dataset', len(train_dataset))
+    trainer = RetainNPOTrainer(
+            model=model,
+            ref_model=ref_model,
+            args=training_args,
+            train_dataset=train_dataset,
+            tokenizer=tokenizer,
+            beta=0.1,
+            data_collator = default_data_collator,
+            gamma = 1.0,
+            alpha = 1.0,
+    )
+
 
 # === title based unlearning =====
 if cfg.exp_type == 'dpo_title':
