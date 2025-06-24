@@ -5,7 +5,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
 from config import Config
 from peft import  LoraConfig, get_peft_model
-from data_module import DualDataset
+from data_module import DualDataset, DualTitleDataset
 from collators import custom_gd_collator_forget
 from utils import find_all_linear_names
 from simnpo_utils import SimNPO
@@ -79,11 +79,32 @@ training_args = TrainingArguments(
 
 
 if cfg.loss_type == 'simnpo':
-    print('creating the dataset for vanilla gradient diff')
+    print('creating the dataset for simnpo')
     dataset = DualDataset(forget_data = forget, 
                           retain_data = retain, 
                           tokenizer = tokenizer, 
                           max_length=256)
+
+
+if cfg.loss_type == 'simnpo_melu':
+    print('\n\ncreating the dataset for melu simnpo')
+    title_df = pd.read_csv('title_df.csv')
+    def make_template_format(df):
+        df['question_forget'] = df['question_forget'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+        df['answer_forget'] = df['answer_forget'].apply(lambda x : x + tokenizer.eos_token)
+        df['question_retain'] = df['question_retain'].apply(lambda x : LLAMA3_CHAT_TEMPLATE.format(question = x))
+        df['answer_retain'] = df['answer_retain'].apply(lambda x : x + tokenizer.eos_token)
+        return df
+
+    title_df = make_template_format(title_df)
+    print('\n\nTitle df shape is:',title_df.shape)
+    print('\n\nForget question and answer\n',title_df['question_forget'][0], title_df['answer_forget'][0])
+    print('\n\nRetain df question and answer\n',title_df['question_retain'][0], title_df['answer_retain'][0])
+    dataset = DualTitleDataset(paired_df=title_df,
+                          tokenizer = tokenizer, 
+                          max_length=256)
+    print('\n\nLength of tokenized dataset', len(dataset))
+    
 
 
 trainer = SimNPO(

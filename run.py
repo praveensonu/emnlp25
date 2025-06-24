@@ -90,7 +90,7 @@ training_args = TrainingArguments(
 # ------- dataset and training args for the standard gradient difference method
 
 
-if cfg.loss_type == 'grad_diff':
+if cfg.loss_type == 'grad_diff': # 1:1seq
     print('\n\ncreating the dataset for gradient diff (length of forget)')
     retain_df = retain.iloc[:forget.shape[0]]
     print('\n\nForget shape is:',forget.shape)
@@ -101,7 +101,7 @@ if cfg.loss_type == 'grad_diff':
                           tokenizer = tokenizer,
                           max_length=256)
 
-if cfg.loss_type == 'gd_tofu':
+if cfg.loss_type == 'gd_tofu': #1:1random
     print('\n\ncreating the dataset for tofu grad diff (random chosing of retain)')
     dataset = DualDatasetRandom(forget_data = forget,
                                 retain_data = retain,
@@ -109,7 +109,7 @@ if cfg.loss_type == 'gd_tofu':
                                 max_length=256)
 
 
-if cfg.loss_type == 'vanilla_grad_diff':
+if cfg.loss_type == 'vanilla_grad_diff': #cyclic
     print('creating the dataset for vanilla gradient diff')
     dataset = DualDataset(forget_data = forget, 
                           retain_data = retain, 
