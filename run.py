@@ -1,5 +1,5 @@
-# import os
-# os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '5'
 # to run the script, use the command: 
 # 1. export CUDA_VISIBLE_DEVICES=4,5
 # 2. accelerate launch --num_processes 2 run.py
@@ -28,7 +28,8 @@ cfg = Config()
 print('loading the forget, retain')
 forget = pd.read_csv(cfg.forget_path) 
 retain = pd.read_csv(cfg.retain_path)
-balanced_r = pd.read_csv('balanced_retain.csv')
+#balanced_r = pd.read_csv('balanced_retain.csv')
+coreset_df = pd.read_csv('/home/praveen/theoden/emnlp25/coreset_10.csv')
 
 print(f"\nLoading the Tokenizer {cfg.model_id}")
 tokenizer = AutoTokenizer.from_pretrained(cfg.model_id, token = cfg.access_token)
@@ -124,6 +125,16 @@ if cfg.loss_type == 'balanced_grad_diff':
     print('\n\n balanced retain shape:', balanced_ret.shape)
     dataset = DualDataset(forget_data = forget, 
                           retain_data = balanced_ret, 
+                          tokenizer = tokenizer, 
+                          max_length=256) 
+    
+
+if cfg.loss_type == 'coreset_10_gd':
+    print('creating the dataset for coreset_10 gd')
+    coreset_df = make_template_format(coreset_df)
+    print('\n\n coreset shape:', coreset_df.shape)
+    dataset = DualDataset(forget_data = forget, 
+                          retain_data = coreset_df, 
                           tokenizer = tokenizer, 
                           max_length=256) 
 

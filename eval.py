@@ -1,6 +1,6 @@
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '4'
+os.environ['CUDA_VISIBLE_DEVICES'] = '5'
 import pandas as pd
 from eval_utils import compute_model_utility_retain, compute_forget_efficacy, compute_model_utility_test
 import torch
@@ -26,6 +26,7 @@ balanced_exp_types = ['balanced_grad_diff', 'balanced_dpo', 'balanced_npo']
 entity_exp_type = ['entity_only_grad_diff', 'dpo_entity', 'npo_entity'] #direct
 forget_len = ['gd', 'dpo_retain', 'npo_retain'] #1_1seq
 domain_exp_type = ['domain_only_grad_diff', 'dpo_domain', 'npo_domain'] #indirect
+
 
 if cfg.exp_type in balanced_exp_types:
     retain = pd.read_csv('balanced_retain.csv')
@@ -53,7 +54,7 @@ print('\n\nConducting evaluation on:', cfg.exp_type)
 
 cfg.model_id = 'praveensonu/llama_3_1_8b_finetuned'
 cfg.results_path = f'/home/praveen/theoden/emnlp25/results/scores/{cfg.exp_type}_results.json'
-cfg.save_dir = '/home/praveen/theoden/emnlp25/outputs/simnpo_model'
+cfg.save_dir = '/home/praveen/theoden/outputs/coreset_10_gd_model'
 
 
 # ---- Loading Tokenizer -----------
